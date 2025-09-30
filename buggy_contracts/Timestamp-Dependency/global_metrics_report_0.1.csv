@@ -1,0 +1,4 @@
+Range,True Positives,False Positives,False Negatives,Precision,Recall,F1 Score
+0,211,1182,1152,0.1515,0.1548,0.1531
+1,469,925,894,0.3364,0.3441,0.3402
+2,1171,222,192,0.8406,0.8591,0.8498

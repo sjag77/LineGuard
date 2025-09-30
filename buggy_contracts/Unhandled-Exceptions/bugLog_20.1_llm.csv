@@ -1,0 +1,23 @@
+loc,length,bug type,approach
+44,4,Unhandled-Exceptions,code snippet injection
+55,4,Unhandled-Exceptions,code snippet injection
+69,3,Unhandled-Exceptions,code snippet injection
+81,3,Unhandled-Exceptions,code snippet injection
+86,2,Unhandled-Exceptions,code snippet injection
+116,44,Unhandled-Exceptions,code snippet injection
+187,3,Unhandled-Exceptions,code snippet injection
+191,3,Unhandled-Exceptions,code snippet injection
+195,3,Unhandled-Exceptions,code snippet injection
+213,4,Unhandled-Exceptions,code snippet injection
+218,3,Unhandled-Exceptions,code snippet injection
+244,5,Unhandled-Exceptions,code snippet injection
+250,4,Unhandled-Exceptions,code snippet injection
+255,7,Unhandled-Exceptions,code snippet injection
+297,3,Unhandled-Exceptions,code snippet injection
+318,3,Unhandled-Exceptions,code snippet injection
+356,5,Unhandled-Exceptions,code snippet injection
+396,2,Unhandled-Exceptions,code snippet injection
+411,2,Unhandled-Exceptions,code snippet injection
+417,3,Unhandled-Exceptions,code snippet injection
+428,3,Unhandled-Exceptions,code snippet injection
+442,5,Unhandled-Exceptions,code snippet injection

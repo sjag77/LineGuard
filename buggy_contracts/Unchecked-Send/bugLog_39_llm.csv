@@ -1,0 +1,12 @@
+loc,length,bug type,approach
+7,2,Unchecked-Send,code snippet injection
+11,2,Unchecked-Send,code snippet injection
+14,2,Unchecked-Send,code snippet injection
+17,2,Unchecked-Send,code snippet injection
+22,2,Unchecked-Send,code snippet injection
+30,2,Unchecked-Send,code snippet injection
+40,2,Unchecked-Send,code snippet injection
+43,2,Unchecked-Send,code snippet injection
+47,2,Unchecked-Send,code snippet injection
+59,2,Unchecked-Send,code snippet injection
+75,2,Unchecked-Send,code snippet injection
