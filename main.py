@@ -1,47 +1,36 @@
 #!/usr/bin/env python3
 """
-smartguard_adaptive_trainer_demo.py
-===================================
+smartguard_user_feedback_system_predictions_only_vfinal.py
 
-Two-score scheme focused on Precision & Recall:
-
-- Per-contract metrics:
-    precision = TP / (TP + FP)
-    recall    = TP / (TP + FN)
-    combined_per_contract_score = F1 * 100
-- Threshold applies to **precision** and **recall** independently:
-    if precision < TH or recall < TH -> retry (REAL mode), with **dynamic feedback**.
-
-Dynamic feedback rules sent in the next prompt:
-  1) P < TH and R < TH -> "Be more precise and find all vulnerabilities."
-  2) P < TH and R >= TH -> "Be more careful choosing the exact line numbers."
-  3) P >= TH and R < TH -> "You chose good lines; now find all remaining vulnerabilities."
-  4) P >= TH and R >= TH -> "Great work." (move on)
-
-Overall score: simple average of **final** per-contract scores (F1*100), priming not counted.
-
-Modes:
-- REAL: iterate full dataset; retry below-threshold up to --max_retries.
-- TEST: test/Overflow-Underflow with 5 contracts, sample predictions for 2..5; no retries.
+Key behavior (final):
+- SYSTEM replies are ONLY predictions (e.g. "[prediction] 10,20,36,...") or a warm-up ack.
+- Metrics + feedback are logged in USER as:
+    [analysis] P=... R=... F1*100=... ; [feedback_for_next] ...
+- First turn: USER sends base instruction + contract_1 (warm-up). SYSTEM may ack.
+- From contract_2 onward: USER sends contract (+ injected feedback), waits for SYSTEM [prediction], evaluates; retry same contract if needed.
+- TEST mode uses a single results folder: "Overflow-Underflow_TEST".
+- REAL mode PRE-CREATES the 7 label folders under both results_root and memory_root and stores each label's outputs in its same-named folder.
 
 Usage (TEST):
-  python smartguard_adaptive_trainer_demo.py \
+  python smartguard_user_feedback_system_predictions_only_vfinal.py \
     --mode test \
     --test_root "test/Overflow-Underflow" \
     --test_pred_root "test/Overflow-Underflow/sample_preds" \
     --results_root "./results_test" \
     --memory_root "./memory_test" \
-    --api_key "DUMMY"
+    --api_key "DUMMY" \
+    --threshold 0.7
 
 Usage (REAL):
-  python smartguard_adaptive_trainer_demo.py \
+  python smartguard_user_feedback_system_predictions_only_vfinal.py \
     --mode real \
     --contracts_root "/path/to/buggy_contracts" \
     --results_root "/path/to/results" \
     --memory_root "/path/to/memory" \
     --api_key "$OPENAI_API_KEY" \
     --threshold 0.7 \
-    --max_retries 1
+    --max_attempts 3 \
+    --history_turns 4
 """
 
 import re
@@ -52,10 +41,9 @@ import argparse
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 
-import numpy as np
 import pandas as pd
 
-# Optional for REAL mode
+# Optional: only needed for REAL mode calls
 try:
     import openai  # type: ignore
 except Exception:
@@ -63,8 +51,10 @@ except Exception:
 
 # ---------------- Defaults ----------------
 BASE_MODEL = "gpt-4o-mini"
-TEMPERATURE = 0.3
+TEMPERATURE = 0.2
+HISTORY_TURNS_DEFAULT = 4
 
+# Map (display → folder_name_on_disk)
 LABEL_FOLDERS = {
     "Re-entrancy": "Re-entrancy",
     "Timestamp dep": "Timestamp-Dependency",
@@ -75,11 +65,17 @@ LABEL_FOLDERS = {
     "tx.origin": "tx.origin"
 }
 
-# ---------------- Utilities ----------------
+# ---------------- Utility funcs ----------------
 
 
 def ensure_dir(p: Path) -> None:
     p.mkdir(parents=True, exist_ok=True)
+
+
+def ensure_label_dirs(base: Path) -> None:
+    """Create all 7 label directories under the given base (results or memory)."""
+    for folder_name in LABEL_FOLDERS.values():
+        ensure_dir(base / folder_name)
 
 
 def read_text(p: Path) -> str:
@@ -89,26 +85,19 @@ def read_text(p: Path) -> str:
 def read_vuln_lines_from_csv(meta_path: Path) -> List[int]:
     df = pd.read_csv(meta_path)
     cols = [c for c in df.columns if re.search(r'line|loc|linen', c, re.I)]
-    if not cols and df.shape[1] == 1:
+    if not cols and df.shape[1] >= 1:
         cols = [df.columns[0]]
     lines = set()
     for c in cols:
         for v in df[c].dropna().astype(str):
-            for part in re.split(r'[;, \|]+', v.strip()):
-                if not part:
-                    continue
-                if part.isdigit():
-                    lines.add(int(part))
-                else:
-                    m = re.search(r'(\d+)', part)
-                    if m:
-                        lines.add(int(m.group(1)))
+            m = re.search(r'(\d+)', v)
+            if m:
+                lines.add(int(m.group(1)))
     return sorted(lines)
 
 
 def parse_pred_csv_lines(pred_csv: Path) -> List[int]:
-    """Read the first column of CSV and extract ints robustly."""
-    if not pred_csv.exists():
+    if not pred_csv or not pred_csv.exists():
         return []
     df = pd.read_csv(pred_csv)
     if df.empty:
@@ -116,12 +105,9 @@ def parse_pred_csv_lines(pred_csv: Path) -> List[int]:
     col = df.columns[0]
     vals: List[int] = []
     for v in df[col].dropna().astype(str):
-        if v.isdigit():
-            vals.append(int(v))
-        else:
-            m = re.search(r'(\d+)', v)
-            if m:
-                vals.append(int(m.group(1)))
+        m = re.search(r'(\d+)', v)
+        if m:
+            vals.append(int(m.group(1)))
     return sorted(set(vals))
 
 
@@ -141,7 +127,89 @@ def f1_from_pr(prec: float, rec: float) -> float:
     return 2 * prec * rec / (prec + rec)
 
 
-def call_llm(prompt: str, api_key: str) -> str:
+def feedback_from_pr(prec: float, rec: float, threshold: float) -> str:
+    bad_p = prec < threshold
+    bad_r = rec < threshold
+    if bad_p and bad_r:
+        return ("Your precision and recall are both below target. "
+                "Be more precise in selecting exact line numbers AND ensure you find all vulnerabilities.")
+    if bad_p and not bad_r:
+        return ("Recall is good but precision is below target. "
+                "Be more careful choosing the exact line numbers to better match ground truth.")
+    if not bad_p and bad_r:
+        return ("Precision is good but recall is below target. "
+                "You selected good lines but missed some vulnerabilities—find all remaining ones.")
+    return "Great work—both precision and recall met the target. Proceed to the next contract."
+
+# ---------------- 2-role chat helpers ----------------
+
+
+def instruction_block(label_name: str) -> str:
+    return (
+        "You are an expert in smart contract vulnerability detection.\n"
+        "A Solidity smart contract will be provided; identify all vulnerabilities present in the code.\n"
+        f"Focus specifically on detecting instances of {label_name}.\n"
+        "Return ONLY the line numbers (comma-separated or newline-separated).\n"
+        "When ready, you may first reply 'I understand the patterns and I'm ready for the next contract' or directly give predictions."
+    )
+
+
+def ensure_user_instruction(memory_chat: List[Dict], label_name: str) -> None:
+    if not memory_chat or memory_chat[0].get("role") != "user":
+        memory_chat.insert(
+            0, {"role": "user", "content": instruction_block(label_name)})
+
+
+def compress_recent_systems(memory_chat: List[Dict], last_n: int) -> List[str]:
+    systems = [m.get("content", "")
+               for m in memory_chat if m.get("role") == "system"]
+    return systems[-last_n:] if last_n > 0 else []
+
+
+def get_last_user_feedback(memory_chat: List[Dict]) -> Optional[str]:
+    for m in reversed(memory_chat):
+        if m.get("role") == "user":
+            txt = str(m.get("content", "")).strip()
+            if txt.startswith("[feedback_for_next]"):
+                return txt.replace("[feedback_for_next]", "", 1).strip()
+    return None
+
+
+def build_user_contract_prompt(contract_text: str, injected_feedback: Optional[str]) -> str:
+    parts = []
+    if injected_feedback:
+        parts.append(
+            "=== PREVIOUS FEEDBACK (for this attempt) ===\n" + injected_feedback.strip())
+    parts.append(
+        "Analyze the following contract. Return only the line numbers.")
+    parts.append("--- CONTRACT ---\n" + contract_text)
+    return "\n\n".join(parts)
+
+
+def build_messages_for_attempt(memory_chat: List[Dict],
+                               contract_text: str,
+                               history_turns: int,
+                               carry_feedback: Optional[str]) -> List[Dict]:
+    msgs: List[Dict] = []
+    for s in compress_recent_systems(memory_chat, history_turns):
+        msgs.append({"role": "system", "content": s})
+    user_prompt = build_user_contract_prompt(contract_text, carry_feedback)
+    msgs.append({"role": "user", "content": user_prompt})
+    return msgs
+
+
+def append_attempt_to_chat(memory_chat: List[Dict],
+                           user_prompt: str,
+                           system_content: str,
+                           analysis_and_feedback_user: str) -> None:
+    memory_chat.append({"role": "user", "content": user_prompt})
+    memory_chat.append({"role": "system", "content": system_content})
+    memory_chat.append({"role": "user", "content": analysis_and_feedback_user})
+
+# ---------------- LLM call ----------------
+
+
+def call_llm_messages(messages: List[Dict], api_key: str) -> str:
     if openai is None:
         raise RuntimeError(
             "openai package not installed; cannot call LLM in REAL mode.")
@@ -150,7 +218,7 @@ def call_llm(prompt: str, api_key: str) -> str:
         try:
             resp = openai.ChatCompletion.create(
                 model=BASE_MODEL,
-                messages=[{"role": "user", "content": prompt}],
+                messages=messages,
                 temperature=TEMPERATURE
             )
             return resp.choices[0].message["content"]
@@ -159,91 +227,41 @@ def call_llm(prompt: str, api_key: str) -> str:
             time.sleep(2)
     raise RuntimeError("LLM API failed after 3 retries")
 
-
-def memory_to_text(memory: List[Dict], last_n: int = 5) -> str:
-    text = ""
-    for turn in memory[-last_n:]:
-        p = f", P={turn['precision']:.2f}" if 'precision' in turn else ""
-        r = f", R={turn['recall']:.2f}" if 'recall' in turn else ""
-        s = f", F1*100={turn['per_contract_score']:.2f}" if 'per_contract_score' in turn else ""
-        o = f", overall={turn['overall_score']:.2f}" if 'overall_score' in turn else ""
-        fb = f"\n[Feedback]: {turn['feedback']}" if 'feedback' in turn and turn['feedback'] else ""
-        text += f"\n[User]: {turn['user']}\n[LLM{p}{r}{s}{o}]: {turn['llm']}{fb}\n"
-    return text
+# ---------------- Migration loader ----------------
 
 
-def feedback_from_pr(prec: float, rec: float, threshold: float) -> str:
-    bad_p = prec < threshold
-    bad_r = rec < threshold
-    if bad_p and bad_r:
-        return ("Your precision and recall are both below the target. "
-                "Be more precise in choosing exact line numbers AND ensure you find all vulnerabilities.")
-    if bad_p and not bad_r:
-        return ("Your recall is good but precision is below target. "
-                "Be more careful selecting the exact line numbers to better match ground truth.")
-    if not bad_p and bad_r:
-        return ("Your precision is good but recall is below target. "
-                "You selected good lines but missed some vulnerabilities—find all remaining ones.")
-    return "Great work—both precision and recall met the target. Proceed to the next contract."
+def migrate_legacy_metrics_array_to_chat(raw: List[Dict], label_name: str) -> List[Dict]:
+    chat: List[Dict] = [
+        {"role": "user", "content": instruction_block(label_name)}]
+    for it in raw:
+        cid = int(it.get("contract_id", -1))
+        att = int(it.get("attempt", 1))
+        prec = float(it.get("precision", 0.0))
+        rec = float(it.get("recall", 0.0))
+        f1x = float(it.get("per_contract_score", 0.0))
+        fb = str(it.get("feedback", "")) or "No feedback available."
+        lines = sorted({int(x) for x in re.findall(
+            r'\b\d+\b', str(it.get("llm", "")))})
+        chat.append(
+            {"role": "user", "content": f"(legacy-migrated) contract #{cid} attempt {att}\n<original user content unavailable>"})
+        chat.append(
+            {"role": "system", "content": f"[prediction] {','.join(str(x) for x in lines)}"})
+        chat.append(
+            {"role": "user", "content": f"[analysis] P={prec:.4f} R={rec:.4f} F1*100={f1x:.2f} ; [feedback_for_next] {fb}"})
+    return chat
 
 
-def build_instruction(label_name: str,
-                      overall_score_so_far: Optional[float] = None,
-                      last_contract_score: Optional[float] = None,
-                      last_precision: Optional[float] = None,
-                      last_recall: Optional[float] = None,
-                      last_feedback: Optional[str] = None) -> str:
-    parts = [
-        "You are an expert in smart contract vulnerability detection.",
-        "A Solidity smart contract will be provided, and your task is to identify all vulnerabilities present in the code.",
-        f"Specifically, focus on detecting instances of {label_name}.",
-        "Your output must follow the structure and text format of the metadata (a list of vulnerable line numbers).",
-        "The most critical factor is the accuracy of the **line number** where the vulnerability occurs.",
-        "If you detect a vulnerability on line 30 but ground-truth indicates 29, bias toward 29.",
-    ]
-    if overall_score_so_far is not None:
-        parts.append(
-            f"Overall accuracy so far (F1*100): {overall_score_so_far:.2f}.")
-    if last_contract_score is not None:
-        parts.append(
-            f"Last contract score (F1*100): {last_contract_score:.2f}.")
-    if last_precision is not None and last_recall is not None:
-        parts.append(
-            f"Last precision: {last_precision:.2f}, last recall: {last_recall:.2f}.")
-    if last_feedback:
-        parts.append(f"Guidance from last iteration: {last_feedback}")
-    parts.append(
-        "Aim for the best possible alignment with metadata. Return only the line numbers.")
-    return "\n".join(parts)
-
-
-def build_prompt(label_name: str,
-                 contract_text: str,
-                 memory_text: str,
-                 overall_score_so_far: Optional[float],
-                 last_contract_score: Optional[float],
-                 last_precision: Optional[float],
-                 last_recall: Optional[float],
-                 last_feedback: Optional[str]) -> str:
-    return (
-        memory_text
-        + "\n"
-        + build_instruction(label_name, overall_score_so_far,
-                            last_contract_score, last_precision, last_recall, last_feedback)
-        + "\n\n--- CONTRACT ---\n"
-        + contract_text
-    )
-
-
-def find_sample_pred_csv(test_pred_root: Path, i: int) -> Optional[Path]:
-    candidates = [
-        test_pred_root / f"buggy_{i}_pred.csv",
-        test_pred_root / f"BugLog_{i}_pred.csv",
-    ]
-    for c in candidates:
-        if c.exists():
-            return c
-    return None
+def load_or_migrate_chat(memory_path: Path, label_name: str) -> List[Dict]:
+    if not memory_path.exists():
+        return [{"role": "user", "content": instruction_block(label_name)}]
+    raw = json.load(open(memory_path))
+    if isinstance(raw, list) and raw and "role" not in raw[0]:
+        chat = migrate_legacy_metrics_array_to_chat(raw, label_name)
+        json.dump(chat, open(memory_path, "w"), indent=2)
+        return chat
+    chat = raw if isinstance(raw, list) else []
+    ensure_user_instruction(chat, label_name)
+    return chat
 
 # ---------------- REAL mode ----------------
 
@@ -255,7 +273,8 @@ def process_label_real(label_key: str,
                        memory_root: Path,
                        api_key: str,
                        threshold: float,
-                       max_retries: int):
+                       max_attempts: int,
+                       history_turns: int):
     label_dir = contracts_root / folder_name
     if not label_dir.exists():
         print(f"[SKIP] Missing directory: {label_dir}")
@@ -267,39 +286,16 @@ def process_label_real(label_key: str,
     ensure_dir(mem_dir)
     memory_path = mem_dir / "memory_full.json"
 
-    # Load existing memory
-    memory: List[Dict] = []
-    if memory_path.exists():
-        try:
-            memory = json.load(open(memory_path))
-            print(
-                f"[INFO] Loaded memory for {label_key} ({len(memory)} turns).")
-        except Exception:
-            memory = []
-
-    # Overall reconstruction from memory (counted only)
-    overall_sum, overall_count = 0.0, 0
-    for turn in memory:
-        if turn.get("counted", False):
-            overall_sum += float(turn.get("per_contract_score", 0))
-            overall_count += 1
-    overall_score = round(overall_sum / overall_count,
-                          2) if overall_count else None
-
-    last_contract_score = None
-    last_precision, last_recall = None, None
-    last_feedback = memory[-1].get("feedback") if memory else None
-    if memory:
-        if 'per_contract_score' in memory[-1]:
-            last_contract_score = float(memory[-1]['per_contract_score'])
-        if 'precision' in memory[-1] and 'recall' in memory[-1]:
-            last_precision = float(memory[-1]['precision'])
-            last_recall = float(memory[-1]['recall'])
+    memory_chat = load_or_migrate_chat(memory_path, folder_name)
+    print(
+        f"[INFO] Loaded memory chat for {label_key} ({len(memory_chat)} messages).")
 
     sol_files = sorted(label_dir.glob("buggy_*.sol"))
     if not sol_files:
         print(f"[WARN] No contracts found in {label_dir}")
         return
+
+    carried_feedback_across_contracts = get_last_user_feedback(memory_chat)
 
     for sol_file in sol_files:
         m = re.search(r'buggy_(\d+)\.sol', sol_file.name)
@@ -315,99 +311,88 @@ def process_label_real(label_key: str,
         contract_text = read_text(sol_file)
         truth_lines = read_vuln_lines_from_csv(meta_file)
 
-        # attempt loop
         attempt = 0
-        final_pred_lines: List[int] = []
-        final_llm_answer = ""
-        final_prec = 0.0
-        final_rec = 0.0
-        final_score = 0.0
-        feedback = last_feedback or ""
+        final_lines: List[int] = []
+        final_prec = final_rec = 0.0
+        final_f1x100 = 0.0
+
+        immediate_feedback: Optional[str] = carried_feedback_across_contracts
 
         while True:
             attempt += 1
-            mem_text = memory_to_text(memory)
-            prompt = build_prompt(
-                folder_name, contract_text, mem_text,
-                overall_score, last_contract_score, last_precision, last_recall, feedback
+            messages = build_messages_for_attempt(
+                memory_chat=memory_chat,
+                contract_text=contract_text,
+                history_turns=history_turns,
+                carry_feedback=immediate_feedback
             )
+
             print(
                 f"\n[REAL::{folder_name}] {sol_file.name} | Attempt {attempt}")
-            llm_answer = call_llm(prompt, api_key)
+            llm_text = call_llm_messages(messages, api_key).strip()
 
-            # Parse prediction from free text → store as CSV lines
-            pred_lines = sorted({int(x)
-                                for x in re.findall(r'\b\d+\b', llm_answer)})
-            prec, rec, TP, FP, FN = precision_recall(pred_lines, truth_lines)
-            f1 = f1_from_pr(prec, rec)
-            score = round(100.0 * f1, 2)
+            found_nums = re.findall(r'\b\d+\b', llm_text)
+            if found_nums:
+                pred_lines = sorted({int(x) for x in found_nums})
+                prec, rec, TP, FP, FN = precision_recall(
+                    pred_lines, truth_lines)
+                f1 = f1_from_pr(prec, rec)
+                f1x100 = round(100.0 * f1, 2)
+                fb = feedback_from_pr(prec, rec, threshold)
 
-            # Craft feedback for next iteration decision
-            feedback = feedback_from_pr(prec, rec, threshold)
+                analysis_user = f"[analysis] P={prec:.4f} R={rec:.4f} F1*100={f1x100:.2f} ; [feedback_for_next] {fb}"
+                system_content = f"[prediction] {','.join(str(x) for x in pred_lines)}"
 
-            # Log this attempt (not counted yet)
-            memory.append({
-                "contract_id": idx,
-                "attempt": attempt,
-                "user": prompt,
-                "llm": llm_answer,
-                "precision": round(prec, 4),
-                "recall": round(rec, 4),
-                "per_contract_score": score,
-                "overall_score": overall_score if overall_score is not None else 0.0,
-                "feedback": feedback,
-                "counted": False
-            })
-            json.dump(memory, open(memory_path, "w"), indent=2)
+                user_prompt_logged = messages[-1]["content"]
+                append_attempt_to_chat(
+                    memory_chat, user_prompt_logged, system_content, analysis_user)
+                json.dump(memory_chat, open(memory_path, "w"), indent=2)
 
-            print(
-                f"   P={prec:.3f}, R={rec:.3f}, F1*100={score:.2f} | feedback: {feedback}")
+                print(f"   SYSTEM → {system_content}")
+                print(
+                    f"   EVAL   → P={prec:.3f}, R={rec:.3f}, F1*100={f1x100:.2f}")
 
-            # Threshold check on P & R independently
-            if (prec >= threshold and rec >= threshold) or attempt >= (max_retries + 1):
-                final_pred_lines = pred_lines
-                final_llm_answer = llm_answer
-                final_prec, final_rec, final_score = prec, rec, score
+                if (prec >= threshold and rec >= threshold) or attempt >= max_attempts:
+                    final_lines, final_prec, final_rec, final_f1x100 = pred_lines, prec, rec, f1x100
+                    carried_feedback_across_contracts = fb
+                    break
+                else:
+                    immediate_feedback = fb
+                    continue
+            else:
+                # Warm-up / acknowledgement
+                system_content = llm_text or "I understand the patterns and I'm ready for the next contract."
+                analysis_user = "[analysis] WARM-UP_ACK ; [feedback_for_next] Warm-up acknowledged."
+                user_prompt_logged = messages[-1]["content"]
+                append_attempt_to_chat(
+                    memory_chat, user_prompt_logged, system_content, analysis_user)
+                json.dump(memory_chat, open(memory_path, "w"), indent=2)
+                carried_feedback_across_contracts = "Warm-up acknowledged."
                 break
-            # else: loop again with tailored feedback embedded via memory context
 
-        # mark final attempt as counted, update overall
-        overall_sum += final_score
-        overall_count += 1
-        overall_score = round(overall_sum / overall_count, 2)
-
-        memory[-1]["counted"] = True
-        memory[-1]["overall_score"] = overall_score
-        json.dump(memory, open(memory_path, "w"), indent=2)
-
-        # Save final prediction CSV (after retries if any)
-        out_csv = (results_dir / f"{sol_file.stem}_pred.csv")
-        pd.DataFrame({"predicted_lines": final_pred_lines}
+        out_csv = results_dir / f"{sol_file.stem}_pred.csv"
+        pd.DataFrame({"predicted_lines": final_lines}
                      ).to_csv(out_csv, index=False)
         print(
-            f"   FINAL → P={final_prec:.3f}, R={final_rec:.3f}, F1*100={final_score:.2f} | overall={overall_score:.2f} (saved {out_csv.name})")
-
-        # prepare context for next contract
-        last_contract_score = final_score
-        last_precision, last_recall = final_prec, final_rec
-        last_feedback = feedback
+            f"   FINAL → P={final_prec:.3f}, R={final_rec:.3f}, F1*100={final_f1x100:.2f} (saved {out_csv.name})")
 
 # ---------------- TEST mode ----------------
+
+
+def find_sample_pred_csv(test_pred_root: Path, i: int) -> Optional[Path]:
+    for name in (f"buggy_{i}_pred.csv", f"BugLog_{i}_pred.csv"):
+        cand = test_pred_root / name
+        if cand.exists():
+            return cand
+    return None
 
 
 def process_test_mode(test_root: Path,
                       test_pred_root: Path,
                       results_root: Path,
-                      memory_root: Path):
-    """
-    TEST layout:
-      test_root/buggy_1.sol ... buggy_5.sol
-      test_root/BugLog_1.csv ... BugLog_5.csv
-      test_pred_root/buggy_2_pred.csv ... buggy_5_pred.csv (or BugLog_*.csv)
-    Priming:
-      - memory['llm'] = FULL TEXT of buggy_2_pred.csv for the first entry (contract 1).
-      - No retries in TEST mode.
-    """
+                      memory_root: Path,
+                      history_turns: int,
+                      threshold: float):
     label_display = "Overflow-Underflow_TEST"
     results_dir = results_root / label_display
     mem_dir = memory_root / label_display
@@ -415,14 +400,8 @@ def process_test_mode(test_root: Path,
     ensure_dir(mem_dir)
     memory_path = mem_dir / "memory_full.json"
 
-    memory: List[Dict] = []
-    if memory_path.exists():
-        try:
-            memory = json.load(open(memory_path))
-            print(
-                f"[INFO][TEST] Loaded existing memory ({len(memory)} turns).")
-        except Exception as e:
-            print(f"[WARN][TEST] Could not load memory: {e}. Starting fresh.")
+    memory_chat = load_or_migrate_chat(memory_path, "Overflow-Underflow")
+    print(f"[INFO][TEST] Loaded memory chat ({len(memory_chat)} messages).")
 
     sol_files = [test_root / f"buggy_{i}.sol" for i in range(1, 6)]
     meta_files = [test_root / f"BugLog_{i}.csv" for i in range(1, 6)]
@@ -430,151 +409,78 @@ def process_test_mode(test_root: Path,
         if not p.exists():
             print(f"[ERROR][TEST] Missing file: {p}")
 
-    # Overall reconstruction
-    overall_sum, overall_count = 0.0, 0
-    for turn in memory:
-        if turn.get("counted", False):
-            overall_sum += float(turn.get("per_contract_score", 0))
-            overall_count += 1
-    overall_score = round(overall_sum / overall_count,
-                          2) if overall_count else None
-    last_contract_score = memory[-1].get(
-        "per_contract_score") if memory else None
-    last_precision = memory[-1].get("precision") if memory else None
-    last_recall = memory[-1].get("recall") if memory else None
-    last_feedback = memory[-1].get("feedback") if memory else None
-
-    # 1) Priming (contract 1)
+    # Priming (contract 1)
     if sol_files[0].exists():
-        sol1_text = read_text(sol_files[0])
-        mem_text = memory_to_text(memory)
-        prompt1 = build_prompt("Overflow-Underflow", sol1_text, mem_text,
-                               overall_score, last_contract_score, last_precision, last_recall, last_feedback)
-        pred_csv_for_2 = find_sample_pred_csv(test_pred_root, 2)
-        if pred_csv_for_2 and pred_csv_for_2.exists():
-            priming_llm = read_text(pred_csv_for_2)
+        ctext1 = read_text(sol_files[0])
+        injected_fb = get_last_user_feedback(memory_chat)
+        user_prompt_1 = build_user_contract_prompt(ctext1, injected_fb)
+
+        pred2_csv = find_sample_pred_csv(test_pred_root, 2)
+        if pred2_csv:
+            pred2_lines = parse_pred_csv_lines(pred2_csv)
+            system_content = f"[prediction] {','.join(str(x) for x in pred2_lines)}"
+            truth1 = read_vuln_lines_from_csv(
+                meta_files[0]) if meta_files[0].exists() else []
+            prec, rec, *_ = precision_recall(pred2_lines, truth1)
+            f1x100 = round(100.0 * f1_from_pr(prec, rec), 2)
+            fb = feedback_from_pr(prec, rec, threshold)
+            analysis_user = f"[analysis] P={prec:.4f} R={rec:.4f} F1*100={f1x100:.2f} ; [feedback_for_next] {fb}"
         else:
-            priming_llm = "ERROR: Missing sample prediction CSV for contract 2."
-            print(f"[WARN][TEST] {priming_llm}")
-        memory.append({
-            "contract_id": 1,
-            "attempt": 1,
-            "user": prompt1,
-            "llm": priming_llm,
-            "precision": 1.0,
-            "recall": 1.0,
-            "per_contract_score": 100.0,  # priming default
-            "overall_score": overall_score if overall_score is not None else 0.0,
-            "feedback": "Priming completed.",
-            "counted": False  # not counted
-        })
-        json.dump(memory, open(memory_path, "w"), indent=2)
-        last_contract_score = 100.0
-        last_precision, last_recall = 1.0, 1.0
-        last_feedback = "Priming completed."
+            system_content = "I understand the patterns and I'm ready for the next contract."
+            analysis_user = "[analysis] WARM-UP_ACK ; [feedback_for_next] Warm-up acknowledged."
+
+        append_attempt_to_chat(memory_chat, user_prompt_1,
+                               system_content, analysis_user)
+        json.dump(memory_chat, open(memory_path, "w"), indent=2)
         print("[TEST] Priming complete.")
     else:
-        print("[ERROR][TEST] Missing buggy_1.sol; aborting priming.")
+        print("[ERROR][TEST] Missing buggy_1.sol; aborting test.")
         return
 
-    # 2) Contracts 2..5 (no retries)
+    # Contracts 2..5
     for i in range(2, 6):
-        sol_path = sol_files[i - 1]
-        meta_path = meta_files[i - 1]
+        sol_path = sol_files[i-1]
+        meta_path = meta_files[i-1]
         if not sol_path.exists() or not meta_path.exists():
-            warn = f"[WARN][TEST] Skipping buggy_{i}: missing files."
-            print(warn)
-            memory.append({
-                "contract_id": i,
-                "attempt": 1,
-                "user": warn,
-                "llm": "",
-                "precision": 0.0,
-                "recall": 0.0,
-                "per_contract_score": 0.0,
-                "overall_score": overall_score if overall_score is not None else 0.0,
-                "feedback": "Missing files.",
-                "counted": False
-            })
-            json.dump(memory, open(memory_path, "w"), indent=2)
+            print(f"[WARN][TEST] Skipping buggy_{i}: missing files.")
+            memory_chat.append({"role": "system", "content": "[prediction] "})
+            memory_chat.append(
+                {"role": "user", "content": "[analysis] Missing files ; [feedback_for_next] Missing files."})
+            json.dump(memory_chat, open(memory_path, "w"), indent=2)
             continue
 
-        truth_lines = read_vuln_lines_from_csv(meta_path)
+        ctext = read_text(sol_path)
+        injected_fb = get_last_user_feedback(memory_chat)
+        user_prompt = build_user_contract_prompt(ctext, injected_fb)
+
         pred_csv = find_sample_pred_csv(test_pred_root, i)
-        if not (pred_csv and pred_csv.exists()):
-            warn = f"[WARN][TEST] Missing sample prediction CSV for contract {i}."
-            print(warn)
-            memory.append({
-                "contract_id": i,
-                "attempt": 1,
-                "user": warn,
-                "llm": "",
-                "precision": 0.0,
-                "recall": 0.0,
-                "per_contract_score": 0.0,
-                "overall_score": overall_score if overall_score is not None else 0.0,
-                "feedback": "Missing sample prediction.",
-                "counted": False
-            })
-            json.dump(memory, open(memory_path, "w"), indent=2)
+        if not pred_csv:
+            print(
+                f"[WARN][TEST] Missing sample prediction CSV for contract {i}.")
+            memory_chat.append({"role": "user", "content": user_prompt})
+            memory_chat.append({"role": "system", "content": "[prediction] "})
+            memory_chat.append(
+                {"role": "user", "content": "[analysis] P=0.0000 R=0.0000 F1*100=0.00 ; [feedback_for_next] Missing sample prediction."})
+            json.dump(memory_chat, open(memory_path, "w"), indent=2)
             continue
 
-        mem_text = memory_to_text(memory)
-        prompt = build_prompt("Overflow-Underflow",
-                              read_text(sol_path),
-                              mem_text,
-                              overall_score,
-                              last_contract_score,
-                              last_precision,
-                              last_recall,
-                              last_feedback)
+        pred_lines = parse_pred_csv_lines(pred_csv)
+        truth_lines = read_vuln_lines_from_csv(meta_path)
+        prec, rec, *_ = precision_recall(pred_lines, truth_lines)
+        f1x100 = round(100.0 * f1_from_pr(prec, rec), 2)
+        fb = feedback_from_pr(prec, rec, threshold)
+        system_content = f"[prediction] {','.join(str(x) for x in pred_lines)}"
+        analysis_user = f"[analysis] P={prec:.4f} R={rec:.4f} F1*100={f1x100:.2f} ; [feedback_for_next] {fb}"
 
-        # store raw CSV text in memory
-        llm_answer_text = read_text(pred_csv)
-        pred_lines = parse_pred_csv_lines(pred_csv)   # parse for metrics
-        prec, rec, TP, FP, FN = precision_recall(pred_lines, truth_lines)
-        f1 = f1_from_pr(prec, rec)
-        per_score = round(100.0 * f1, 2)
-        # test uses a nominal 0.7 for messaging
-        feedback = feedback_from_pr(prec, rec, threshold=0.7)
+        append_attempt_to_chat(memory_chat, user_prompt,
+                               system_content, analysis_user)
+        json.dump(memory_chat, open(memory_path, "w"), indent=2)
 
-        # Save standardized output CSV
-        out_pred = results_dir / f"buggy_{i}_pred.csv"
+        out_csv = results_dir / f"{sol_path.stem}_pred.csv"
         pd.DataFrame({"predicted_lines": pred_lines}
-                     ).to_csv(out_pred, index=False)
-
-        # Update overall
-        if overall_score is None:
-            overall_sum, overall_count = per_score, 1
-        else:
-            # reconstruct on the fly
-            overall_sum, overall_count = overall_score * len([t for t in memory if t.get("counted", False)]), \
-                len([t for t in memory if t.get("counted", False)])
-            overall_sum += per_score
-            overall_count += 1
-        overall_score = round(overall_sum / overall_count, 2)
-
-        # Log memory
-        memory.append({
-            "contract_id": i,
-            "attempt": 1,
-            "user": prompt,
-            "llm": llm_answer_text,
-            "precision": round(prec, 4),
-            "recall": round(rec, 4),
-            "per_contract_score": per_score,
-            "overall_score": overall_score,
-            "feedback": feedback,
-            "counted": True
-        })
-        json.dump(memory, open(memory_path, "w"), indent=2)
-
-        print(f"[TEST] {sol_path.name} → P={prec:.3f}, R={rec:.3f}, F1*100={per_score:.2f} | overall={overall_score:.2f} (saved {out_pred.name})")
-
-        # next context
-        last_contract_score = per_score
-        last_precision, last_recall = prec, rec
-        last_feedback = feedback
+                     ).to_csv(out_csv, index=False)
+        print(
+            f"[TEST] {sol_path.name} → P={prec:.3f}, R={rec:.3f}, F1*100={f1x100:.2f} (saved {out_csv.name})")
 
 # ---------------- Main ----------------
 
@@ -588,12 +494,14 @@ def main():
     ap.add_argument("--results_root", required=True,
                     help="Where to save final prediction CSVs.")
     ap.add_argument("--memory_root", required=True,
-                    help="Where to save memory JSONs.")
+                    help="Where to save full chat memory JSONs.")
     ap.add_argument("--api_key", required=True, help="LLM API key.")
-    ap.add_argument("--threshold", type=float, default=0.7,  # precision/recall threshold in [0,1]
-                    help="Per-metric threshold applied to both precision and recall.")
-    ap.add_argument("--max_retries", type=int, default=1,
-                    help="Max retries per contract when below threshold (REAL mode).")
+    ap.add_argument("--threshold", type=float, default=0.7,
+                    help="Per-metric threshold in [0,1] applied to both precision and recall.")
+    ap.add_argument("--max_attempts", type=int, default=3,
+                    help="Maximum attempts per contract (first try + retries).")
+    ap.add_argument("--history_turns", type=int, default=HISTORY_TURNS_DEFAULT,
+                    help="How many recent SYSTEM messages to include in the next request.")
     # TEST mode paths
     ap.add_argument("--test_root", default="test/Overflow-Underflow",
                     help="Test folder with 5 contracts + metadata.")
@@ -607,22 +515,29 @@ def main():
     ensure_dir(memory_root)
 
     if args.mode == "test":
+        # Single TEST folder
         process_test_mode(
             test_root=Path(args.test_root),
             test_pred_root=Path(args.test_pred_root),
             results_root=results_root,
-            memory_root=memory_root
+            memory_root=memory_root,
+            history_turns=args.history_turns,
+            threshold=args.threshold
         )
         print("\n✅ TEST mode completed.")
         return
 
-    # REAL mode
+    # REAL mode → create ALL seven label folders up-front (results + memory)
+    ensure_label_dirs(results_root)
+    ensure_label_dirs(memory_root)
+
     if not args.contracts_root:
         raise SystemExit("--contracts_root is required for real mode.")
     contracts_root = Path(args.contracts_root)
 
     for label_key, folder_name in LABEL_FOLDERS.items():
-        print(f"\n=== REAL MODE: Processing Label '{label_key}' ===")
+        print(
+            f"\n=== REAL MODE: Processing Label '{label_key}' → folder '{folder_name}' ===")
         process_label_real(
             label_key=label_key,
             folder_name=folder_name,
@@ -631,7 +546,8 @@ def main():
             memory_root=memory_root,
             api_key=args.api_key,
             threshold=args.threshold,
-            max_retries=args.max_retries
+            max_attempts=args.max_attempts,
+            history_turns=args.history_turns
         )
 
     print("\n✅ REAL mode completed.")
