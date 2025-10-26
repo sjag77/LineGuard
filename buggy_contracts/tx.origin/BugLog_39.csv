@@ -1,12 +1,12 @@
-loc,length,bug type,approach
-56,4,tx.origin,code snippet injection
-30,4,tx.origin,code snippet injection
-93,4,tx.origin,code snippet injection
-75,4,tx.origin,code snippet injection
-52,3,tx.origin,code snippet injection
-40,4,tx.origin,code snippet injection
-62,3,tx.origin,code snippet injection
-23,4,tx.origin,code snippet injection
-19,3,tx.origin,code snippet injection
-14,4,tx.origin,code snippet injection
-8,4,tx.origin,code snippet injection
+line,loc,length,bug type,approach
+57,56,4,tx.origin,code snippet injection
+31,30,4,tx.origin,code snippet injection
+94,93,4,tx.origin,code snippet injection
+76,75,4,tx.origin,code snippet injection
+53,52,3,tx.origin,code snippet injection
+41,40,4,tx.origin,code snippet injection
+63,62,3,tx.origin,code snippet injection
+24,23,4,tx.origin,code snippet injection
+20,19,3,tx.origin,code snippet injection
+15,14,4,tx.origin,code snippet injection
+9,8,4,tx.origin,code snippet injection
