@@ -1,9 +1,17 @@
-loc,length,bug type,approach
-61,13,TOD,code snippet injection
-47,13,TOD,code snippet injection
-144,13,TOD,code snippet injection
-127,13,TOD,code snippet injection
-104,18,TOD,code snippet injection
-83,13,TOD,code snippet injection
-22,18,TOD,code snippet injection
-8,13,TOD,code snippet injection
+line,loc,length,bug type,approach
+66,61,13,TOD,code snippet injection
+72,61,13,TOD,code snippet injection
+52,47,13,TOD,code snippet injection
+58,47,13,TOD,code snippet injection
+149,144,13,TOD,code snippet injection
+155,144,13,TOD,code snippet injection
+132,127,13,TOD,code snippet injection
+138,127,13,TOD,code snippet injection
+111,104,18,TOD,code snippet injection
+119,104,18,TOD,code snippet injection
+88,83,13,TOD,code snippet injection
+94,83,13,TOD,code snippet injection
+29,22,18,TOD,code snippet injection
+37,22,18,TOD,code snippet injection
+13,8,13,TOD,code snippet injection
+19,8,13,TOD,code snippet injection
