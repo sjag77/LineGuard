@@ -1,54 +1,54 @@
-loc,length,bug type,approach
-62,3,Unhandled+AC0-Exceptions,code snippet injection
-66,3,Unhandled+AC0-Exceptions,code snippet injection
-70,8,Unhandled+AC0-Exceptions,code snippet injection
-79,3,Unhandled+AC0-Exceptions,code snippet injection
-83,5,Unhandled+AC0-Exceptions,code snippet injection
-89,3,Unhandled+AC0-Exceptions,code snippet injection
-92,2,Unhandled+AC0-Exceptions,code snippet injection
-95,5,Unhandled+AC0-Exceptions,code snippet injection
-113,3,Unhandled+AC0-Exceptions,code snippet injection
-128,6,Unhandled+AC0-Exceptions,code snippet injection
-139,3,Unhandled+AC0-Exceptions,code snippet injection
-151,2,Unhandled+AC0-Exceptions,code snippet injection
-160,6,Unhandled+AC0-Exceptions,code snippet injection
-184,8,Unhandled+AC0-Exceptions,code snippet injection
-193,3,Unhandled+AC0-Exceptions,code snippet injection
-204,8,Unhandled+AC0-Exceptions,code snippet injection
-213,9,Unhandled+AC0-Exceptions,code snippet injection
-223,3,Unhandled+AC0-Exceptions,code snippet injection
-227,3,Unhandled+AC0-Exceptions,code snippet injection
-231,2,Unhandled+AC0-Exceptions,code snippet injection
-234,9,Unhandled+AC0-Exceptions,code snippet injection
-244,5,Unhandled+AC0-Exceptions,code snippet injection
-250,6,Unhandled+AC0-Exceptions,code snippet injection
-257,5,Unhandled+AC0-Exceptions,code snippet injection
-263,3,Unhandled+AC0-Exceptions,code snippet injection
-267,5,Unhandled+AC0-Exceptions,code snippet injection
-273,3,Unhandled+AC0-Exceptions,code snippet injection
-277,3,Unhandled+AC0-Exceptions,code snippet injection
-282,3,Unhandled+AC0-Exceptions,code snippet injection
-297,1,Unhandled+AC0-Exceptions,weakening security
-312,3,Unhandled+AC0-Exceptions,code snippet injection
-320,1,Unhandled+AC0-Exceptions,weakening security
-322,1,Unhandled+AC0-Exceptions,weakening security
-326,1,Unhandled+AC0-Exceptions,weakening security
-340,5,Unhandled+AC0-Exceptions,code snippet injection
-366,3,Unhandled+AC0-Exceptions,code snippet injection
-401,9,Unhandled+AC0-Exceptions,code snippet injection
-415,9,Unhandled+AC0-Exceptions,code snippet injection
-429,3,Unhandled+AC0-Exceptions,code snippet injection
-436,5,Unhandled+AC0-Exceptions,code snippet injection
-449,9,Unhandled+AC0-Exceptions,code snippet injection
-464,5,Unhandled+AC0-Exceptions,code snippet injection
-473,1,Unhandled+AC0-Exceptions,weakening security
-476,3,Unhandled+AC0-Exceptions,code snippet injection
-487,3,Unhandled+AC0-Exceptions,code snippet injection
-498,8,Unhandled+AC0-Exceptions,code snippet injection
-529,9,Unhandled+AC0-Exceptions,code snippet injection
-553,2,Unhandled+AC0-Exceptions,code snippet injection
-577,3,Unhandled+AC0-Exceptions,code snippet injection
-589,3,Unhandled+AC0-Exceptions,code snippet injection
-605,9,Unhandled+AC0-Exceptions,code snippet injection
-622,9,Unhandled+AC0-Exceptions,code snippet injection
-639,6,Unhandled+AC0-Exceptions,code snippet injection
+line,loc,length,bug type,approach
+63,62,3,Unhandled-Exceptions,code snippet injection
+67,66,3,Unhandled-Exceptions,code snippet injection
+73,70,8,Unhandled-Exceptions,code snippet injection
+80,79,3,Unhandled-Exceptions,code snippet injection
+85,83,5,Unhandled-Exceptions,code snippet injection
+90,89,3,Unhandled-Exceptions,code snippet injection
+93,92,2,Unhandled-Exceptions,code snippet injection
+97,95,5,Unhandled-Exceptions,code snippet injection
+114,113,3,Unhandled-Exceptions,code snippet injection
+132,128,6,Unhandled-Exceptions,code snippet injection
+140,139,3,Unhandled-Exceptions,code snippet injection
+152,151,2,Unhandled-Exceptions,code snippet injection
+164,160,6,Unhandled-Exceptions,code snippet injection
+187,184,8,Unhandled-Exceptions,code snippet injection
+194,193,3,Unhandled-Exceptions,code snippet injection
+207,204,8,Unhandled-Exceptions,code snippet injection
+215,213,9,Unhandled-Exceptions,code snippet injection
+224,223,3,Unhandled-Exceptions,code snippet injection
+228,227,3,Unhandled-Exceptions,code snippet injection
+232,231,2,Unhandled-Exceptions,code snippet injection
+236,234,9,Unhandled-Exceptions,code snippet injection
+246,244,5,Unhandled-Exceptions,code snippet injection
+254,250,6,Unhandled-Exceptions,code snippet injection
+259,257,5,Unhandled-Exceptions,code snippet injection
+264,263,3,Unhandled-Exceptions,code snippet injection
+268,267,5,Unhandled-Exceptions,code snippet injection
+274,273,3,Unhandled-Exceptions,code snippet injection
+278,277,3,Unhandled-Exceptions,code snippet injection
+283,282,3,Unhandled-Exceptions,code snippet injection
+297,297,1,Unhandled-Exceptions,weakening security
+313,312,3,Unhandled-Exceptions,code snippet injection
+320,320,1,Unhandled-Exceptions,weakening security
+322,322,1,Unhandled-Exceptions,weakening security
+326,326,1,Unhandled-Exceptions,weakening security
+342,340,5,Unhandled-Exceptions,code snippet injection
+367,366,3,Unhandled-Exceptions,code snippet injection
+407,401,9,Unhandled-Exceptions,code snippet injection
+421,415,9,Unhandled-Exceptions,code snippet injection
+430,429,3,Unhandled-Exceptions,code snippet injection
+438,436,5,Unhandled-Exceptions,code snippet injection
+451,449,9,Unhandled-Exceptions,code snippet injection
+466,464,5,Unhandled-Exceptions,code snippet injection
+473,473,1,Unhandled-Exceptions,weakening security
+477,476,3,Unhandled-Exceptions,code snippet injection
+488,487,3,Unhandled-Exceptions,code snippet injection
+501,498,8,Unhandled-Exceptions,code snippet injection
+535,529,9,Unhandled-Exceptions,code snippet injection
+554,553,2,Unhandled-Exceptions,code snippet injection
+578,577,3,Unhandled-Exceptions,code snippet injection
+590,589,3,Unhandled-Exceptions,code snippet injection
+611,605,9,Unhandled-Exceptions,code snippet injection
+624,622,9,Unhandled-Exceptions,code snippet injection
+643,639,6,Unhandled-Exceptions,code snippet injection
