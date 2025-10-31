@@ -36,7 +36,7 @@ flowchart LR
     F --> C
     E --> G["Outputs: per-contract CSV + per-label summary"]
 ```
-Repository Structure
+##Repository Structure
 .
 ├─ smartguard_user_feedback_system_predictions_only_vfinal.py   # main pipeline (real/test modes)
 ├─ results/                                                     # generated outputs
@@ -47,7 +47,7 @@ Repository Structure
 ├─ buggy_contracts/                                             # dataset root (7 vulnerability categories)
 │  └─ <Label>/buggy_i.sol + BugLog_i.csv
 └─ test/Overflow-Underflow/                                    # 5-contract demo (test mode)
-Installation
+##Installation
 
 Requires Python 3.9+
 # 1. (Recommended) create a virtual environment
@@ -115,7 +115,7 @@ CLI Reference
 | `--limit_contracts` | Int                                                | 50        | Limit number of contracts per run      |
 | `--all_labels`      | Flag                                               | off       | Process all categories                 |
 
-Results Summary
+##Results Summary
 
 Dataset: 350 contracts × 7 categories
 
@@ -135,7 +135,7 @@ This framework is for academic and research purposes only.
 LLM outputs are not guaranteed to be accurate. Always audit flagged lines manually before deployment.
 Do not upload proprietary or sensitive code to external APIs.
 
-License
+##License
 
-Specify your license (e.g., MIT, Apache-2.0).
+Apache-2.0
 ---
