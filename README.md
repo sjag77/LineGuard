@@ -1,4 +1,4 @@
-### LineGuard: Memory-Aware Line-Level Vulnerability Localization for Solidity
+# LineGuard: Memory-Aware Line-Level Vulnerability Localization for Solidity
 
 > A compact, multi-attempt, feedback-driven LLM framework that **localizes smart-contract vulnerabilities at the line (and block) level** with audit-grade traceability.
 
