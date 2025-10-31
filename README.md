@@ -143,5 +143,6 @@ Do not upload proprietary or sensitive code to external APIs.
 
 ## License
 
-Apache-2.0
+Apache 2.0
+
 ---
