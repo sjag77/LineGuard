@@ -27,14 +27,14 @@ LineGuard is a **closed-loop reasoning pipeline** with five modular components:
 
 ```mermaid
 flowchart LR
-    A[Prompt Initialization] --> B[Semantic Pruning (rank Top-K)]
-    B --> C[Sequential Contract Analysis (build compact prompt)]
-    C --> D[LLM Core (GPT-4o/GPT-5) → predicted lines]
-    D --> E[Evaluation (block/line)]
+    A["Prompt Initialization"] --> B["Semantic Pruning (rank Top-K)"]
+    B --> C["Sequential Contract Analysis (build compact prompt)"]
+    C --> D["LLM Core (GPT-4o/GPT-5) -> predicted lines"]
+    D --> E["Evaluation (block/line)"]
     E -->|select best attempt| C
-    E --> F[Memory-Aware Feedback (summary + one-line rule)]
+    E --> F["Memory-Aware Feedback (summary + one-line rule)"]
     F --> C
-    E --> G[Outputs: per-contract CSV + per-label summary]
+    E --> G["Outputs: per-contract CSV + per-label summary"]
 ```
 Repository Structure
 .
