@@ -1,4 +1,4 @@
-# 🧠 LineGuard: Memory-Aware Line-Level Vulnerability Localization for Solidity
+### LineGuard: Memory-Aware Line-Level Vulnerability Localization for Solidity
 
 > A compact, multi-attempt, feedback-driven LLM framework that **localizes smart-contract vulnerabilities at the line (and block) level** with audit-grade traceability.
 
@@ -35,6 +35,7 @@ flowchart LR
     E --> F[Memory-Aware Feedback (summary + one-line rule)]
     F --> C
     E --> G[Outputs: per-contract CSV + per-label summary]
+```
 Repository Structure
 .
 ├─ smartguard_user_feedback_system_predictions_only_vfinal.py   # main pipeline (real/test modes)
