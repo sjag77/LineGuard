@@ -38,7 +38,7 @@ flowchart LR
 ```
 ---
 
-##Installation
+## Installation
 
 Requires Python 3.9+
 # 1. (Recommended) create a virtual environment
