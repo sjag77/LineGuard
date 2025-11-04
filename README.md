@@ -32,15 +32,15 @@ flowchart LR
 ```
 ---
 
-## Installation
+# Installation
 
 Requires Python 3.9+
-# 1. (Recommended) create a virtual environment
+## 1. (Recommended) create a virtual environment
 python -m venv .venv && source .venv/bin/activate     # Linux/Mac
-# or
+## or
 .\.venv\Scripts\activate                              # Windows PowerShell
 
-# 2. Install dependencies
+## 2. Install dependencies
 pip install pandas openai
 Set your OpenAI API key:
 $env:OPENAI_API_KEY = "<YOUR_KEY>"
@@ -102,7 +102,7 @@ CLI Reference
 
 ---
 
-## Results Summary
+# Results
 
 Dataset: 350 contracts × 7 categories
 
