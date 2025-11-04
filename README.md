@@ -1,4 +1,4 @@
-# LineGuard: LineGuard: An LLM-Based Smart Contract Vulnerability Detection
+# LineGuard: An LLM-Based Smart Contract Vulnerability Detection
 
 > A compact, multi-attempt, feedback-driven LLM framework that **localizes smart-contract vulnerabilities at the line (and block) level** with audit-grade traceability.
 
