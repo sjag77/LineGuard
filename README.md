@@ -38,17 +38,6 @@ flowchart LR
 ```
 ---
 
-## Repository Structure
-.
-├─ smartguard_user_feedback_system_predictions_only_vfinal.py   # main pipeline (real/test modes)
-├─ results/                                                     # generated outputs
-│  ├─ <Label>/*.csv                                            # per-contract predictions & per-label summaries
-│  └─ log/run.log                                              # full logs (Tee)
-├─ memory/                                                      # LLM memory store
-│  └─ <Label>/memory_full.json
-├─ buggy_contracts/                                             # dataset root (7 vulnerability categories)
-│  └─ <Label>/buggy_i.sol + BugLog_i.csv
-└─ test/Overflow-Underflow/                                    # 5-contract demo (test mode)
 ##Installation
 
 Requires Python 3.9+
