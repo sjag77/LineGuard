@@ -1,12 +1,6 @@
 # LineGuard: An LLM-Based Smart Contract Vulnerability Detection
 
-> A compact, multi-attempt, feedback-driven LLM framework that **localizes smart-contract vulnerabilities at the line (and block) level** with audit-grade traceability.
-
----
-
-## LineGuard: An LLM-Based Smart Contract Vulnerability Detection
-
-Smart contracts face sophisticated attacks that cause large financial losses. Traditional static and symbolic analyzers typically operate at function/contract granularity and struggle to pinpoint the exact vulnerable line. **LineGuard** is a hybrid *LLM-in-the-loop* framework that performs **fine-grained line-level localization** by combining:
+This is a compact, multi-attempt, feedback-driven LLM framework that **localizes smart-contract vulnerabilities at the line (and block) level** with audit-grade traceability. Smart contracts face sophisticated attacks that cause large financial losses. Traditional static and symbolic analyzers typically operate at function/contract granularity and struggle to pinpoint the exact vulnerable line. **LineGuard** is a hybrid *LLM-in-the-loop* framework that performs **fine-grained line-level localization** by combining:
 1. **Semantic pruning** of candidate lines  
 2. **Memory-aware smart feedback** for iterative self-correction  
 3. **Deterministic, reproducible evaluation** at both block and line levels  
