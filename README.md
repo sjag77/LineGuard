@@ -123,6 +123,10 @@ LLM outputs are not guaranteed to be accurate. Always audit flagged lines manual
 Do not upload proprietary or sensitive code to external APIs.
 
 ---
+## Conclusion
+
+LineGuard is a memory-aware LLM-based framework that detects and localizes security vulnerabilities in Solidity smart contracts at the line level. The input of our proposed architecture is a line-numbered smart contract. LineGuard includes five components: (1) Prompt Initialization, which loads rules and configurations; (2) Semantic Pruning, which filters code to keep vulnerability-relevant lines; (3) Sequential Contract Analysis, which builds prompts with feedback from previous attempts; (4) LLM Core, which performs inference using GPT-4o/ GPT-5; and (5) Memory-Aware Feedback, which summarizes previous results to improve the next attempt. The output of our architecture is a security report listing detected vulnerabilities with exact line numbers and their types. Our benchmarks for evaluating performance are precision, recall, and F1-score. In our experimental result, LineGuard achieved an average precision of 0.92, recall of 0.72, and an overall F1-score of 0.81 on seven types of vulnerabilities, evaluated on almost 400 benign and buggy smart contracts.
+
 
 ## License
 
