@@ -1,132 +1,204 @@
 # LineGuard: An LLM-Based Smart Contract Vulnerability Detection
 
-This is a compact, multi-attempt, feedback-driven LLM framework that **localizes smart-contract vulnerabilities at the line (and block) level** with audit-grade traceability. Smart contracts face sophisticated attacks that cause large financial losses. Traditional static and symbolic analyzers typically operate at function/contract granularity and struggle to pinpoint the exact vulnerable line. **LineGuard** is a hybrid *LLM-in-the-loop* framework that performs **fine-grained line-level localization** by combining:
-1. **Semantic pruning** of candidate lines  
-2. **Memory-aware smart feedback** for iterative self-correction  
-3. **Deterministic, reproducible evaluation** at both block and line levels  
+LineGuard is a multi-attempt, feedback-driven LLM framework that **localizes smart-contract
+vulnerabilities at the exact line** (and block) of Solidity source code. Traditional static and
+symbolic analyzers usually report at function or contract granularity; LineGuard names the vulnerable
+lines by combining:
 
-On a corpus of **350 Solidity contracts** across seven vulnerability categories, **LineGuard (GPT-5)** reduces **false negatives by up to _85%_**, improves line-level **F1** (e.g., _0.69 → >0.83_ vs. GPT-4o), and sustains **~0.89 average precision** — producing stable, audit-ready reports.
+1. **Semantic pruning** of candidate lines
+2. **Memory-aware feedback** for iterative self-correction across attempts
+3. **Label-free (non-oracle) evaluation**, so reported results use no ground-truth information
+
+On 315 evaluation contracts across seven vulnerability categories, LineGuard with **Claude Sonnet 5**,
+evaluated without any ground-truth assistance, reaches a macro-averaged line-level **F1-score of 0.837**
+and misses **39.6% fewer injected bugs** than an earlier oracle-assisted GPT-4o configuration on the same
+contracts.
 
 ---
 
-## Architecture Overview
+## Architecture
 
-LineGuard is a **closed-loop reasoning pipeline** with five modular components:
+LineGuard is a closed-loop reasoning pipeline with five components:
 
-1. **Prompt Initialization** – Loads label-specific rules and initializes evaluation parameters  
-2. **Semantic Pruning** – Extracts and ranks Top-K candidate lines via lexical and structural heuristics  
-3. **Sequential Contract Analysis** – Builds compact prompts and orchestrates multi-attempt reasoning  
-4. **LLM Core (GPT-4o / GPT-5)** – Performs controlled inference and prediction selection  
-5. **Memory-Aware Feedback** – Summarizes reasoning history, distills a one-line corrective rule, and injects concise guidance into subsequent attempts
+1. **Prompt Initialization**: loads label-specific rules and the run configuration
+2. **Semantic Pruning**: extracts and ranks the Top-K candidate lines with lexical and structural heuristics
+3. **Sequential Contract Analysis**: builds a compact prompt from the candidate snippets and feedback
+4. **LLM Core**: calls the configured model and parses a strict, digits-only list of line numbers
+5. **Memory-Aware Feedback**: summarizes earlier attempts into concise guidance for the next attempt
 
 ```mermaid
 flowchart LR
     A["Prompt Initialization"] --> B["Semantic Pruning (rank Top-K)"]
-    B --> C["Sequential Contract Analysis (build compact prompt)"]
-    C --> D["LLM Core (GPT-4o/GPT-5) -> predicted lines"]
-    D --> E["Evaluation (block/line)"]
-    E -->|select best attempt| C
-    E --> F["Memory-Aware Feedback (summary + one-line rule)"]
+    B --> C["Sequential Contract Analysis (compact prompt)"]
+    C --> D["LLM Core -> predicted lines"]
+    D --> E["Stop / select attempt"]
+    E -->|next attempt| F["Memory-Aware Feedback"]
     F --> C
-    E --> G["Outputs: per-contract CSV + per-label summary"]
+    E --> G["Per-contract result + per-label summary"]
 ```
+
+### Oracle and non-oracle modes
+
+* **Oracle mode** (`--oracle on`): feedback, early stopping and attempt selection use scores computed
+  from the ground truth. This is an upper bound and is not available when auditing unlabelled code.
+* **Non-oracle mode** (`--oracle off`): feedback comes from agreement between the model's own attempts
+  and fixed per-label heuristics, the reported attempt is chosen by that agreement, and iteration stops
+  when predictions converge. The ground truth is used only afterwards, to score the result.
+
+### Evaluation protocol used for the reported results
+
+Applied identically to every category (`--warmup_contracts 5 --oracle off`):
+
+* **Warm-up**: contracts 1 to 5 run in oracle mode only to fill the feedback memory. They are excluded
+  from every reported metric.
+* **Evaluation**: contracts 6 to 50 run in non-oracle mode. No score derived from the ground truth is
+  written to memory during this phase. All reported numbers use these 45 contracts per category.
+
 ---
 
-# Installation
+## Installation
 
-Requires Python 3.9+
-## 1. (Recommended) create a virtual environment
-python -m venv .venv && source .venv/bin/activate     # Linux/Mac
-## or
-.\.venv\Scripts\activate                              # Windows PowerShell
+Requires Python 3.9 or later.
 
-## 2. Install dependencies
-pip install pandas openai
-Set your OpenAI API key:
-$env:OPENAI_API_KEY = "<YOUR_KEY>"
-Model selection: Edit BASE_MODEL in the script ("gpt-5" or "gpt-4o")
-Quickstart
-Test Mode (5-contract demo)
-python smartguard_user_feedback_system_predictions_only_vfinal.py \
-  --mode test \
-  --results_root ./results \
-  --memory_root ./memory \
-  --api_key $OPENAI_API_KEY
-Real Mode (single label)
-python smartguard_user_feedback_system_predictions_only_vfinal.py \
-  --mode real \
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install pandas anthropic openai
+```
+
+Choose a model backend:
+
+| Provider | Flag | Authentication |
+| --- | --- | --- |
+| Claude Code CLI (used for the reported results) | `--provider claude_cli` | Install the CLI and run `claude auth login` |
+| Anthropic API | `--provider anthropic` | `ANTHROPIC_API_KEY`, or a profile from `ant auth login` |
+| OpenAI API | `--provider openai` | `--api_key` |
+| OpenRouter, Gemini, Groq | `--provider openrouter` / `gemini` / `groq` | `--api_key` |
+
+---
+
+## Quickstart
+
+### Reproduce the reported evaluation, one label at a time
+
+```bash
+scripts/run_all_labels.sh 1
+```
+
+Label indexes: 1 Re-entrancy, 2 Timestamp-Dependency, 3 Unchecked-Send, 4 Unhandled-Exceptions,
+5 TOD, 6 Overflow-Underflow, 7 tx.origin. The script writes to `results_sonnet_v2/` and
+`memory_sonnet_v2/`. It is safe to rerun: completed contracts are skipped, and if a usage limit is
+reached the run stops cleanly (exit code 75) and resumes from the first unfinished contract.
+
+### Run `main.py` directly
+
+```bash
+python3 main.py --mode real --provider claude_cli --model claude-sonnet-5 \
   --contracts_root ./buggy_contracts \
-  --results_root ./results \
-  --memory_root ./memory \
-  --api_key $OPENAI_API_KEY \
-  --threshold 0.7 --max_attempts 3 --history_turns 4 \
-  --condense_window 5 --topk_candidates 40 \
-  --block_dilation 1 --block_eval dilated \
-  --line_tolerance 0 --early_stop block \
-  --smart_feedback llm --fb_history_k 12 --fb_max_chars 600 \
-  --fb_rule_chars 180 --mem_max_msgs 120 --mem_keep_recent 24 --distill_every 10 \
-  --label_index 3 --limit_contracts 50
-Real Mode (all labels)
-python smartguard_user_feedback_system_predictions_only_vfinal.py \
-  --mode real --all_labels \
-  --contracts_root ./buggy_contracts \
-  --results_root ./results \
-  --memory_root ./memory \
-  --api_key $OPENAI_API_KEY
-CLI Reference
-| Argument            | Type / Range                                       | Default   | Description                            |
-| ------------------- | -------------------------------------------------- | --------- | -------------------------------------- |
-| `--mode`            | `real` / `test`                                    | `real`    | Full run or demo                       |
-| `--contracts_root`  | Path                                               | —         | Root with labeled contract folders     |
-| `--results_root`    | Path                                               | —         | Output directory for results           |
-| `--memory_root`     | Path                                               | —         | Memory JSON output path                |
-| `--api_key`         | String                                             | —         | OpenAI API key                         |
-| `--threshold`       | Float [0–1]                                        | 0.7       | Early-stop precision/recall threshold  |
-| `--max_attempts`    | Int                                                | 3         | Max prediction attempts per contract   |
-| `--history_turns`   | Int                                                | 4         | Number of previous messages to include |
-| `--condense_window` | Int                                                | 5         | Snippet radius for compact prompts     |
-| `--topk_candidates` | Int                                                | 40        | Max candidate lines                    |
-| `--block_eval`      | `hit` / `dilated` / `overlap`                      | `dilated` | Block-level eval mode                  |
-| `--line_tolerance`  | Int                                                | 0         | ± tolerance for line-level matching    |
-| `--early_stop`      | `block` / `line` / `any` / `perfect_line` / `both` | `block`   | Early stopping policy                  |
-| `--smart_feedback`  | `off` / `local` / `llm`                            | `llm`     | Feedback generation strategy           |
-| `--fb_history_k`    | Int                                                | 12        | How many feedbacks to summarize        |
-| `--fb_max_chars`    | Int                                                | 600       | Char limit for feedback summary        |
-| `--fb_rule_chars`   | Int                                                | 180       | Max chars for one-line rule            |
-| `--mem_max_msgs`    | Int                                                | 120       | Prune memory beyond this size          |
-| `--mem_keep_recent` | Int                                                | 24        | Keep recent N messages after pruning   |
-| `--distill_every`   | Int                                                | 10        | Distill cadence (per label)            |
-| `--label_index`     | Int [1–7]                                          | —         | Select one vulnerability label         |
-| `--limit_contracts` | Int                                                | 50        | Limit number of contracts per run      |
-| `--all_labels`      | Flag                                               | off       | Process all categories                 |
+  --results_root ./results --memory_root ./memory \
+  --label_index 1 --limit_contracts 50 \
+  --warmup_contracts 5 --oracle off --resume \
+  --threshold 0.7 --max_attempts 3 --early_stop block \
+  --topk_candidates 40 --condense_window 5 \
+  --block_eval dilated --block_dilation 1 --line_tolerance 0 \
+  --smart_feedback llm
+```
+
+### Recount the analysis-tool baselines
+
+```bash
+git clone --depth 1 https://github.com/DependableSystemsLab/SolidiFI-benchmark
+python3 scripts/baseline_fn.py SolidiFI-benchmark/results reports/baseline_fn_6_50.json 6 50
+```
+
+This recomputes the missed bugs of Oyente, Securify, Mythril, SmartCheck, Manticore and Slither on
+any contract range from the tool reports published by SolidiFI. On all 50 contracts it reproduces 17 of
+the 26 published totals exactly and the remaining nine within 2.7%.
 
 ---
 
-# Results
+## CLI reference
 
-Dataset: 350 contracts × 7 categories
+| Argument | Values | Default | Description |
+| --- | --- | --- | --- |
+| `--mode` | `real` / `test` | `real` | Full run or 5-contract demo |
+| `--contracts_root` | path | | Root of the labeled contract folders |
+| `--results_root` | path | | Output directory for results and logs |
+| `--memory_root` | path | | Output directory for feedback memory |
+| `--provider` | `openai` / `anthropic` / `claude_cli` / `gemini` / `groq` / `openrouter` | `openai` | Model backend |
+| `--model` | model id | per provider | For example `claude-sonnet-5` or `gpt-4o` |
+| `--api_key` | string | | Required for OpenAI-compatible providers |
+| `--oracle` | `on` / `off` | `on` | Use ground truth for feedback, stopping and selection |
+| `--warmup_contracts` | int | 0 | First N contracts per label run in oracle mode and are excluded from metrics |
+| `--resume` | flag | off | Skip contracts that already have a saved result |
+| `--label_index` | 1 to 7 | prompt | Vulnerability label to process |
+| `--limit_contracts` | int | 50 | Contracts per label |
+| `--all_labels` | flag | off | Process all labels in one run |
+| `--threshold` | float 0 to 1 | 0.7 | Early-stop precision/recall threshold (oracle mode) |
+| `--max_attempts` | int | 3 | Maximum attempts per contract |
+| `--early_stop` | `block` / `line` / `any` / `perfect_line` / `both` | `block` | Early-stopping policy (oracle mode) |
+| `--topk_candidates` | int | 40 | Candidate lines kept after pruning |
+| `--condense_window` | int | 5 | Snippet radius around each candidate |
+| `--block_eval` | `hit` / `dilated` / `overlap` | `dilated` | Block-level scoring mode |
+| `--block_dilation` | int | 1 | Dilation width for `dilated` block scoring |
+| `--line_tolerance` | int | 0 | Tolerance for line-level matching |
+| `--smart_feedback` | `off` / `local` / `llm` | `llm` | Feedback-rule generation |
+| `--history_turns` | int | 4 | Previous predictions included per attempt |
+| `--fb_history_k` | int | 12 | Recent feedback entries summarized |
+| `--fb_max_chars` / `--fb_rule_chars` | int | 600 / 180 | Feedback length limits |
+| `--mem_max_msgs` / `--mem_keep_recent` / `--distill_every` | int | 120 / 24 / 10 | Memory pruning controls |
+| `--ablation` | `full` / `single_shot` / `pruning_only` / `feedback_only` | `full` | Component ablation presets |
+| `--use_pruning` / `--use_feedback` | `on` / `off` | preset | Override individual components |
+| `--num_runs` / `--seed` | int | 1 / none | Repeated runs with isolated state; seed where supported |
 
-LineGuard (GPT-5) achieved:
-
-85% reduction in false negatives vs. static tools (Oyente, Mythril, Securify, etc.)
-
-F1 improvement: 0.69 → 0.83+
-
-Average precision: ≈0.92%
-
-Stable performance across execution-sensitive vulnerabilities (Re-entrancy, TOD)
-
-Ethical & Security Disclaimer
-
-This framework is for academic and research purposes only.
-LLM outputs are not guaranteed to be accurate. Always audit flagged lines manually before deployment.
-Do not upload proprietary or sensitive code to external APIs.
+Every model call is logged per label in `<label>_usage.csv` with provider, resolved model id, prompt and
+completion tokens, latency and estimated cost.
 
 ---
-## Conclusion
 
-LineGuard is a memory-aware LLM-based framework that detects and localizes security vulnerabilities in Solidity smart contracts at the line level. The input of our proposed architecture is a line-numbered smart contract. LineGuard includes five components: (1) Prompt Initialization, which loads rules and configurations; (2) Semantic Pruning, which filters code to keep vulnerability-relevant lines; (3) Sequential Contract Analysis, which builds prompts with feedback from previous attempts; (4) LLM Core, which performs inference using GPT-4o/ GPT-5; and (5) Memory-Aware Feedback, which summarizes previous results to improve the next attempt. The output of our architecture is a security report listing detected vulnerabilities with exact line numbers and their types. Our benchmarks for evaluating performance are precision, recall, and F1-score. In our experimental result, LineGuard achieved an average precision of 0.92, recall of 0.72, and an overall F1-score of 0.81 on seven types of vulnerabilities, evaluated on almost 400 benign and buggy smart contracts.
+## Results
 
+Claude Sonnet 5 through the Claude Code CLI, non-oracle mode, 45 evaluation contracts per category.
+GPT-4o results come from an earlier oracle-mode run of the same framework, re-scored on the same
+contracts against the corrected annotations, so that reference is favourable to GPT-4o.
+Line-level metrics are macro averages over contracts.
+
+| Category | Line precision | Line recall | Line F1 | GPT-4o line F1 (oracle) | Missed bugs, Sonnet 5 | Missed bugs, GPT-4o | Strongest tool (missed) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Re-entrancy | 0.700 | 0.901 | **0.779** | 0.728 | 156 / 1235 | 451 / 1235 | Slither (0) |
+| Timestamp-Dependency | 0.970 | 0.758 | **0.845** | 0.751 | 51 / 1272 | 142 / 1272 | Slither (490) |
+| Unchecked-Send | 0.955 | 0.991 | 0.972 | **0.986** | 9 / 1154 | 15 / 1154 | Mythril (321) |
+| Unhandled-Exceptions | 0.929 | 0.937 | **0.931** | 0.825 | 112 / 1265 | 349 / 1265 | Slither (422) |
+| TOD | 0.698 | 0.453 | **0.547** | 0.522 | 403 / 1227 | 441 / 1227 | Securify (263) |
+| Overflow-Underflow | 0.930 | 0.832 | **0.862** | 0.791 | 361 / 1223 | 465 / 1223 | Oyente (814) |
+| tx.origin | 0.920 | 0.921 | **0.921** | 0.918 | 92 / 1228 | 97 / 1228 | Slither (0) |
+| **Macro average** | **0.872** | **0.828** | **0.837** | 0.789 | **1184 / 8604** | 1960 / 8604 | |
+
+* LineGuard misses fewer injected bugs than every supported analysis tool in four categories.
+  Slither is stronger on Re-entrancy and tx.origin, and Securify on TOD.
+* Cost on the 315 evaluation contracts: 696 model calls (2.21 per contract), 5.50 million tokens,
+  13.1 seconds and USD 0.071 per contract at list prices.
+* Stability: agreement between consecutive attempts averages 0.953 across categories, and 79.0% of
+  contracts converged before the third attempt. Each configuration was run once, so run-to-run
+  variance was not measured.
+
+Full analysis data and reports are in `reports/`; per-contract predictions, usage and logs are in
+`results_sonnet_v2/`.
+
+---
+
+## Repository layout
+
+| Path | Contents |
+| --- | --- |
+| `main.py` | LineGuard pipeline |
+| `buggy_contracts/` | Dataset: 350 contracts with line-level annotations and the SHA-256 manifest |
+| `scripts/run_all_labels.sh` | Runs one label with the reported evaluation protocol |
+| `scripts/baseline_fn.py` | Recounts analysis-tool false negatives from SolidiFI reports |
+| `scripts/compare_sonnet_gpt4o.py` | Per-contract comparison with the GPT-4o run |
+| `results_sonnet_v2/`, `memory_sonnet_v2/` | Outputs of the reported Claude Sonnet 5 runs |
+| `reports/` | Analysis JSON and comparison reports |
+
+---
 
 ## Dataset provenance and integrity
 
@@ -140,6 +212,9 @@ with its annotation `BugLog_{i}.csv`.
   auditing for this work.
 * **Line numbering.** 1-based (the first line of a file is line 1). Blank and comment-only lines are
   counted in the numbering; they are simply ignored by the candidate-extraction heuristics.
+* **Corrections.** Before the reported experiments all 350 annotation files were checked
+  programmatically, and six were corrected: two headers missing the `line` column, one row missing its
+  line value, and three line values outside their injected span.
 * **Integrity.** `buggy_contracts/SHA256SUMS.txt` lists the SHA-256 digest of all 700 dataset files.
   Verify a copy with:
 
@@ -148,11 +223,17 @@ with its annotation `BugLog_{i}.csv`.
   ```
 
   The manifest itself has SHA-256
-  `e49672d27f3f875a303e96ad3a74ea017c066ee3d0548c4703b061b0fa178837`.
+  `8752bb31190694557a356ef9269030f7ed64e598774c22f31fffb0b1720e5255`.
+
+---
+
+## Disclaimer
+
+This framework is for academic and research purposes only. LLM outputs are not guaranteed to be
+accurate; always audit flagged lines manually. Do not send proprietary or sensitive code to external
+model APIs without authorization.
 
 ## License
 
-Apache License 2.0 — see [LICENSE](LICENSE). This covers both the source code and the
-line-level annotations released in `buggy_contracts/`.
-
----
+Apache License 2.0; see [LICENSE](LICENSE). This covers both the source code and the line-level
+annotations released in `buggy_contracts/`.
