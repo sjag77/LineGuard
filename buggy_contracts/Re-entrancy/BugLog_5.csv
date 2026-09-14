@@ -1,5 +1,5 @@
 line,loc,length,bug type,approach
-380,9,Re-erntrancy,code snippet injection
+383,380,9,Re-erntrancy,code snippet injection
 162,158,7,Re-erntrancy,code snippet injection
 150,147,8,Re-erntrancy,code snippet injection
 138,134,10,Re-erntrancy,code snippet injection

@@ -1,4 +1,4 @@
-loc,length,bug type,approach
+line,loc,length,bug type,approach
 173,170,9,Re-erntrancy,code snippet injection
 165,161,7,Re-erntrancy,code snippet injection
 154,151,8,Re-erntrancy,code snippet injection
