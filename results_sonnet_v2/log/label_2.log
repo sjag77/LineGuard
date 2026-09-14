@@ -1,0 +1,554 @@
+/Users/sj_ag77/LineGuard/main.py:2: SyntaxWarning: invalid escape sequence '\m'
+  """
+
+=== REAL MODE: Processing Label 'Timestamp dep' → folder 'Timestamp-Dependency' [provider=claude_cli model=claude-sonnet-5 oracle=False ablation=full] ===
+[INFO] Loaded memory chat for Timestamp dep (1 messages).
+
+[REAL::Timestamp-Dependency] buggy_1.sol | Attempt 1
+   SYSTEM → [prediction] 24,36,37,38,51,63,64,65,75,79,81,89,95,107,112,118,119,120,135,148,164,170,177,182
+   EVAL   → [BLOCK/dilated] P=0.847, R=0.658, F1*100=74.07, HitRate*100=84.75 | [LINE±0] P=1.000, R=0.800, F1*100=88.89, Acc*100=96.72
+
+[REAL::Timestamp-Dependency] buggy_1.sol | Attempt 2
+   SYSTEM → [prediction] 24,36,37,38,51,63,64,65,75,79,81,89,95,107,112,118,119,120,135,148,164,170,177,182
+   EVAL   → [BLOCK/dilated] P=0.847, R=0.658, F1*100=74.07, HitRate*100=84.75 | [LINE±0] P=1.000, R=0.800, F1*100=88.89, Acc*100=96.72
+
+[REAL::Timestamp-Dependency] buggy_1.sol | Attempt 3
+   SYSTEM → [prediction] 24,36,37,38,51,63,64,65,75,79,81,89,95,107,112,118,119,120,135,148,164,170,177,182
+   EVAL   → [BLOCK/dilated] P=0.847, R=0.658, F1*100=74.07, HitRate*100=84.75 | [LINE±0] P=1.000, R=0.800, F1*100=88.89, Acc*100=96.72
+   FINAL → [BLOCK/dilated] P=0.847, R=0.658, F1*100=74.07 (saved buggy_1_pred.csv) | Selected Attempt = 1
+
+[REAL::Timestamp-Dependency] buggy_2.sol | Attempt 2
+   SYSTEM → [prediction] 8,10,12,17,23,24,25,32,38,44,49,55,56,57,66,94,95,96,123,153,154,155,168,179,194,204,213,219
+   EVAL   → [BLOCK/dilated] P=0.879, R=0.652, F1*100=74.84, HitRate*100=87.88 | [LINE±0] P=1.000, R=0.824, F1*100=90.32, Acc*100=97.27
+
+[REAL::Timestamp-Dependency] buggy_2.sol | Attempt 1
+   SYSTEM → [prediction] 17,23,24,25,32,38,44,49,55,56,57,66,94,95,96,123,153,154,155,168,179,194,204,213,219
+   EVAL   → [BLOCK/dilated] P=0.932, R=0.618, F1*100=74.32, HitRate*100=93.22 | [LINE±0] P=1.000, R=0.735, F1*100=84.75, Acc*100=95.91
+
+[REAL::Timestamp-Dependency] buggy_2.sol | Attempt 3
+   SYSTEM → [prediction] 17,23,24,25,38,44,49,55,56,57,66,94,95,96,123,153,154,155,168,179,194,204,213,219
+   EVAL   → [BLOCK/dilated] P=0.929, R=0.584, F1*100=71.72, HitRate*100=92.86 | [LINE±0] P=1.000, R=0.706, F1*100=82.76, Acc*100=95.45
+   FINAL → [BLOCK/dilated] P=0.879, R=0.652, F1*100=74.84 (saved buggy_2_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_3.sol | Attempt 1
+   SYSTEM → [prediction] 8,10,12,18,19,20,27,33,34,35,42,48,55,60,68,69,70,98,125,126,127,157,171,172,173,185,193,208,218,227,233
+   EVAL   → [BLOCK/dilated] P=0.887, R=0.643, F1*100=74.56, HitRate*100=88.73 | [LINE±0] P=1.000, R=0.838, F1*100=91.18, Acc*100=97.44
+
+[REAL::Timestamp-Dependency] buggy_3.sol | Attempt 2
+   SYSTEM → [prediction] 8,10,12,18,19,20,27,33,34,35,42,48,55,60,68,69,70,98,125,126,127,157,171,172,173,185,193,208,218,227,233
+   EVAL   → [BLOCK/dilated] P=0.887, R=0.643, F1*100=74.56, HitRate*100=88.73 | [LINE±0] P=1.000, R=0.838, F1*100=91.18, Acc*100=97.44
+
+[REAL::Timestamp-Dependency] buggy_3.sol | Attempt 3
+   SYSTEM → [prediction] 8,10,12,18,19,20,27,33,34,35,42,48,55,60,68,69,70,98,125,126,127,157,171,172,173,185,193,208,218,227,233
+   EVAL   → [BLOCK/dilated] P=0.887, R=0.643, F1*100=74.56, HitRate*100=88.73 | [LINE±0] P=1.000, R=0.838, F1*100=91.18, Acc*100=97.44
+   FINAL → [BLOCK/dilated] P=0.887, R=0.643, F1*100=74.56 (saved buggy_3_pred.csv) | Selected Attempt = 1
+
+[REAL::Timestamp-Dependency] buggy_4.sol | Attempt 1
+   SYSTEM → [prediction] 32,33,34,41,47,54,59,65,66,67,75,82,83,84,92,99,100,101,107,112,121,146,154,160,170,172,174,176,185,196,205
+   EVAL   → [BLOCK/dilated] P=0.743, R=0.647, F1*100=69.18, HitRate*100=74.32 | [LINE±0] P=0.871, R=0.818, F1*100=84.38, Acc*100=95.15
+
+[REAL::Timestamp-Dependency] buggy_4.sol | Attempt 2
+   SYSTEM → [prediction] 32,33,34,41,47,54,59,65,66,67,75,82,83,84,92,99,100,101,107,112,121,146,154,160,170,172,174,176,185,196,205
+   EVAL   → [BLOCK/dilated] P=0.743, R=0.647, F1*100=69.18, HitRate*100=74.32 | [LINE±0] P=0.871, R=0.818, F1*100=84.38, Acc*100=95.15
+
+[REAL::Timestamp-Dependency] buggy_4.sol | Attempt 3
+   SYSTEM → [prediction] 32,33,34,41,47,54,59,65,66,67,75,82,83,84,92,99,100,101,107,112,121,146,154,160,170,172,174,176,185,196,205
+   EVAL   → [BLOCK/dilated] P=0.743, R=0.647, F1*100=69.18, HitRate*100=74.32 | [LINE±0] P=0.871, R=0.818, F1*100=84.38, Acc*100=95.15
+   FINAL → [BLOCK/dilated] P=0.743, R=0.647, F1*100=69.18 (saved buggy_4_pred.csv) | Selected Attempt = 1
+
+[REAL::Timestamp-Dependency] buggy_5.sol | Attempt 1
+   SYSTEM → [prediction] 9,13,27,28,29,53,62,63,66,70,76,77,83,87,92,96,100,121,122,123,150,151,168,169,189,208,232,233,234,258,259,271,272,277,284,285,286,293,305,306,325,326,342,356,368,369,379,380,392
+   EVAL   → [BLOCK/dilated] P=0.901, R=0.714, F1*100=79.68, HitRate*100=90.09 | [LINE±0] P=0.980, R=0.941, F1*100=96.00, Acc*100=98.98
+   FINAL → [BLOCK/dilated] P=0.901, R=0.714, F1*100=79.68 (saved buggy_5_pred.csv) | Selected Attempt = 1
+
+[REAL::Timestamp-Dependency] buggy_6.sol | Attempt 2
+   SYSTEM → [prediction] 11,15,19,25,30,33,35,47,55,64,92,102,103,104,116,117,118,129,139,140,141,152,162,174,185,196,197,198,210,219,224,226,228,238,239,240,251,267,286,299
+   EVAL   → [BLOCK/dilated] P=0.928, R=0.657, F1*100=76.92, HitRate*100=92.78 | [LINE±0] P=1.000, R=0.800, F1*100=88.89, Acc*100=96.69
+
+[REAL::Timestamp-Dependency] buggy_6.sol | Attempt 1
+   SYSTEM → [prediction] 11,15,19,25,30,33,35,47,55,64,92,102,103,104,116,117,118,129,139,140,141,152,162,174,185,196,197,198,210,219,224,226,228,238,239,240,251,267,286,299
+   EVAL   → [BLOCK/dilated] P=0.928, R=0.657, F1*100=76.92, HitRate*100=92.78 | [LINE±0] P=1.000, R=0.800, F1*100=88.89, Acc*100=96.69
+   FINAL → [BLOCK/dilated] P=0.928, R=0.657, F1*100=76.92 (saved buggy_6_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_7.sol | Attempt 2
+   SYSTEM → [prediction] 10,15,19,25,30,33,35,47,55,64,92,102,103,104,116,117,118,129,139,140,141,152,162,174,185,196,197,198,210,218,223,228,230,232,242,243,255,272,292,306
+   EVAL   → [BLOCK/dilated] P=0.929, R=0.657, F1*100=76.99, HitRate*100=92.93 | [LINE±0] P=1.000, R=0.784, F1*100=87.91, Acc*100=96.44
+
+[REAL::Timestamp-Dependency] buggy_7.sol | Attempt 1
+   SYSTEM → [prediction] 10,15,19,25,30,33,35,47,55,64,92,102,103,104,116,117,118,129,139,140,141,152,162,174,185,196,197,198,210,218,223,228,230,232,242,243,255,272,292,306
+   EVAL   → [BLOCK/dilated] P=0.929, R=0.657, F1*100=76.99, HitRate*100=92.93 | [LINE±0] P=1.000, R=0.784, F1*100=87.91, Acc*100=96.44
+   FINAL → [BLOCK/dilated] P=0.929, R=0.657, F1*100=76.99 (saved buggy_7_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_8.sol | Attempt 1
+   SYSTEM → [prediction] 9,13,27,28,29,53,62,63,66,70,76,83,87,92,96,100,121,122,123,150,168,189,208,232,233,234,258,271,277,284,285,286,293,305,306,325,342,356,368,379,392
+   EVAL   → [BLOCK/dilated] P=0.893, R=0.657, F1*100=75.72, HitRate*100=89.32 | [LINE±0] P=0.976, R=0.784, F1*100=86.96, Acc*100=96.95
+
+[REAL::Timestamp-Dependency] buggy_8.sol | Attempt 2
+   SYSTEM → [prediction] 9,13,27,28,29,53,62,63,66,70,76,77,83,87,92,96,100,121,122,123,150,151,168,169,189,208,232,233,234,258,259,271,272,277,284,285,286,293,305,306,325,326,342,356,368,369,379,380,392
+   EVAL   → [BLOCK/dilated] P=0.901, R=0.714, F1*100=79.68, HitRate*100=90.09 | [LINE±0] P=0.980, R=0.941, F1*100=96.00, Acc*100=98.98
+
+[REAL::Timestamp-Dependency] buggy_8.sol | Attempt 3
+   SYSTEM → [prediction] 9,13,27,28,29,53,62,66,70,76,83,87,92,96,100,121,122,123,150,168,189,208,232,233,234,258,271,277,284,285,286,293,305,306,325,342,356,368,379,392
+   EVAL   → [BLOCK/dilated] P=0.902, R=0.657, F1*100=76.03, HitRate*100=90.20 | [LINE±0] P=1.000, R=0.784, F1*100=87.91, Acc*100=97.21
+   FINAL → [BLOCK/dilated] P=0.893, R=0.657, F1*100=75.72 (saved buggy_8_pred.csv) | Selected Attempt = 1
+
+[REAL::Timestamp-Dependency] buggy_9.sol | Attempt 2
+   SYSTEM → [prediction] 56,65,73,81,86,92,99,100,101,109,110,111,120,126,127,128,135,139,143,153,180,192,205,220,221,222,238,258,259,260,280,300,301,302,321,341,360,373
+   EVAL   → [BLOCK/dilated] P=0.889, R=0.656, F1*100=75.47, HitRate*100=88.89 | [LINE±0] P=1.000, R=0.844, F1*100=91.57, Acc*100=98.13
+
+[REAL::Timestamp-Dependency] buggy_9.sol | Attempt 1
+   SYSTEM → [prediction] 56,65,73,81,86,92,99,100,101,109,110,111,120,126,127,128,135,139,143,153,180,192,205,220,221,222,238,258,259,260,280,300,301,302,321,341,360,373
+   EVAL   → [BLOCK/dilated] P=0.889, R=0.656, F1*100=75.47, HitRate*100=88.89 | [LINE±0] P=1.000, R=0.844, F1*100=91.57, Acc*100=98.13
+   FINAL → [BLOCK/dilated] P=0.889, R=0.656, F1*100=75.47 (saved buggy_9_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_10.sol | Attempt 3
+   SYSTEM → [prediction] 9,14,15,23,25,27,39,40,51,58,63
+   EVAL   → [BLOCK/dilated] P=0.704, R=0.905, F1*100=79.17, HitRate*100=70.37 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+
+[REAL::Timestamp-Dependency] buggy_10.sol | Attempt 1
+   SYSTEM → [prediction] 9,14,15,39
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.476, F1*100=64.52, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.364, F1*100=53.33, Acc*100=89.06
+
+[REAL::Timestamp-Dependency] buggy_10.sol | Attempt 2
+   SYSTEM → [prediction] 9,14,15,23,25,27,39,40,51,58,63
+   EVAL   → [BLOCK/dilated] P=0.704, R=0.905, F1*100=79.17, HitRate*100=70.37 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+   FINAL → [BLOCK/dilated] P=0.704, R=0.905, F1*100=79.17 (saved buggy_10_pred.csv) | Selected Attempt = 3
+[INFO] Memory distilled/pruned for label 'Timestamp-Dependency'. Kept 26 messages.
+
+[REAL::Timestamp-Dependency] buggy_11.sol | Attempt 3
+   SYSTEM → [prediction] 31,37,43,44,45,53,54,55,62,68,69,70,75,77,86,95,100,104,112,120,127,137,147,151,155,160,167,171,191,192,193,207,222,242,264,288,301,319,331,341
+   EVAL   → [BLOCK/dilated] P=0.913, R=0.648, F1*100=75.81, HitRate*100=91.26 | [LINE±0] P=1.000, R=0.755, F1*100=86.02, Acc*100=96.20
+
+[REAL::Timestamp-Dependency] buggy_11.sol | Attempt 1
+   SYSTEM → [prediction] 32,37,43,45,53,55,62,68,70,99,127,137,147,151,155,166,170,191,193,222,264,287,331
+   EVAL   → [BLOCK/dilated] P=0.938, R=0.421, F1*100=58.10, HitRate*100=93.85 | [LINE±0] P=0.826, R=0.358, F1*100=50.00, Acc*100=88.89
+
+[REAL::Timestamp-Dependency] buggy_11.sol | Attempt 2
+   SYSTEM → [prediction] 31,37,43,44,45,53,54,55,62,68,69,70,75,77,86,95,100,104,112,120,127,137,147,151,155,160,167,171,191,192,193,207,222,242,264,288,301,319,331,341
+   EVAL   → [BLOCK/dilated] P=0.913, R=0.648, F1*100=75.81, HitRate*100=91.26 | [LINE±0] P=1.000, R=0.755, F1*100=86.02, Acc*100=96.20
+   FINAL → [BLOCK/dilated] P=0.913, R=0.648, F1*100=75.81 (saved buggy_11_pred.csv) | Selected Attempt = 3
+
+[REAL::Timestamp-Dependency] buggy_12.sol | Attempt 2
+   SYSTEM → [prediction] 100,105,110,114,118,123,126,128,136,143,148,154,156,167,200,201,237,248,261,277,287,294,298,303,312,320,334,345,355,363,373,385,396,407,417,428,439,446,455,466
+   EVAL   → [BLOCK/dilated] P=0.922, R=0.591, F1*100=72.05, HitRate*100=92.24 | [LINE±0] P=0.950, R=0.585, F1*100=72.38, Acc*100=93.80
+
+[REAL::Timestamp-Dependency] buggy_12.sol | Attempt 1
+   SYSTEM → [prediction] 100,105,110,114,118,123,126,128,136,143,148,154,156,167,200,201,237,248,261,277,287,294,298,303,312,320,334,345,355,363,373,385,396,407,417,428,439,446,455,466
+   EVAL   → [BLOCK/dilated] P=0.922, R=0.591, F1*100=72.05, HitRate*100=92.24 | [LINE±0] P=0.950, R=0.585, F1*100=72.38, Acc*100=93.80
+   FINAL → [BLOCK/dilated] P=0.922, R=0.591, F1*100=72.05 (saved buggy_12_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_13.sol | Attempt 2
+   SYSTEM → [prediction] 15,21,26,33,34,35,44,51,52,53,60,64,68,88,115,116,117,135,155,175,198,215,234
+   EVAL   → [BLOCK/dilated] P=0.825, R=0.662, F1*100=73.44, HitRate*100=82.46 | [LINE±0] P=1.000, R=0.821, F1*100=90.20, Acc*100=97.87
+
+[REAL::Timestamp-Dependency] buggy_13.sol | Attempt 1
+   SYSTEM → [prediction] 15,16,21,26,33,34,35,44,51,52,53,60,64,68,88,115,116,117,135,155,175,198,215,234
+   EVAL   → [BLOCK/dilated] P=0.828, R=0.676, F1*100=74.42, HitRate*100=82.76 | [LINE±0] P=1.000, R=0.857, F1*100=92.31, Acc*100=98.30
+   FINAL → [BLOCK/dilated] P=0.825, R=0.662, F1*100=73.44 (saved buggy_13_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_14.sol | Attempt 2
+   SYSTEM → [prediction] 75,76,77,85,86,87,97,103,104,105,117,125,135,136,137,149,160,161,162,172,182,183,184,196,209,222,234,243,253,261,269,277,283,295
+   EVAL   → [BLOCK/dilated] P=0.872, R=0.636, F1*100=73.51, HitRate*100=87.18 | [LINE±0] P=1.000, R=0.850, F1*100=91.89, Acc*100=97.97
+
+[REAL::Timestamp-Dependency] buggy_14.sol | Attempt 1
+   SYSTEM → [prediction] 75,76,77,85,86,87,97,103,104,105,117,125,135,136,137,149,160,161,162,172,182,183,184,196,209,222,234,243,253,261,269,277,283,295
+   EVAL   → [BLOCK/dilated] P=0.872, R=0.636, F1*100=73.51, HitRate*100=87.18 | [LINE±0] P=1.000, R=0.850, F1*100=91.89, Acc*100=97.97
+   FINAL → [BLOCK/dilated] P=0.872, R=0.636, F1*100=73.51 (saved buggy_14_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_15.sol | Attempt 2
+   SYSTEM → [prediction] 15,21,26,33,34,35,44,51,52,53,60,64,68,88,115,116,117,135,155,175,198,215,234
+   EVAL   → [BLOCK/dilated] P=0.825, R=0.662, F1*100=73.44, HitRate*100=82.46 | [LINE±0] P=1.000, R=0.821, F1*100=90.20, Acc*100=97.87
+
+[REAL::Timestamp-Dependency] buggy_15.sol | Attempt 1
+   SYSTEM → [prediction] 15,21,26,33,34,35,44,51,52,53,88,115,116,117,135,155,175,198
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.592, F1*100=74.34, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.643, F1*100=78.26, Acc*100=95.74
+
+[REAL::Timestamp-Dependency] buggy_15.sol | Attempt 3
+   SYSTEM → [prediction] 15,16,21,26,33,34,35,44,45,51,52,53,60,64,68,88,89,115,116,117,135,155,156,175,176,198,215,234
+   EVAL   → [BLOCK/dilated] P=0.839, R=0.732, F1*100=78.20, HitRate*100=83.87 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+   FINAL → [BLOCK/dilated] P=0.825, R=0.662, F1*100=73.44 (saved buggy_15_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_16.sol | Attempt 2
+   SYSTEM → [prediction] 56,64,69,74,78,82,86,89,99,105,117,139,152,159,165,173,181,185,191,197,214,222,232,242,266,282,292,304,323,332,341,354,377,388,401,413,427,438,449,453
+   EVAL   → [BLOCK/dilated] P=0.950, R=0.559, F1*100=70.37, HitRate*100=95.00 | [LINE±0] P=1.000, R=0.556, F1*100=71.43, Acc*100=93.04
+
+[REAL::Timestamp-Dependency] buggy_16.sol | Attempt 1
+   SYSTEM → [prediction] 56,64,69,74,78,82,86,99,117,139,152,165,173,181,185,191,197,214,222,232,242,266,282,292,304,323,332,341,354,377,388,401,413,427,438,449
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.529, F1*100=69.23, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.500, F1*100=66.67, Acc*100=92.17
+   FINAL → [BLOCK/dilated] P=0.950, R=0.559, F1*100=70.37 (saved buggy_16_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_17.sol | Attempt 2
+   SYSTEM → [prediction] 50,59,67,74,88,92,96,101,107,111,115,118,121,132,143,153,154,155,168,181,182,183,198,212,218,225,226,227,236,237,245,260,277,289,303,311,317,330,342,348
+   EVAL   → [BLOCK/dilated] P=0.849, R=0.643, F1*100=73.17, HitRate*100=84.91 | [LINE±0] P=0.900, R=0.706, F1*100=79.12, Acc*100=94.56
+
+[REAL::Timestamp-Dependency] buggy_17.sol | Attempt 1
+   SYSTEM → [prediction] 50,59,67,74,88,92,96,101,107,111,115,118,121,132,143,153,154,155,168,181,182,183,198,212,218,225,226,227,236,237,245,260,277,289,303,311,317,330,342,348
+   EVAL   → [BLOCK/dilated] P=0.849, R=0.643, F1*100=73.17, HitRate*100=84.91 | [LINE±0] P=0.900, R=0.706, F1*100=79.12, Acc*100=94.56
+   FINAL → [BLOCK/dilated] P=0.849, R=0.643, F1*100=73.17 (saved buggy_17_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_18.sol | Attempt 3
+   SYSTEM → [prediction] 64,71,79,84,89,93,95,97,112,126,134,142,148,158,191,195,200,207,217,224,229,237,245,249,254,258,288,318,345,386,398,409,420,433,444,455,469,484,514,536
+   EVAL   → [BLOCK/dilated] P=0.924, R=0.509, F1*100=65.66, HitRate*100=92.37 | [LINE±0] P=0.975, R=0.520, F1*100=67.83, Acc*100=94.08
+
+[REAL::Timestamp-Dependency] buggy_18.sol | Attempt 1
+   SYSTEM → [prediction] 64,71,79,84,89,93,191,195,200,207,217,224,229,237,245,249,254,288,318,345,386,398,420,433,444,455,469,484,514,536
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.421, F1*100=59.21, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.400, F1*100=57.14, Acc*100=92.80
+
+[REAL::Timestamp-Dependency] buggy_18.sol | Attempt 2
+   SYSTEM → [prediction] 64,71,79,84,89,93,95,97,112,126,134,142,148,158,191,195,200,207,217,224,229,237,245,249,254,258,288,318,345,386,398,409,420,433,444,455,469,484,514,536
+   EVAL   → [BLOCK/dilated] P=0.924, R=0.509, F1*100=65.66, HitRate*100=92.37 | [LINE±0] P=0.975, R=0.520, F1*100=67.83, Acc*100=94.08
+   FINAL → [BLOCK/dilated] P=0.924, R=0.509, F1*100=65.66 (saved buggy_18_pred.csv) | Selected Attempt = 3
+
+[REAL::Timestamp-Dependency] buggy_19.sol | Attempt 2
+   SYSTEM → [prediction] 59,70,80,91,100,108,117,134,147,148,149,166,167,168,179,189,190,191,202,212,222,231,241,242,243,254,265,266,267,278,289,290,301,310,320,329,336,342,348,354
+   EVAL   → [BLOCK/dilated] P=0.898, R=0.662, F1*100=76.19, HitRate*100=89.80 | [LINE±0] P=1.000, R=0.816, F1*100=89.89, Acc*100=97.46
+
+[REAL::Timestamp-Dependency] buggy_19.sol | Attempt 1
+   SYSTEM → [prediction] 59,70,80,91,100,108,117,134,147,148,149,166,167,168,179,189,190,191,202,212,222,231,241,242,243,254,265,266,267,278,289,290,301,310,320,329,336,342,348,354
+   EVAL   → [BLOCK/dilated] P=0.898, R=0.662, F1*100=76.19, HitRate*100=89.80 | [LINE±0] P=1.000, R=0.816, F1*100=89.89, Acc*100=97.46
+   FINAL → [BLOCK/dilated] P=0.898, R=0.662, F1*100=76.19 (saved buggy_19_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_20.sol | Attempt 2
+   SYSTEM → [prediction] 33,37,45,60,73,77,93,94,95,134,135,136,151,177,181,186,191,200,202,204,227,228,229,237,245,254,267,280,281,282,306,327,328,343,382,401,411,423,435,449
+   EVAL   → [BLOCK/dilated] P=0.920, R=0.657, F1*100=76.67, HitRate*100=92.00 | [LINE±0] P=1.000, R=0.784, F1*100=87.91, Acc*100=97.57
+
+[REAL::Timestamp-Dependency] buggy_20.sol | Attempt 1
+   SYSTEM → [prediction] 33,37,45,60,73,77,93,94,95,134,135,136,151,177,181,186,191,200,202,204,227,228,229,237,245,254,267,280,281,282,306,327,328,343,382,401,411,423,435,449
+   EVAL   → [BLOCK/dilated] P=0.920, R=0.657, F1*100=76.67, HitRate*100=92.00 | [LINE±0] P=1.000, R=0.784, F1*100=87.91, Acc*100=97.57
+   FINAL → [BLOCK/dilated] P=0.920, R=0.657, F1*100=76.67 (saved buggy_20_pred.csv) | Selected Attempt = 2
+[INFO] Memory distilled/pruned for label 'Timestamp-Dependency'. Kept 26 messages.
+
+[REAL::Timestamp-Dependency] buggy_21.sol | Attempt 3
+   SYSTEM → [prediction] 7,13,19,24,62,66,72,78,83,117,118,119,127,134,141,142,143,152,153,154,162,169,170,171,181,190,204,205,206,219,236,237,238,265,287,304,455,470,476,481
+   EVAL   → [BLOCK/dilated] P=0.896, R=0.662, F1*100=76.11, HitRate*100=89.58 | [LINE±0] P=1.000, R=0.833, F1*100=90.91, Acc*100=98.34
+
+[REAL::Timestamp-Dependency] buggy_21.sol | Attempt 1
+   SYSTEM → [prediction] 7,8,13,14,19,24,62,66,72,73,78,83,117,118,119,127,128,134,141,142,143,152,153,154,162,169,170,171,181,190,191,204,205,206,219,220,236,237,238,265,287,288,304,305,455,470,476,481
+   EVAL   → [BLOCK/dilated] P=0.904, R=0.723, F1*100=80.34, HitRate*100=90.38 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+
+[REAL::Timestamp-Dependency] buggy_21.sol | Attempt 2
+   SYSTEM → [prediction] 7,13,19,24,62,66,72,78,83,117,118,119,127,134,141,142,143,152,153,154,162,169,170,171,181,190,204,205,206,219,236,237,238,265,287,304,455,470,476,481
+   EVAL   → [BLOCK/dilated] P=0.896, R=0.662, F1*100=76.11, HitRate*100=89.58 | [LINE±0] P=1.000, R=0.833, F1*100=90.91, Acc*100=98.34
+   FINAL → [BLOCK/dilated] P=0.896, R=0.662, F1*100=76.11 (saved buggy_21_pred.csv) | Selected Attempt = 3
+
+[REAL::Timestamp-Dependency] buggy_22.sol | Attempt 2
+   SYSTEM → [prediction] 10,19,32,40,46,57,65,75,81,82,83,91,100,107,115,121,200,205,212,220,225,230,234,239,244,247,249,251,253,255,299,319,350,383,394,423,456,490,550
+   EVAL   → [BLOCK/dilated] P=0.917, R=0.606, F1*100=72.99, HitRate*100=91.74 | [LINE±0] P=0.974, R=0.644, F1*100=77.55, Acc*100=96.01
+
+[REAL::Timestamp-Dependency] buggy_22.sol | Attempt 1
+   SYSTEM → [prediction] 10,19,32,40,46,57,65,75,81,82,83,91,92,100,107,115,121,200,205,212,220,225,230,234,239,244,247,249,251,253,255,299,319,350,383,394,423,456,490,550
+   EVAL   → [BLOCK/dilated] P=0.918, R=0.612, F1*100=73.45, HitRate*100=91.82 | [LINE±0] P=0.975, R=0.661, F1*100=78.79, Acc*100=96.20
+   FINAL → [BLOCK/dilated] P=0.917, R=0.606, F1*100=72.99 (saved buggy_22_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_23.sol | Attempt 3
+   SYSTEM → [prediction] 121,126,132,145,159,160,161,177,192,211,229,249,250,251,272,292,293,294,315,335,336,337,356,373,397,410,428,434,435,436,444,445,446,457,465,473,481,495
+   EVAL   → [BLOCK/dilated] P=0.889, R=0.656, F1*100=75.47, HitRate*100=88.89 | [LINE±0] P=1.000, R=0.844, F1*100=91.57, Acc*100=98.59
+
+[REAL::Timestamp-Dependency] buggy_23.sol | Attempt 1
+   SYSTEM → [prediction] 121,126,132,145,159,160,161,177,192,211,229,249,250,251,272,292,293,294,315,335,336,337,356,373,397,410,428,434,435,436,444,445,446
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.615, F1*100=76.14, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.733, F1*100=84.62, Acc*100=97.58
+
+[REAL::Timestamp-Dependency] buggy_23.sol | Attempt 2
+   SYSTEM → [prediction] 121,126,132,145,159,160,161,177,192,211,229,249,250,251,272,292,293,294,315,335,336,337,356,373,397,410,428,434,435,436,444,445,446,457,465,473,481,495
+   EVAL   → [BLOCK/dilated] P=0.889, R=0.656, F1*100=75.47, HitRate*100=88.89 | [LINE±0] P=1.000, R=0.844, F1*100=91.57, Acc*100=98.59
+   FINAL → [BLOCK/dilated] P=0.889, R=0.656, F1*100=75.47 (saved buggy_23_pred.csv) | Selected Attempt = 3
+
+[REAL::Timestamp-Dependency] buggy_24.sol | Attempt 2
+   SYSTEM → [prediction] 228,233,238,245,255,262,267,275,283,287,292,298,305,313,318,323,345,358,370,376,388,402,406,409,413,426,459,497,507,520,536,551,567,592,606,623,631,657,677,684
+   EVAL   → [BLOCK/dilated] P=0.792, R=0.442, F1*100=56.72, HitRate*100=79.17 | [LINE±0] P=0.825, R=0.440, F1*100=57.39, Acc*100=94.91
+
+[REAL::Timestamp-Dependency] buggy_24.sol | Attempt 1
+   SYSTEM → [prediction] 228,233,238,245,255,262,267,275,283,287,292,298,305,313,318,323,345,358,406,409,413,426,459,497,507,520,536,551,567,592,606,623,631,657,677,684
+   EVAL   → [BLOCK/dilated] P=0.806, R=0.405, F1*100=53.87, HitRate*100=80.56 | [LINE±0] P=0.806, R=0.387, F1*100=52.25, Acc*100=94.49
+   FINAL → [BLOCK/dilated] P=0.792, R=0.442, F1*100=56.72 (saved buggy_24_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_25.sol | Attempt 3
+   SYSTEM → [prediction] 16,17,18,44,59,60,61,70,75,78,80,82,84,86,95,105,123,143,178,188,189,190,230,247,248,249,260,271,272,273,283,294
+   EVAL   → [BLOCK/dilated] P=0.875, R=0.643, F1*100=74.12, HitRate*100=87.50 | [LINE±0] P=0.969, R=0.838, F1*100=89.86, Acc*100=97.65
+
+[REAL::Timestamp-Dependency] buggy_25.sol | Attempt 1
+   SYSTEM → [prediction] 16,17,18,44,59,60,61,70,75,78,80,82,84,86,95,105,123,143,178,188,189,190,230,247,248,249,260,271,272,273,283,294
+   EVAL   → [BLOCK/dilated] P=0.875, R=0.643, F1*100=74.12, HitRate*100=87.50 | [LINE±0] P=0.969, R=0.838, F1*100=89.86, Acc*100=97.65
+
+[REAL::Timestamp-Dependency] buggy_25.sol | Attempt 2
+   SYSTEM → [prediction] 16,17,18,44,59,60,61,70,71,75,78,80,82,84,86,95,96,105,106,123,143,178,188,189,190,247,248,249,260,261,271,272,273,283,294
+   EVAL   → [BLOCK/dilated] P=0.877, R=0.653, F1*100=74.85, HitRate*100=87.67 | [LINE±0] P=0.971, R=0.919, F1*100=94.44, Acc*100=98.66
+   FINAL → [BLOCK/dilated] P=0.875, R=0.643, F1*100=74.12 (saved buggy_25_pred.csv) | Selected Attempt = 3
+
+[REAL::Timestamp-Dependency] buggy_26.sol | Attempt 2
+   SYSTEM → [prediction] 65,71,72,73,81,82,83,90,96,97,98,105,118,121,124,132,140,148,149,150,160,170,171,172,183,193,194,195,205,215,225,234,245,253,257
+   EVAL   → [BLOCK/dilated] P=0.877, R=0.645, F1*100=74.35, HitRate*100=87.65 | [LINE±0] P=0.971, R=0.829, F1*100=89.47, Acc*100=96.90
+
+[REAL::Timestamp-Dependency] buggy_26.sol | Attempt 1
+   SYSTEM → [prediction] 65,71,72,73,81,82,83,90,96,97,98,105,118,121,124,132,140,148,149,150,160,170,171,172,183,193,194,195,205,215,225,234,245,253,257
+   EVAL   → [BLOCK/dilated] P=0.877, R=0.645, F1*100=74.35, HitRate*100=87.65 | [LINE±0] P=0.971, R=0.829, F1*100=89.47, Acc*100=96.90
+   FINAL → [BLOCK/dilated] P=0.877, R=0.645, F1*100=74.35 (saved buggy_26_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_27.sol | Attempt 3
+   SYSTEM → [prediction] 54,63,80,91,95,106,113,120,128,138,145,156,163,168,176,184,188,193,196,198,200,202,208,215,226,233,241,250,262,276,340,352,366,427,439,450,462,473,488,501
+   EVAL   → [BLOCK/dilated] P=0.940, R=0.512, F1*100=66.27, HitRate*100=94.02 | [LINE±0] P=1.000, R=0.533, F1*100=69.57, Acc*100=93.69
+
+[REAL::Timestamp-Dependency] buggy_27.sol | Attempt 1
+   SYSTEM → [prediction] 63,80,91,95,106,113,120,128,138,145,156,163,168,176,184,188,193,208,215,226,233,241,250,262,276,340,352,366,427,439,450,462,473,488,501
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.488, F1*100=65.62, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.467, F1*100=63.64, Acc*100=92.79
+
+[REAL::Timestamp-Dependency] buggy_27.sol | Attempt 2
+   SYSTEM → [prediction] 54,63,80,91,95,106,113,120,128,138,145,156,163,168,176,184,188,193,196,198,200,202,208,215,226,233,241,250,262,276,340,352,366,427,439,450,462,473,488,501
+   EVAL   → [BLOCK/dilated] P=0.940, R=0.512, F1*100=66.27, HitRate*100=94.02 | [LINE±0] P=1.000, R=0.533, F1*100=69.57, Acc*100=93.69
+   FINAL → [BLOCK/dilated] P=0.940, R=0.512, F1*100=66.27 (saved buggy_27_pred.csv) | Selected Attempt = 3
+
+[REAL::Timestamp-Dependency] buggy_28.sol | Attempt 2
+   SYSTEM → [prediction] 55,59,64,77,78,79,89,98,107,115,119,125,131,137,138,139,147,148,149,156,165,174,175,176,186,196,197,198,210,233,234,246,257,283,294,303,310,315,324,331
+   EVAL   → [BLOCK/dilated] P=0.898, R=0.662, F1*100=76.19, HitRate*100=89.80 | [LINE±0] P=1.000, R=0.816, F1*100=89.89, Acc*100=97.29
+
+[REAL::Timestamp-Dependency] buggy_28.sol | Attempt 1
+   SYSTEM → [prediction] 55,59,64,77,78,79,89,98,107,115,119,125,131,137,138,139,147,148,149,156,165,174,175,176,186,196,197,198,210,233,234,246,257,283,294,303,310,315,324,331
+   EVAL   → [BLOCK/dilated] P=0.898, R=0.662, F1*100=76.19, HitRate*100=89.80 | [LINE±0] P=1.000, R=0.816, F1*100=89.89, Acc*100=97.29
+   FINAL → [BLOCK/dilated] P=0.898, R=0.662, F1*100=76.19 (saved buggy_28_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_29.sol | Attempt 2
+   SYSTEM → [prediction] 19,28,29,30,37,164,165,166,176,185,186,187,197,206,215,268,270,272,283,291,303,304,305,337,338,342,363,364,365,380,390,401,412
+   EVAL   → [BLOCK/dilated] P=0.840, R=0.643, F1*100=72.83, HitRate*100=84.00 | [LINE±0] P=0.939, R=0.838, F1*100=88.57, Acc*100=98.07
+
+[REAL::Timestamp-Dependency] buggy_29.sol | Attempt 1
+   SYSTEM → [prediction] 19,28,29,30,37,164,165,166,176,185,186,187,197,206,215,268,270,272,283,291,303,304,305,337,338,342,363,364,365,380,390,401,412
+   EVAL   → [BLOCK/dilated] P=0.840, R=0.643, F1*100=72.83, HitRate*100=84.00 | [LINE±0] P=0.939, R=0.838, F1*100=88.57, Acc*100=98.07
+   FINAL → [BLOCK/dilated] P=0.840, R=0.643, F1*100=72.83 (saved buggy_29_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_30.sol | Attempt 3
+   SYSTEM → [prediction] 302,310,319,340,354,370,387,407,419,436,446,455,468,492,518,544,569,589,603,624,647,679,682,692,706,716,729,741,752,762,764,774,788,797,805,816,828,835,839,852
+   EVAL   → [BLOCK/dilated] P=0.924, R=0.512, F1*100=65.87, HitRate*100=92.44 | [LINE±0] P=1.000, R=0.533, F1*100=69.57, Acc*100=96.24
+
+[REAL::Timestamp-Dependency] buggy_30.sol | Attempt 1
+   SYSTEM → [prediction] 302,310,319,340,354,370,387,407,419,436,446,455,468,492,518,544,569,589,603,624,647,679,692,706,716,729,741,752,774,788,797,805,816,828,852
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.488, F1*100=65.62, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.467, F1*100=63.64, Acc*100=95.70
+
+[REAL::Timestamp-Dependency] buggy_30.sol | Attempt 2
+   SYSTEM → [prediction] 302,310,319,340,354,370,387,407,419,436,446,455,468,492,518,544,569,589,603,624,647,679,682,692,706,716,729,741,752,762,764,774,788,797,805,816,828,835,839,852
+   EVAL   → [BLOCK/dilated] P=0.924, R=0.512, F1*100=65.87, HitRate*100=92.44 | [LINE±0] P=1.000, R=0.533, F1*100=69.57, Acc*100=96.24
+   FINAL → [BLOCK/dilated] P=0.924, R=0.512, F1*100=65.87 (saved buggy_30_pred.csv) | Selected Attempt = 3
+[INFO] Memory distilled/pruned for label 'Timestamp-Dependency'. Kept 26 messages.
+
+[REAL::Timestamp-Dependency] buggy_31.sol | Attempt 3
+   SYSTEM → [prediction] 97,98,114,127,128,129,141,151,165,166,167,181,201,212,229,236,242,243,244,250,259,283,291
+   EVAL   → [BLOCK/dilated] P=0.855, R=0.662, F1*100=74.60, HitRate*100=85.45 | [LINE±0] P=1.000, R=0.821, F1*100=90.20, Acc*100=98.29
+
+[REAL::Timestamp-Dependency] buggy_31.sol | Attempt 1
+   SYSTEM → [prediction] 97,98,114,115,127,128,129,151,152,165,166,167,181,201,212,213,236,242,243,244,259,260,283
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.662, F1*100=79.66, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.821, F1*100=90.20, Acc*100=98.29
+
+[REAL::Timestamp-Dependency] buggy_31.sol | Attempt 2
+   SYSTEM → [prediction] 97,102,114,127,128,129,141,151,165,166,167,181,201,212,229,236,242,243,244,250,259,283,291
+   EVAL   → [BLOCK/dilated] P=0.825, R=0.662, F1*100=73.44, HitRate*100=82.46 | [LINE±0] P=1.000, R=0.821, F1*100=90.20, Acc*100=98.29
+   FINAL → [BLOCK/dilated] P=0.855, R=0.662, F1*100=74.60 (saved buggy_31_pred.csv) | Selected Attempt = 3
+
+[REAL::Timestamp-Dependency] buggy_32.sol | Attempt 3
+   SYSTEM → [prediction] 52,53,54,68,69,70,84,85,86,102,103,104,111,117,118,119,133,149,168,183,194,199,201,212,218,224,229,239,247
+   EVAL   → [BLOCK/dilated] P=0.864, R=0.582, F1*100=69.51, HitRate*100=86.36 | [LINE±0] P=1.000, R=0.784, F1*100=87.88, Acc*100=96.79
+
+[REAL::Timestamp-Dependency] buggy_32.sol | Attempt 1
+   SYSTEM → [prediction] 52,53,54,68,69,70,84,85,86,102,103,104,111,117,118,119,133,149,168,183,212,218,224,229,239,247
+   EVAL   → [BLOCK/dilated] P=0.931, R=0.551, F1*100=69.23, HitRate*100=93.10 | [LINE±0] P=1.000, R=0.703, F1*100=82.54, Acc*100=95.58
+
+[REAL::Timestamp-Dependency] buggy_32.sol | Attempt 2
+   SYSTEM → [prediction] 52,53,54,61,68,69,70,77,84,85,86,102,103,104,111,117,118,119,133,149,168,183,194,199,201,212,218,224,229,239,247
+   EVAL   → [BLOCK/dilated] P=0.875, R=0.643, F1*100=74.12, HitRate*100=87.50 | [LINE±0] P=1.000, R=0.838, F1*100=91.18, Acc*100=97.59
+   FINAL → [BLOCK/dilated] P=0.864, R=0.582, F1*100=69.51 (saved buggy_32_pred.csv) | Selected Attempt = 3
+
+[REAL::Timestamp-Dependency] buggy_33.sol | Attempt 2
+   SYSTEM → [prediction] 9,13,17,25,33,40,81,87,88,89,96,104,110,116,117,118,126,127,128,136,142,143,144,149,151,161,175,176,177,186,192,199,209,210,211,220,228,238,246,254
+   EVAL   → [BLOCK/dilated] P=0.842, R=0.656, F1*100=73.73, HitRate*100=84.21 | [LINE±0] P=0.950, R=0.844, F1*100=89.41, Acc*100=96.47
+
+[REAL::Timestamp-Dependency] buggy_33.sol | Attempt 1
+   SYSTEM → [prediction] 9,13,17,25,33,40,81,87,88,89,96,104,110,116,117,118,126,127,128,136,142,143,144,149,151,161,175,176,177,186,192,199,209,210,211,220,228,238,246,254
+   EVAL   → [BLOCK/dilated] P=0.842, R=0.656, F1*100=73.73, HitRate*100=84.21 | [LINE±0] P=0.950, R=0.844, F1*100=89.41, Acc*100=96.47
+   FINAL → [BLOCK/dilated] P=0.842, R=0.656, F1*100=73.73 (saved buggy_33_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_34.sol | Attempt 3
+   SYSTEM → [prediction] 13,20,28,36,145,150,156,161,170,178,183,189,193,197,212,216,230,239,240,256,257,265,279,296,319,326,334,341,367,383,395,405,422,435,450,469,494,518,543
+   EVAL   → [BLOCK/dilated] P=0.814, R=0.517, F1*100=63.23, HitRate*100=81.42 | [LINE±0] P=0.846, R=0.524, F1*100=64.71, Acc*100=94.26
+
+[REAL::Timestamp-Dependency] buggy_34.sol | Attempt 1
+   SYSTEM → [prediction] 12,20,28,36,145,150,156,161,169,170,171,178,183,189,192,193,196,197,212,216,230,239,240,242,256,257,265,278,279,280,295,296,297,319,383,395,405,422,450,494
+   EVAL   → [BLOCK/dilated] P=0.808, R=0.449, F1*100=57.76, HitRate*100=80.81 | [LINE±0] P=0.775, R=0.492, F1*100=60.19, Acc*100=93.46
+
+[REAL::Timestamp-Dependency] buggy_34.sol | Attempt 2
+   SYSTEM → [prediction] 13,20,28,36,42,145,150,156,161,170,178,183,189,193,197,212,216,230,239,240,256,257,265,279,296,319,326,334,341,367,383,395,405,422,435,450,469,494,518,543
+   EVAL   → [BLOCK/dilated] P=0.819, R=0.534, F1*100=64.63, HitRate*100=81.90 | [LINE±0] P=0.850, R=0.540, F1*100=66.02, Acc*100=94.42
+   FINAL → [BLOCK/dilated] P=0.814, R=0.517, F1*100=63.23 (saved buggy_34_pred.csv) | Selected Attempt = 3
+
+[REAL::Timestamp-Dependency] buggy_35.sol | Attempt 2
+   SYSTEM → [prediction] 138,144,145,146,155,164,177,183,189,207,212,217,222,226,231,237,240,242,244,246,248,258,275,276,277,293,294,312,323,335,352,362,374,388,404,415,428,460,475,498
+   EVAL   → [BLOCK/dilated] P=0.915, R=0.614, F1*100=73.48, HitRate*100=91.51 | [LINE±0] P=0.975, R=0.684, F1*100=80.41, Acc*100=96.27
+
+[REAL::Timestamp-Dependency] buggy_35.sol | Attempt 1
+   SYSTEM → [prediction] 138,144,145,146,155,164,177,183,189,207,212,217,222,226,231,237,240,242,244,246,248,258,275,276,277,293,294,312,323,335,352,362,374,388,404,415,428,460,475,498
+   EVAL   → [BLOCK/dilated] P=0.915, R=0.614, F1*100=73.48, HitRate*100=91.51 | [LINE±0] P=0.975, R=0.684, F1*100=80.41, Acc*100=96.27
+   FINAL → [BLOCK/dilated] P=0.915, R=0.614, F1*100=73.48 (saved buggy_35_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_36.sol | Attempt 2
+   SYSTEM → [prediction] 10,19,32,40,46,57,65,75,81,82,83,91,92,100,107,115,121,200,205,212,220,225,230,234,239,244,247,249,251,253,255,299,319,350,383,394,423,456,490,550
+   EVAL   → [BLOCK/dilated] P=0.918, R=0.612, F1*100=73.45, HitRate*100=91.82 | [LINE±0] P=0.975, R=0.661, F1*100=78.79, Acc*100=96.20
+
+[REAL::Timestamp-Dependency] buggy_36.sol | Attempt 1
+   SYSTEM → [prediction] 10,19,32,40,46,57,65,75,82,91,92,100,107,115,121,200,205,212,220,225,230,234,239,244,383
+   EVAL   → [BLOCK/dilated] P=0.959, R=0.424, F1*100=58.82, HitRate*100=95.89 | [LINE±0] P=0.960, R=0.407, F1*100=57.14, Acc*100=93.48
+
+[REAL::Timestamp-Dependency] buggy_36.sol | Attempt 3
+   SYSTEM → [prediction] 10,19,32,40,46,57,65,75,81,82,83,91,100,107,115,121,200,205,212,220,225,230,234,239,244,247,249,251,253,255,299,319,350,383,394,423,456,490,550
+   EVAL   → [BLOCK/dilated] P=0.917, R=0.606, F1*100=72.99, HitRate*100=91.74 | [LINE±0] P=0.974, R=0.644, F1*100=77.55, Acc*100=96.01
+   FINAL → [BLOCK/dilated] P=0.918, R=0.612, F1*100=73.45 (saved buggy_36_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_37.sol | Attempt 2
+   SYSTEM → [prediction] 31,39,47,54,67,73,79,80,81,89,90,91,98,105,111,113,127,138,143,147,155,163,170,180,192,199,207,212,218,222,242,257,272,292,314,338,351,369,381,391
+   EVAL   → [BLOCK/dilated] P=0.919, R=0.618, F1*100=73.91, HitRate*100=91.89 | [LINE±0] P=1.000, R=0.678, F1*100=80.81, Acc*100=95.18
+
+[REAL::Timestamp-Dependency] buggy_37.sol | Attempt 1
+   SYSTEM → [prediction] 31,39,47,54,67,73,79,80,81,89,90,91,98,105,127,138,143,155,163,170,180,192,199,207,212,218,222,242,257,272,292,314,338,351,369,381
+   EVAL   → [BLOCK/dilated] P=0.980, R=0.594, F1*100=73.96, HitRate*100=98.00 | [LINE±0] P=1.000, R=0.610, F1*100=75.79, Acc*100=94.16
+   FINAL → [BLOCK/dilated] P=0.919, R=0.618, F1*100=73.91 (saved buggy_37_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_38.sol | Attempt 3
+   SYSTEM → [prediction] 55,59,64,77,78,79,89,98,107,115,119,125,131,137,138,139,147,148,149,156,165,174,175,176,186,196,197,198,210,233,234,246,257,283,294,303,310,315,324,331
+   EVAL   → [BLOCK/dilated] P=0.898, R=0.662, F1*100=76.19, HitRate*100=89.80 | [LINE±0] P=1.000, R=0.816, F1*100=89.89, Acc*100=97.29
+
+[REAL::Timestamp-Dependency] buggy_38.sol | Attempt 1
+   SYSTEM → [prediction] 55,59,64,77,78,79,89,98,107,115,119,125,131,137,138,139,147,148,149,156,165,174,175,176,186,196,197,198,210,233,234,246,257,283,294
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.624, F1*100=76.85, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.714, F1*100=83.33, Acc*100=95.78
+
+[REAL::Timestamp-Dependency] buggy_38.sol | Attempt 2
+   SYSTEM → [prediction] 55,59,64,77,78,79,89,98,107,115,119,125,131,137,138,139,147,148,149,156,165,174,175,176,186,196,197,198,210,233,234,246,257,283,294,303,310,315,324,331
+   EVAL   → [BLOCK/dilated] P=0.898, R=0.662, F1*100=76.19, HitRate*100=89.80 | [LINE±0] P=1.000, R=0.816, F1*100=89.89, Acc*100=97.29
+   FINAL → [BLOCK/dilated] P=0.898, R=0.662, F1*100=76.19 (saved buggy_38_pred.csv) | Selected Attempt = 3
+
+[REAL::Timestamp-Dependency] buggy_39.sol | Attempt 3
+   SYSTEM → [prediction] 10,11,18,19,20,26,31,32,37,45,55,57,62,63,75,90
+   EVAL   → [BLOCK/dilated] P=0.757, R=0.800, F1*100=77.78, HitRate*100=75.68 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+
+[REAL::Timestamp-Dependency] buggy_39.sol | Attempt 1
+   SYSTEM → [prediction] 10,11,18,19,20,26,31,32,45,62,63
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.657, F1*100=79.31, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.688, F1*100=81.48, Acc*100=94.51
+
+[REAL::Timestamp-Dependency] buggy_39.sol | Attempt 2
+   SYSTEM → [prediction] 10,18,19,20,26,31,37,45,55,57,62,75,90
+   EVAL   → [BLOCK/dilated] P=0.735, R=0.714, F1*100=72.46, HitRate*100=73.53 | [LINE±0] P=1.000, R=0.812, F1*100=89.66, Acc*100=96.70
+   FINAL → [BLOCK/dilated] P=0.757, R=0.800, F1*100=77.78 (saved buggy_39_pred.csv) | Selected Attempt = 3
+
+[REAL::Timestamp-Dependency] buggy_40.sol | Attempt 3
+   SYSTEM → [prediction] 218,225,232,233,234,248,260,278,289,306,307,308,332,355,356,357,382,411,412,413,435,458,484,499,510,511,512,525,526,527,543,551,560,577,584
+   EVAL   → [BLOCK/dilated] P=0.877, R=0.612, F1*100=72.08, HitRate*100=87.65 | [LINE±0] P=1.000, R=0.814, F1*100=89.74, Acc*100=98.63
+
+[REAL::Timestamp-Dependency] buggy_40.sol | Attempt 1
+   SYSTEM → [prediction] 218,225,232,233,234,248,260,278,289,306,307,308,332,355,356,357,382,411,412,413,435,458,484,499,510,511,512,525,526,527
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.569, F1*100=72.53, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.698, F1*100=82.19, Acc*100=97.78
+
+[REAL::Timestamp-Dependency] buggy_40.sol | Attempt 2
+   SYSTEM → [prediction] 218,219,225,232,233,234,248,249,260,261,278,289,306,307,308,332,333,355,356,357,382,383,411,412,413,435,458,459,484,485,499,510,511,512,519,525,526,527,543,551,560,577,584
+   EVAL   → [BLOCK/dilated] P=0.890, R=0.698, F1*100=78.26, HitRate*100=89.01 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+   FINAL → [BLOCK/dilated] P=0.877, R=0.612, F1*100=72.08 (saved buggy_40_pred.csv) | Selected Attempt = 3
+[INFO] Memory distilled/pruned for label 'Timestamp-Dependency'. Kept 26 messages.
+
+[REAL::Timestamp-Dependency] buggy_41.sol | Attempt 3
+   SYSTEM → [prediction] 19,25,30,37,38,39,48,55,56,57,64,68,72,92,119,120,121,139,159,179,202,219,238
+   EVAL   → [BLOCK/dilated] P=0.825, R=0.662, F1*100=73.44, HitRate*100=82.46 | [LINE±0] P=1.000, R=0.821, F1*100=90.20, Acc*100=97.91
+
+[REAL::Timestamp-Dependency] buggy_41.sol | Attempt 1
+   SYSTEM → [prediction] 19,25,30,37,38,39,48,55,56,57,119,120,121,139,159,179,202
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.549, F1*100=70.91, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.607, F1*100=75.56, Acc*100=95.40
+
+[REAL::Timestamp-Dependency] buggy_41.sol | Attempt 2
+   SYSTEM → [prediction] 19,25,30,38,39,48,56,57,64,68,72,92,119,120,121,139,159,179,202,219,238
+   EVAL   → [BLOCK/dilated] P=0.818, R=0.634, F1*100=71.43, HitRate*100=81.82 | [LINE±0] P=1.000, R=0.750, F1*100=85.71, Acc*100=97.07
+   FINAL → [BLOCK/dilated] P=0.825, R=0.662, F1*100=73.44 (saved buggy_41_pred.csv) | Selected Attempt = 3
+
+[REAL::Timestamp-Dependency] buggy_42.sol | Attempt 2
+   SYSTEM → [prediction] 9,13,17,25,33,40,81,87,88,89,96,104,110,116,117,118,126,127,128,136,142,143,144,149,151,161,175,176,177,185,191,198,208,209,210,219,227,237,245,253
+   EVAL   → [BLOCK/dilated] P=0.842, R=0.656, F1*100=73.73, HitRate*100=84.21 | [LINE±0] P=0.950, R=0.844, F1*100=89.41, Acc*100=96.46
+
+[REAL::Timestamp-Dependency] buggy_42.sol | Attempt 1
+   SYSTEM → [prediction] 9,13,17,25,33,40,81,87,88,89,96,104,110,116,117,118,126,127,128,136,142,143,144,149,151,161,175,176,177,185,191,198,208,209,210,219,227,237,245,253
+   EVAL   → [BLOCK/dilated] P=0.842, R=0.656, F1*100=73.73, HitRate*100=84.21 | [LINE±0] P=0.950, R=0.844, F1*100=89.41, Acc*100=96.46
+   FINAL → [BLOCK/dilated] P=0.842, R=0.656, F1*100=73.73 (saved buggy_42_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_43.sol | Attempt 2
+   SYSTEM → [prediction] 10,19,29,33,37,48,58,70,81,82,83,96,97,98,110,119,120,121,131,140,182,209,247,251,263,264,265,277,289,306,317,318,319,329,340,355,384,398,411,423
+   EVAL   → [BLOCK/dilated] P=0.900, R=0.657, F1*100=75.95, HitRate*100=90.00 | [LINE±0] P=1.000, R=0.800, F1*100=88.89, Acc*100=97.65
+
+[REAL::Timestamp-Dependency] buggy_43.sol | Attempt 1
+   SYSTEM → [prediction] 10,19,29,33,37,48,58,70,81,82,83,96,97,98,110,119,120,121,131,140,182,209,247,251,263,264,265,277,289,306,317,318,319,329,340,355,384,398,411,423
+   EVAL   → [BLOCK/dilated] P=0.900, R=0.657, F1*100=75.95, HitRate*100=90.00 | [LINE±0] P=1.000, R=0.800, F1*100=88.89, Acc*100=97.65
+   FINAL → [BLOCK/dilated] P=0.900, R=0.657, F1*100=75.95 (saved buggy_43_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_44.sol | Attempt 2
+   SYSTEM → [prediction] 10,20,31,35,39,50,59,70,81,92,93,94,107,108,109,119,128,129,130,140,150,152,163,173,214,242,243,244,284,309,319,320,321,331,345,383,399,411,424,436
+   EVAL   → [BLOCK/dilated] P=0.909, R=0.657, F1*100=76.27, HitRate*100=90.91 | [LINE±0] P=1.000, R=0.800, F1*100=88.89, Acc*100=97.72
+
+[REAL::Timestamp-Dependency] buggy_44.sol | Attempt 1
+   SYSTEM → [prediction] 10,20,31,35,39,50,59,70,81,92,93,94,107,108,109,119,128,129,130,140,150,152,163,173,214,242,243,244,284,309,319,320,321,331,345,383,399,411,424,436
+   EVAL   → [BLOCK/dilated] P=0.909, R=0.657, F1*100=76.27, HitRate*100=90.91 | [LINE±0] P=1.000, R=0.800, F1*100=88.89, Acc*100=97.72
+   FINAL → [BLOCK/dilated] P=0.909, R=0.657, F1*100=76.27 (saved buggy_44_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_45.sol | Attempt 2
+   SYSTEM → [prediction] 11,17,22,25,27,29,32,34,53,58,63,68,74,81,87,88,89,97,98,99,107,113,114,115,156,167,179,189,203,204,205,220,251,252,253,263,276,277,278,287
+   EVAL   → [BLOCK/dilated] P=0.925, R=0.662, F1*100=77.13, HitRate*100=92.47 | [LINE±0] P=1.000, R=0.833, F1*100=90.91, Acc*100=97.24
+
+[REAL::Timestamp-Dependency] buggy_45.sol | Attempt 1
+   SYSTEM → [prediction] 11,17,22,25,27,29,32,34,53,58,63,68,74,81,87,88,89,97,98,99,107,113,114,115,156,167,179,189,203,204,205,220,251,252,253,263,276,277,278,287
+   EVAL   → [BLOCK/dilated] P=0.925, R=0.662, F1*100=77.13, HitRate*100=92.47 | [LINE±0] P=1.000, R=0.833, F1*100=90.91, Acc*100=97.24
+   FINAL → [BLOCK/dilated] P=0.925, R=0.662, F1*100=77.13 (saved buggy_45_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_46.sol | Attempt 2
+   SYSTEM → [prediction] 21,22,35,49,73,87,98,119,139
+   EVAL   → [BLOCK/dilated] P=0.440, R=0.846, F1*100=57.89, HitRate*100=44.00 | [LINE±0] P=0.667, R=0.750, F1*100=70.59, Acc*100=96.48
+
+[REAL::Timestamp-Dependency] buggy_46.sol | Attempt 1
+   SYSTEM → [prediction] 21,22,35,49,73,87,98,119,139
+   EVAL   → [BLOCK/dilated] P=0.440, R=0.846, F1*100=57.89, HitRate*100=44.00 | [LINE±0] P=0.667, R=0.750, F1*100=70.59, Acc*100=96.48
+   FINAL → [BLOCK/dilated] P=0.440, R=0.846, F1*100=57.89 (saved buggy_46_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_47.sol | Attempt 2
+   SYSTEM → [prediction] 14,19,25,34,44,52,64,71,76,85,93,98,104,124,136,152,171,179,189,206,215,226,236,243,249,254,256,257,261,266,273,282,284,298,310,322,335,343,345,353
+   EVAL   → [BLOCK/dilated] P=0.904, R=0.533, F1*100=67.10, HitRate*100=90.43 | [LINE±0] P=0.900, R=0.522, F1*100=66.06, Acc*100=91.23
+
+[REAL::Timestamp-Dependency] buggy_47.sol | Attempt 1
+   SYSTEM → [prediction] 14,19,25,34,44,52,64,71,76,85,93,98,104,124,136,152,171,179,189,206,215,226,236,243,249,254,256,257,261,266,273,282,284,298,310,322,335,343,345,353
+   EVAL   → [BLOCK/dilated] P=0.904, R=0.533, F1*100=67.10, HitRate*100=90.43 | [LINE±0] P=0.900, R=0.522, F1*100=66.06, Acc*100=91.23
+   FINAL → [BLOCK/dilated] P=0.904, R=0.533, F1*100=67.10 (saved buggy_47_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_48.sol | Attempt 2
+   SYSTEM → [prediction] 49,54,60,66,67,68,76,77,78,85,88,90,105,106,107,121,122,130,135,143,151,158,169,182,187,191,195,201,206,224,238,253,273,287,305,326,348,362,379,389
+   EVAL   → [BLOCK/dilated] P=0.914, R=0.623, F1*100=74.13, HitRate*100=91.43 | [LINE±0] P=1.000, R=0.714, F1*100=83.33, Acc*100=95.90
+
+[REAL::Timestamp-Dependency] buggy_48.sol | Attempt 1
+   SYSTEM → [prediction] 49,54,60,66,67,68,76,77,78,85,105,106,107,121,122,130,143,151,158,169,182,187,191,195,201,206,224,238,253,273,287,305,326,348,362,379,389
+   EVAL   → [BLOCK/dilated] P=0.959, R=0.604, F1*100=74.10, HitRate*100=95.88 | [LINE±0] P=1.000, R=0.661, F1*100=79.57, Acc*100=95.13
+   FINAL → [BLOCK/dilated] P=0.914, R=0.623, F1*100=74.13 (saved buggy_48_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_49.sol | Attempt 2
+   SYSTEM → [prediction] 10,11,18,19,20,26,31,32,37,45,55,57,62,63,75,90
+   EVAL   → [BLOCK/dilated] P=0.757, R=0.800, F1*100=77.78, HitRate*100=75.68 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+
+[REAL::Timestamp-Dependency] buggy_49.sol | Attempt 1
+   SYSTEM → [prediction] 10,11,18,19,20,26,31,32,45,62,63
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.657, F1*100=79.31, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.688, F1*100=81.48, Acc*100=94.51
+
+[REAL::Timestamp-Dependency] buggy_49.sol | Attempt 3
+   SYSTEM → [prediction] 10,18,19,20,26,31,37,45,55,57,62,75,90
+   EVAL   → [BLOCK/dilated] P=0.735, R=0.714, F1*100=72.46, HitRate*100=73.53 | [LINE±0] P=1.000, R=0.812, F1*100=89.66, Acc*100=96.70
+   FINAL → [BLOCK/dilated] P=0.757, R=0.800, F1*100=77.78 (saved buggy_49_pred.csv) | Selected Attempt = 2
+
+[REAL::Timestamp-Dependency] buggy_50.sol | Attempt 2
+   SYSTEM → [prediction] 11,16,22,29,42,43,44,53,54,55,61,64,83,91,101,102,103,116,126,138,147,157,158,159,170,182,183,184,196,211,212,213,223,232,247,260,270,284,290,296
+   EVAL   → [BLOCK/dilated] P=0.833, R=0.656, F1*100=73.39, HitRate*100=83.33 | [LINE±0] P=0.925, R=0.822, F1*100=87.06, Acc*100=96.30
+
+[REAL::Timestamp-Dependency] buggy_50.sol | Attempt 1
+   SYSTEM → [prediction] 11,16,22,29,42,43,44,53,54,55,83,91,101,102,103,116,126,138,147,157,158,159,170,182,183,184,196,211,212,213,223,232,247,260,270,284,290,296
+   EVAL   → [BLOCK/dilated] P=0.867, R=0.639, F1*100=73.58, HitRate*100=86.67 | [LINE±0] P=0.921, R=0.778, F1*100=84.34, Acc*100=95.62
+   FINAL → [BLOCK/dilated] P=0.833, R=0.656, F1*100=73.39 (saved buggy_50_pred.csv) | Selected Attempt = 2
+[INFO] Memory distilled/pruned for label 'Timestamp-Dependency'. Kept 26 messages.
+[INFO] Saved folder summary → results_sonnet_v2/Timestamp-Dependency/Timestamp-Dependency_result.csv
+[SUMMARY::Timestamp-Dependency] eval contracts=45 (warm-up excluded=5) | MACRO Block P/R/F1 = 0.867/0.641/0.729 | MACRO Line P/R/F1 = 0.970/0.758/0.845
+[INFO] Saved usage/cost log → results_sonnet_v2/Timestamp-Dependency/Timestamp-Dependency_usage.csv
+[USAGE::Timestamp-Dependency] calls=135 tokens=1121821 est_cost_usd=4.5354 avg_s/call=7.64
+
+REAL mode completed for the selected label.

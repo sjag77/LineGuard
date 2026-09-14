@@ -1,0 +1,106 @@
+[
+  {
+    "role": "user",
+    "content": "You are an expert in smart contract vulnerability detection.\nA Solidity smart contract will be provided; identify all vulnerabilities present in the code.\nFocus specifically on detecting instances of tx.origin.\nReturn ONLY the line numbers.\nOutput format constraint: ONLY digits separated by commas (e.g., 12,27,41). No words, no ranges, no JSON, no brackets, no explanations.\nWhen ready, you may first reply 'I understand the patterns and I'm ready for the next contract' or directly give predictions."
+  },
+  {
+    "role": "user",
+    "content": "[feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function using an unchecked `.call.value()`/`.call{value:}` transfer to an address parameter as tx.origin-vulnerable, even without a visible require/if check on that owner === COMPACT HINTS === Label: tx.origin Mode: stable MUST: - Flag any use of tx.origin for auth or critical branching. INCLUDE: - require/if consuming tx.origin. NEVER: - Exclude comments or lookalike identifiers. MissedCandidates (consider): L22: function transferTo_txorig..."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 11,22,32,37,42,55,65,76,86,96,106,114,122,129,169,196,234,240,252,262,273,298,306,314,327,358,372,383,395"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function using an unchecked `.call.value()`/`.call{value:}` transfer to an address parameter as tx.origin-vulnerable, even without a visible require/if check on that owner === COMPACT HINTS === Label: tx.origin Mode: stable MUST: - Flag any use of tx.origin for auth or critical branching. INCLUDE: - require/if consuming tx.origin. NEVER: - Exclude comments or lookalike identifiers. MissedCandidates (consider): L22: function transferTo_txorig...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: tx.origin\nMUST: - Flag any use of tx.origin for auth or critical branching.\nINCLUDE: - require/if consuming tx.origin.\nNEVER: - Exclude comments or lookalike identifiers.\nSelfConsistency: agree_with_prev=29 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 11,21,31,36,42,55,65,76,86,96,106,114,122,130,141,146,158,166,206,233,271,295,303,311,326,363,377,388,400,411"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function using an unchecked `.call.value()`/`.call{value:}` transfer to an address parameter as tx.origin-vulnerable, even without a visible require/if check on that owner === COMPACT HINTS === Label: tx.origin Mode: stable MUST: - Flag any use of tx.origin for auth or critical branching. INCLUDE: - require/if consuming tx.origin. NEVER: - Exclude comments or lookalike identifiers. MissedCandidates (consider): L22: function transferTo_txorig...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: tx.origin\nMUST: - Flag any use of tx.origin for auth or critical branching.\nINCLUDE: - require/if consuming tx.origin.\nNEVER: - Exclude comments or lookalike identifiers.\nSelfConsistency: agree_with_prev=30 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 10,15,19,24,28,33,39,44,65,69,74,80,86,92,97,102,108,113,152,162,172,181,194,206,235,243,254,262"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function using an unchecked `.call.value()`/`.call{value:}` transfer to an address parameter as tx.origin-vulnerable, even without a visible require/if check on that owner === COMPACT HINTS === Label: tx.origin Mode: stable MUST: - Flag any use of tx.origin for auth or critical branching. INCLUDE: - require/if consuming tx.origin. NEVER: - Exclude comments or lookalike identifiers. MissedCandidates (consider): L22: function transferTo_txorig...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: tx.origin\nMUST: - Flag any use of tx.origin for auth or critical branching.\nINCLUDE: - require/if consuming tx.origin.\nNEVER: - Exclude comments or lookalike identifiers.\nSelfConsistency: agree_with_prev=28 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 20,47,73,89,103,127,150"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function using an unchecked `.call.value()`/`.call{value:}` transfer to an address parameter as tx.origin-vulnerable, even without a visible require/if check on that owner === COMPACT HINTS === Label: tx.origin Mode: stable MUST: - Flag any use of tx.origin for auth or critical branching. INCLUDE: - require/if consuming tx.origin. NEVER: - Exclude comments or lookalike identifiers. MissedCandidates (consider): L22: function transferTo_txorig...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: tx.origin\nMUST: - Flag any use of tx.origin for auth or critical branching.\nINCLUDE: - require/if consuming tx.origin.\nNEVER: - Exclude comments or lookalike identifiers.\nSelfConsistency: agree_with_prev=7 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 14,19,24,31,36,41,51,56,61,67,71,76,82,100,109,123,140,148,155,169,177,185,192,199,205,211,218,223,230,242,255,264,273,283,301,333,342,354,364,373"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function using an unchecked `.call.value()`/`.call{value:}` transfer to an address parameter as tx.origin-vulnerable, even without a visible require/if check on that owner === COMPACT HINTS === Label: tx.origin Mode: stable MUST: - Flag any use of tx.origin for auth or critical branching. INCLUDE: - require/if consuming tx.origin. NEVER: - Exclude comments or lookalike identifiers. MissedCandidates (consider): L22: f...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: tx.origin\nMUST: - Flag any use of tx.origin for auth or critical branching.\nINCLUDE: - require/if consuming tx.origin.\nNEVER: - Exclude comments or lookalike identifiers.\nSelfConsistency: agree_with_prev=40 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 49,54,59,64,69,74,79,84,99,110,115,121,130,142,151,165,170,175,179,185,190,208,219,231,248,259,274,292,314,326,343,354"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function using an unchecked `.call.value()`/`.call{value:}` transfer to an address parameter as tx.origin-vulnerable, even without a visible require/if check on that owner === COMPACT HINTS === Label: tx.origin Mode: stable MUST: - Flag any use of tx.origin for auth or critical branching. INCLUDE: - require/if consuming tx.origin. NEVER: - Exclude comments or lookalike identifiers. MissedCandidates (consider): L22: f...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: tx.origin\nMUST: - Flag any use of tx.origin for auth or critical branching.\nINCLUDE: - require/if consuming tx.origin.\nNEVER: - Exclude comments or lookalike identifiers.\nSelfConsistency: agree_with_prev=32 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 9,15,20,24,31,41,53,57,63,76,94"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function using an unchecked `.call.value()`/`.call{value:}` transfer to an address parameter as tx.origin-vulnerable, even without a visible require/if check on that owner === COMPACT HINTS === Label: tx.origin Mode: stable MUST: - Flag any use of tx.origin for auth or critical branching. INCLUDE: - require/if consuming tx.origin. NEVER: - Exclude comments or lookalike identifiers. MissedCandidates (consider): L22: f...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: tx.origin\nMUST: - Flag any use of tx.origin for auth or critical branching.\nINCLUDE: - require/if consuming tx.origin.\nNEVER: - Exclude comments or lookalike identifiers.\nSelfConsistency: agree_with_prev=11 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 11,17,23,29,41,47,53,59,79,95,106,114,124,133,141,150,160,170,183,191,200,213,236,257,266"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function using an unchecked `.call.value()`/`.call{value:}` transfer to an address parameter as tx.origin-vulnerable, even without a visible require/if check on that owner === COMPACT HINTS === Label: tx.origin Mode: stable MUST: - Flag any use of tx.origin for auth or critical branching. INCLUDE: - require/if consuming tx.origin. NEVER: - Exclude comments or lookalike identifiers. MissedCandidates (consider): L22: f...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: tx.origin\nMUST: - Flag any use of tx.origin for auth or critical branching.\nINCLUDE: - require/if consuming tx.origin.\nNEVER: - Exclude comments or lookalike identifiers.\nSelfConsistency: agree_with_prev=25 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  }
+]

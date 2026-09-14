@@ -1,0 +1,106 @@
+[
+  {
+    "role": "user",
+    "content": "You are an expert in smart contract vulnerability detection.\nA Solidity smart contract will be provided; identify all vulnerabilities present in the code.\nFocus specifically on detecting instances of TOD.\nReturn ONLY the line numbers.\nOutput format constraint: ONLY digits separated by commas (e.g., 12,27,41). No words, no ranges, no JSON, no brackets, no explanations.\nWhen ready, you may first reply 'I understand the patterns and I'm ready for the next contract' or directly give predictions."
+  },
+  {
+    "role": "user",
+    "content": "[feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function that stores a guess/commitment and pays out an address based on block/timestamp-dependent randomness as transaction-order-dependent (TOD), even if reentrancy/acce === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrele..."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 21,37,45,61,69,80,88,104,126,145,165,184,203,222,235,243,257,265,279,287,334,342,375,383,432,447,468,487,507,537,545,559,567,581,589,613,653,672,680,702"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function that stores a guess/commitment and pays out an address based on block/timestamp-dependent randomness as transaction-order-dependent (TOD), even if reentrancy/acce === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrele...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nSelfConsistency: agree_with_prev=40 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 17,25,46,61,69,80,88,104,126,141,149,170,189,208,227,244,261,274,282,303,317,334,342,357,365,412,420,453,461,506,514,549,566,579,587,612,654,662,682,690"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function that stores a guess/commitment and pays out an address based on block/timestamp-dependent randomness as transaction-order-dependent (TOD), even if reentrancy/acce === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrele...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nSelfConsistency: agree_with_prev=40 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 20,30,38,53,63,71,86,100,115,129,155,163,178,192,203,211,227,242,256,270,285,299,343,351,367,375,392,400,416,424,443,451,474,512,525,533,540,550,558,572"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function that stores a guess/commitment and pays out an address based on block/timestamp-dependent randomness as transaction-order-dependent (TOD), even if reentrancy/acce === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrele...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nSelfConsistency: agree_with_prev=40 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 26,34,72,103,111,138,161,194,226"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function that stores a guess/commitment and pays out an address based on block/timestamp-dependent randomness as transaction-order-dependent (TOD), even if reentrancy/acce === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrele...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nSelfConsistency: agree_with_prev=9 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 24,38,52,68,82,96,111,119,134,144,152,164,172,183,191,207,222,245,253,268,276,297,305,329,337,351,359,377,400,413,421,436,444,461,473,481,493,501,513,521"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function that stores a guess/commitment and pays out an address based on block/timestamp-dependent randomness as transaction-order-dependent (TOD), even if reentrancy/acce === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrele...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nSelfConsistency: agree_with_prev=40 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 59,73,87,101,115,129,143,157,177,185,202,210,225,240,254,262,281,289,305,313,333,341,352,360,371,379,394,409,419,427,451,459,481,502,524,532,549,557,578,586"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function that stores a guess/commitment and pays out an address based on block/timestamp-dependent randomness as transaction-order-dependent (TOD), even if reentrancy/acce === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVE...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nSelfConsistency: agree_with_prev=40 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 15,23,35,43,54,62,77,93,112,129,137,152,163,171,195,222"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function that stores a guess/commitment and pays out an address based on block/timestamp-dependent randomness as transaction-order-dependent (TOD), even if reentrancy/acce === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVE...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nSelfConsistency: agree_with_prev=16 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 17,25,42,57,72,93,108,123,138,167,188,196,213,221,236,244,261,269,284,292,311,329,344,352,368,376,386,395,403,422,436,444,468,496,504,536,554"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any function that stores a guess/commitment and pays out an address based on block/timestamp-dependent randomness as transaction-order-dependent (TOD), even if reentrancy/acce === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVE...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nSelfConsistency: agree_with_prev=36 newly_added=1 dropped=0\nRe-examine lines that changed between attempts before finalizing.\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  }
+]

@@ -1,0 +1,32 @@
+{
+ "filename": "buggy_49.sol",
+ "phase": "eval",
+ "selected_attempt": 2,
+ "attempts_run": 3,
+ "BlockDetection.P": 0.7567567567567568,
+ "BlockDetection.Recall": 0.8,
+ "BlockDetection.F1-Score": 0.7777777777777778,
+ "BlockDetection.HitRate": 0.7567567567567568,
+ "LineDetection.P": 1.0,
+ "LineDetection.Recall": 1.0,
+ "LineDetection.F1-Score": 1.0,
+ "LineDetection.Accuracy": 1.0,
+ "predicted_lines": [
+  10,
+  11,
+  18,
+  19,
+  20,
+  26,
+  31,
+  32,
+  37,
+  45,
+  55,
+  57,
+  62,
+  63,
+  75,
+  90
+ ]
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "role": "user",
+    "content": "You are an expert in smart contract vulnerability detection.\nA Solidity smart contract will be provided; identify all vulnerabilities present in the code.\nFocus specifically on detecting instances of Unchecked-Send.\nReturn ONLY the line numbers.\nOutput format constraint: ONLY digits separated by commas (e.g., 12,27,41). No words, no ranges, no JSON, no brackets, no explanations.\nWhen ready, you may first reply 'I understand the patterns and I'm ready for the next contract' or directly give predictions."
+  },
+  {
+    "role": "user",
+    "content": "[feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every function whose body contains `.send(` or `.call(` with no require/assert/revert check on its return value, even if the send/call line isn't the first line shown. === COMPACT HINTS === Label: Unchecked-Send Mode: tighten MUST: - Flag send/transfer/call.value with unchecked return or missing revert. INCLUDE: - Check for missing require(success) after external send. NEVER: - Exclude lines alre..."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 11,20,28,31,35,46,54,63,71,79,87,93,99,105,144,169,206,210,220,228,237,260,266,272,284,313,325,335,345"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every function whose body contains `.send(` or `.call(` with no require/assert/revert check on its return value, even if the send/call line isn't the first line shown. === COMPACT HINTS === Label: Unchecked-Send Mode: tighten MUST: - Flag send/transfer/call.value with unchecked return or missing revert. INCLUDE: - Check for missing require(success) after external send. NEVER: - Exclude lines already handling success/fail...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unchecked-Send\nMUST: - Flag send/transfer/call.value with unchecked return or missing revert.\nINCLUDE: - Check for missing require(success) after external send.\nNEVER: - Exclude lines already handling success/failure robustly.\nSelfConsistency: agree_with_prev=29 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 11,20,28,31,35,46,54,63,71,79,87,93,99,105,114,117,127,134,173,198,235,258,264,270,283,318,330,340,350,360"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every function whose body contains `.send(` or `.call(` with no require/assert/revert check on its return value, even if the send/call line isn't the first line shown. === COMPACT HINTS === Label: Unchecked-Send Mode: tighten MUST: - Flag send/transfer/call.value with unchecked return or missing revert. INCLUDE: - Check for missing require(success) after external send. NEVER: - Exclude lines already handling success/fail...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unchecked-Send\nMUST: - Flag send/transfer/call.value with unchecked return or missing revert.\nINCLUDE: - Check for missing require(success) after external send.\nNEVER: - Exclude lines already handling success/failure robustly.\nSelfConsistency: agree_with_prev=30 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 10,13,16,19,22,25,29,32,51,54,57,61,65,69,72,75,79,82,119,127,136,144,155,166,193,199,204,208,214"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every function whose body contains `.send(` or `.call(` with no require/assert/revert check on its return value, even if the send/call line isn't the first line shown. === COMPACT HINTS === Label: Unchecked-Send Mode: tighten MUST: - Flag send/transfer/call.value with unchecked return or missing revert. INCLUDE: - Check for missing require(success) after external send. NEVER: - Exclude lines already handling success/fail...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unchecked-Send\nMUST: - Flag send/transfer/call.value with unchecked return or missing revert.\nINCLUDE: - Check for missing require(success) after external send.\nNEVER: - Exclude lines already handling success/failure robustly.\nSelfConsistency: agree_with_prev=29 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 20,46,70,85,97,119,140"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every function whose body contains `.send(` or `.call(` with no require/assert/revert check on its return value, even if the send/call line isn't the first line shown. === COMPACT HINTS === Label: Unchecked-Send Mode: tighten MUST: - Flag send/transfer/call.value with unchecked return or missing revert. INCLUDE: - Check for missing require(success) after external send. NEVER: - Exclude lines alre...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unchecked-Send\nMUST: - Flag send/transfer/call.value with unchecked return or missing revert.\nINCLUDE: - Check for missing require(success) after external send.\nNEVER: - Exclude lines already handling success/failure robustly.\nSelfConsistency: agree_with_prev=7 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 14,17,20,25,28,31,62,69,82,98,104,110,122,133,138,143,147,151,157,160,165,175,186,193,200,209,225,246,256,263,274,279,282,289"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every function whose body contains `.send(` or `.call(` with no require/assert/revert check on its return value, even if the send/call line isn't the first line shown. === COMPACT HINTS === Label: Unchecked-Send Mode: tighten MUST: - Flag send/transfer/call.value with unchecked return or missing revert. INCLUDE: - Check for missing require(success) after external send. NEVER: - Exclude lines alre...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unchecked-Send\nMUST: - Flag send/transfer/call.value with unchecked return or missing revert.\nINCLUDE: - Check for missing require(success) after external send.\nNEVER: - Exclude lines already handling success/failure robustly.\nSelfConsistency: agree_with_prev=34 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 49,52,55,58,61,64,67,70,83,92,95,99,106,117,125,137,140,143,146,150,153,169,179,189,204,213,226,243,263,274,289,296,299"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every function whose body contains `.send(` or `.call(` with no require/assert/revert check on its return value, even if the send/call line isn't the first line shown. === COMPACT HINTS === Label: Unchecked-Send Mode: tighten MUST: - Flag send/transfer/call.value with unchecked return or missing revert. INCLUDE: - Check for missing require(success) after external send. NEVER: - Exclude lines alre...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unchecked-Send\nMUST: - Flag send/transfer/call.value with unchecked return or missing revert.\nINCLUDE: - Check for missing require(success) after external send.\nNEVER: - Exclude lines already handling success/failure robustly.\nSelfConsistency: agree_with_prev=33 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 9,13,16,19,24,32,42,45,49,61,77"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every function whose body contains `.send(` or `.call(` with no require/assert/revert check on its return value, even if the send/call line isn't the first line shown. === COMPACT HINTS === Label: Unchecked-Send Mode: tighten MUST: - Flag send/transfer/call.value with unchecked return or missing revert. INCLUDE: - Check for missing require(success) after external send. NEVER: - Exclude lines alre...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unchecked-Send\nMUST: - Flag send/transfer/call.value with unchecked return or missing revert.\nINCLUDE: - Check for missing require(success) after external send.\nNEVER: - Exclude lines already handling success/failure robustly.\nSelfConsistency: agree_with_prev=11 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 11,15,19,23,33,37,41,45,63,77,86,93,102,109,116,123,131,139,147,150,157,164,176,197,217,224"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every function whose body contains `.send(` or `.call(` with no require/assert/revert check on its return value, even if the send/call line isn't the first line shown. === COMPACT HINTS === Label: Unchecked-Send Mode: tighten MUST: - Flag send/transfer/call.value with unchecked return or missing revert. INCLUDE: - Check for missing require(success) after external send. NEVER: - Exclude lines alre...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unchecked-Send\nMUST: - Flag send/transfer/call.value with unchecked return or missing revert.\nINCLUDE: - Check for missing require(success) after external send.\nNEVER: - Exclude lines already handling success/failure robustly.\nSelfConsistency: agree_with_prev=26 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  }
+]

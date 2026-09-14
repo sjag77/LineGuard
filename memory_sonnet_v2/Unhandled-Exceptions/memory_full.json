@@ -1,0 +1,106 @@
+[
+  {
+    "role": "user",
+    "content": "You are an expert in smart contract vulnerability detection.\nA Solidity smart contract will be provided; identify all vulnerabilities present in the code.\nFocus specifically on detecting instances of Unhandled-Exceptions.\nReturn ONLY the line numbers.\nOutput format constraint: ONLY digits separated by commas (e.g., 12,27,41). No words, no ranges, no JSON, no brackets, no explanations.\nWhen ready, you may first reply 'I understand the patterns and I'm ready for the next contract' or directly give predictions."
+  },
+  {
+    "role": "user",
+    "content": "[feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any low-level `.send()`/`.call()` whose boolean return value is not checked, even if the call site itself appears elsewhere or unused, as an unhandled-exception vulnerability. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch wi..."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 11,20,29,34,40,56,65,76,86,100,115,123,131,140,186,213,252,259,270,281,294,323,331,337,350,380,398,411,430"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any low-level `.send()`/`.call()` whose boolean return value is not checked, even if the call site itself appears elsewhere or unused, as an unhandled-exception vulnerability. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch wi...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unhandled-Exceptions\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nSelfConsistency: agree_with_prev=29 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 14,25,33,38,44,55,64,76,85,95,105,117,130,138,149,157,169,179,225,252,290,314,323,338,353,389,401,412,428,441"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any low-level `.send()`/`.call()` whose boolean return value is not checked, even if the call site itself appears elsewhere or unused, as an unhandled-exception vulnerability. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch wi...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unhandled-Exceptions\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nSelfConsistency: agree_with_prev=30 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 10,19,25,37,41,45,54,58,78,83,86,91,98,103,108,113,123,133,172,182,194,209,222,234,264,279,286,290,296"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any low-level `.send()`/`.call()` whose boolean return value is not checked, even if the call site itself appears elsewhere or unused, as an unhandled-exception vulnerability. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch wi...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unhandled-Exceptions\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nSelfConsistency: agree_with_prev=29 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 25,54,87,103,116,143,165"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any low-level `.send()`/`.call()` whose boolean return value is not checked, even if the call site itself appears elsewhere or unused, as an unhandled-exception vulnerability. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch with proper handling. Misse...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unhandled-Exceptions\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nSelfConsistency: agree_with_prev=7 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 17,21,26,33,42,52,63,71,76,82,87,93,98,115,124,140,163,171,178,193,203,212,219,228,234,240,248,251,257,267,284,293,300,310,332,355,366,382,399,415"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any low-level `.send()`/`.call()` whose boolean return value is not checked, even if the call site itself appears elsewhere or unused, as an unhandled-exception vulnerability. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch with proper handling. Misse...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unhandled-Exceptions\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nSelfConsistency: agree_with_prev=40 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 52,56,61,66,75,85,91,99,113,124,129,137,146,160,175,189,194,199,204,208,212,228,239,252,276,287,300,318,344,358,382,390,393"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any low-level `.send()`/`.call()` whose boolean return value is not checked, even if the call site itself appears elsewhere or unused, as an unhandled-exception vulnerability. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVE...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unhandled-Exceptions\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nSelfConsistency: agree_with_prev=33 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 14,20,23,27,36,46,65,69,79,93,110"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any low-level `.send()`/`.call()` whose boolean return value is not checked, even if the call site itself appears elsewhere or unused, as an unhandled-exception vulnerability. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVE...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unhandled-Exceptions\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nSelfConsistency: agree_with_prev=11 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 11,18,23,29,41,51,60,65,89,105,116,126,142,151,159,169,186,196,204,207,215,228,243,273,294,302"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag any low-level `.send()`/`.call()` whose boolean return value is not checked, even if the call site itself appears elsewhere or unused, as an unhandled-exception vulnerability. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVE...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unhandled-Exceptions\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nSelfConsistency: agree_with_prev=26 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  }
+]

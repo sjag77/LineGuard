@@ -1,0 +1,106 @@
+[
+  {
+    "role": "user",
+    "content": "You are an expert in smart contract vulnerability detection.\nA Solidity smart contract will be provided; identify all vulnerabilities present in the code.\nFocus specifically on detecting instances of Overflow-Underflow.\nReturn ONLY the line numbers.\nOutput format constraint: ONLY digits separated by commas (e.g., 12,27,41). No words, no ranges, no JSON, no brackets, no explanations.\nWhen ready, you may first reply 'I understand the patterns and I'm ready for the next contract' or directly give predictions."
+  },
+  {
+    "role": "user",
+    "content": "[feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every arithmetic op (including empty-body functions with declared but unused vars like `uint8 x=0;`) unless preceded by an explicit require/if bounds-check, but only flag `-=` === COMPACT HINTS === Label: Overflow-Underflow Mode: broaden MUST: - Flag arithmetic updates on balances/allowances without checks. INCLUDE: - Unguarded add/sub/mul on critical state variables. NEVER: - Exclude compiler-ch..."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 13,30,31,32,44,45,46,52,58,72,88,104,115,131,146,155,156,157,166,174,216,217,218,246,285,291,303,313,325,356,357,358,368,369,370,379,394,430,444,456"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every arithmetic op (including empty-body functions with declared but unused vars like `uint8 x=0;`) unless preceded by an explicit require/if bounds-check, but only flag `-=` === COMPACT HINTS === Label: Overflow-Underflow Mode: broaden MUST: - Flag arithmetic updates on balances/allowances without checks. INCLUDE: - Unguarded add/sub/mul on critical state variables. NEVER: - Exclude compiler-checked arithmetic (>=0.8) ...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Overflow-Underflow\nMUST: - Flag arithmetic updates on balances/allowances without checks.\nINCLUDE: - Unguarded add/sub/mul on critical state variables.\nNEVER: - Exclude compiler-checked arithmetic (>=0.8) unless inside unchecked.\nSelfConsistency: agree_with_prev=40 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 12,23,34,35,36,43,44,45,53,72,88,89,90,103,119,134,145,159,172,181,182,183,195,200,212,221,263,264,265,293,332,357,365,374,375,376,393,436,437,438"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every arithmetic op (including empty-body functions with declared but unused vars like `uint8 x=0;`) unless preceded by an explicit require/if bounds-check, but only flag `-=` === COMPACT HINTS === Label: Overflow-Underflow Mode: broaden MUST: - Flag arithmetic updates on balances/allowances without checks. INCLUDE: - Unguarded add/sub/mul on critical state variables. NEVER: - Exclude compiler-checked arithmetic (>=0.8) ...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Overflow-Underflow\nMUST: - Flag arithmetic updates on balances/allowances without checks.\nINCLUDE: - Unguarded add/sub/mul on critical state variables.\nNEVER: - Exclude compiler-checked arithmetic (>=0.8) unless inside unchecked.\nSelfConsistency: agree_with_prev=40 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 11,16,21,26,32,42,48,54,80,85,91,103,104,105,113,125,135,141,153,163,203,204,205,216,227,238,239,240,245,254,267,287,296,305,306,307,320,321,322,331"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every arithmetic op (including empty-body functions with declared but unused vars like `uint8 x=0;`) unless preceded by an explicit require/if bounds-check, but only flag `-=` === COMPACT HINTS === Label: Overflow-Underflow Mode: broaden MUST: - Flag arithmetic updates on balances/allowances without checks. INCLUDE: - Unguarded add/sub/mul on critical state variables. NEVER: - Exclude compiler-ch...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Overflow-Underflow\nMUST: - Flag arithmetic updates on balances/allowances without checks.\nINCLUDE: - Unguarded add/sub/mul on critical state variables.\nNEVER: - Exclude compiler-checked arithmetic (>=0.8) unless inside unchecked.\nSelfConsistency: agree_with_prev=40 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 21,49,75,93,112,136,160"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every arithmetic op (including empty-body functions with declared but unused vars like `uint8 x=0;`) unless preceded by an explicit require/if bounds-check, but only flag `-=` === COMPACT HINTS === Label: Overflow-Underflow Mode: broaden MUST: - Flag arithmetic updates on balances/allowances without checks. INCLUDE: - Unguarded add/sub/mul on critical state variables. NEVER: - Exclude compiler-ch...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Overflow-Underflow\nMUST: - Flag arithmetic updates on balances/allowances without checks.\nINCLUDE: - Unguarded add/sub/mul on critical state variables.\nNEVER: - Exclude compiler-checked arithmetic (>=0.8) unless inside unchecked.\nHighRankedButNotSelected (double-check these): L58: for(uint i = 0 ; i < fileExistenceProofs[dappBoxOrigin].length ; i++) | L122: for(uint i = 0 ; i < len ; i++)\nSelfConsistency: agree_with_prev=7 newly_added=0 dropped=3\nRe-examine lines that changed between attempts before finalizing.\nFORMAT: Return o..."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 16,27,77,78,79,97,98,99,148,149,150,183,184,194,195,196,220,221,245,246,247,269,270,271,279,280,281,315,316,317,350,351,352,363,364,365,423,424"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every arithmetic op (including empty-body functions with declared but unused vars like `uint8 x=0;`) unless preceded by an explicit require/if bounds-check, but only flag `-=` === COMPACT HINTS === Label: Overflow-Underflow Mode: broaden MUST: - Flag arithmetic updates on balances/allowances without checks. INCLUDE: - Unguarded add/sub/mul on critical state variables. NEVER: - Exclude compiler-ch...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Overflow-Underflow\nMUST: - Flag arithmetic updates on balances/allowances without checks.\nINCLUDE: - Unguarded add/sub/mul on critical state variables.\nNEVER: - Exclude compiler-checked arithmetic (>=0.8) unless inside unchecked.\nHighRankedButNotSelected (double-check these): L164: //approve allowance | L422: //add tokens to investor balance from founder balance\nSelfConsistency: agree_with_prev=38 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 51,62,72,78,89,99,104,109,125,126,127,140,151,152,153,161,175,199,200,201,217,218,219,249,250,251"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every arithmetic op (including empty-body functions with declared but unused vars like `uint8 x=0;`) unless preceded by an explicit require/if bounds-check, but only flag `-=` === COMPACT HINTS === Label: Overflow-Underflow Mode: broaden MUST: - Flag arithmetic updates on balances/allowances without checks. INCLUDE: - Unguarded add/sub/mul on critical state variables. NEVER: - Exclude compiler-ch...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Overflow-Underflow\nMUST: - Flag arithmetic updates on balances/allowances without checks.\nINCLUDE: - Unguarded add/sub/mul on critical state variables.\nNEVER: - Exclude compiler-checked arithmetic (>=0.8) unless inside unchecked.\nHighRankedButNotSelected (double-check these): L265: balances[owner] = _totalSupply;\t\t//direct address -> owner  : compiler version up | L289: function balanceOf(address tokenOwner) public view returns (uint balance) {\t\t//constant ->\u2026\nSelfConsistency: agree_with_prev=26 newly_added=0 dropped=14\nRe-exam..."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 11,12,13,21,22,23,29,34,41,51,56,57,63,69,80,95,110,111,112,118"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every arithmetic op (including empty-body functions with declared but unused vars like `uint8 x=0;`) unless preceded by an explicit require/if bounds-check, but only flag `-=` === COMPACT HINTS === Label: Overflow-Underflow Mode: broaden MUST: - Flag arithmetic updates on balances/allowances without checks. INCLUDE: - Unguarded add/sub/mul on critical state variables. NEVER: - Exclude compiler-ch...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Overflow-Underflow\nMUST: - Flag arithmetic updates on balances/allowances without checks.\nINCLUDE: - Unguarded add/sub/mul on critical state variables.\nNEVER: - Exclude compiler-checked arithmetic (>=0.8) unless inside unchecked.\nHighRankedButNotSelected (double-check these): L37: uint256 public totalSupply = 1000000000 * (uint256(10) ** decimals);\nSelfConsistency: agree_with_prev=20 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMM"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 13,14,15,23,35,46,59,71,82,89,114,131,132,133,145,154,166,167,168,178,187,196,207,208,209,221,222,223,237,246,255,269,292,315,329"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every arithmetic op (including empty-body functions with declared but unused vars like `uint8 x=0;`) unless preceded by an explicit require/if bounds-check, but only flag `-=` === COMPACT HINTS === Label: Overflow-Underflow Mode: broaden MUST: - Flag arithmetic updates on balances/allowances without checks. INCLUDE: - Unguarded add/sub/mul on critical state variables. NEVER: - Exclude compiler-ch...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Overflow-Underflow\nMUST: - Flag arithmetic updates on balances/allowances without checks.\nINCLUDE: - Unguarded add/sub/mul on critical state variables.\nNEVER: - Exclude compiler-checked arithmetic (>=0.8) unless inside unchecked.\nHighRankedButNotSelected (double-check these): L301: require(msg.sender == HashList[hash][owncount - 1].owner);\nSelfConsistency: agree_with_prev=28 newly_added=7 dropped=0\nRe-examine lines that changed between attempts before finalizing.\nFORMAT: Return only comma-separated integers (e.g., 12,27). No wo..."
+  }
+]
