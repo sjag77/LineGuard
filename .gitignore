@@ -1,0 +1,8 @@
+__pycache__/
+.DS_Store
+.cli_empty/
+results_smoke/
+memory_smoke/
+results_sonnet/
+memory_sonnet/
+resubmission.zip
