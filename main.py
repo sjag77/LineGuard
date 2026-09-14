@@ -38,6 +38,7 @@ Example:
 
 import re
 import os
+import subprocess
 import json
 import time
 import argparse
@@ -58,12 +59,108 @@ try:
 except Exception:
     OpenAI = None
 
-# ---------------- Defaults ----------------
-#BASE_MODEL = "gpt-4o"  # Models: GPT-4o/GPT-5"
+try:
+    import anthropic  # type: ignore
+except Exception:
+    anthropic = None
 
+# ---------------- Defaults ----------------
+BASE_MODEL = "gpt-4o"  # overridden by --model at runtime; Models: GPT-4o/GPT-5/claude-opus-5/gemini-2.0-flash/...
+PROVIDER = "openai"    # overridden by --provider at runtime: 'openai' | 'anthropic' | 'gemini' | 'groq' | 'openrouter'
+
+DEFAULT_MODEL_BY_PROVIDER = {
+    "openai": "gpt-4o",
+    "anthropic": "claude-opus-5",
+    "claude_cli": "claude-sonnet-5",
+    "gemini": "gemini-2.0-flash",
+    "groq": "llama-3.3-70b-versatile",
+    "openrouter": "meta-llama/llama-3.3-70b-instruct:free",
+}
+
+# 'gemini', 'groq', 'openrouter' are OpenAI-wire-compatible: same client, different base_url.
+PROVIDER_BASE_URL = {
+    "gemini": "https://generativelanguage.googleapis.com/v1beta/openai/",
+    "groq": "https://api.groq.com/openai/v1",
+    "openrouter": "https://openrouter.ai/api/v1",
+}
+
+# Rough $/1M tokens, for cost reporting only (approximate, update as pricing changes).
+_COST_PER_M_TOKENS = {
+    "gpt-4o":        {"in": 2.50,  "out": 10.00},
+    "gpt-4o-mini":    {"in": 0.15,  "out": 0.60},
+    "gpt-5":          {"in": 5.00,  "out": 15.00},
+    "claude-opus-5":  {"in": 5.00,  "out": 25.00},
+    "claude-sonnet-5": {"in": 2.00, "out": 10.00},
+    "claude-haiku-4-5": {"in": 1.00, "out": 5.00},
+    "gemini-2.0-flash": {"in": 0.0, "out": 0.0},  # free tier
+    "llama-3.3-70b-versatile": {"in": 0.0, "out": 0.0},  # free tier
+    "meta-llama/llama-3.3-70b-instruct:free": {"in": 0.0, "out": 0.0},  # OpenRouter free tier
+}
 
 TEMPERATURE = None
 HISTORY_TURNS_DEFAULT = 4
+
+# Per-request wall-clock cap. Without this the SDK default (600s) x the retry loop
+# lets a single stalled call block a run for ~an hour.
+REQUEST_TIMEOUT_S = 120.0
+# Predictions are just comma-separated line numbers; the cap also stops reasoning
+# models from emitting unbounded thinking tokens.
+MAX_OUTPUT_TOKENS = 1024
+
+# ---------------- Claude CLI support ----------------
+CLI_EMPTY_DIR = str(Path(__file__).resolve().parent / ".cli_empty")
+os.makedirs(CLI_EMPTY_DIR, exist_ok=True)
+
+
+class UsageLimitReached(RuntimeError):
+    """Raised when the Claude subscription usage limit is hit; the run stops cleanly and can be resumed."""
+
+
+def _looks_like_usage_limit(data: Dict[str, Any], blob: str) -> bool:
+    status = data.get("api_error_status")
+    if status in (429, "429"):
+        return True
+    return any(s in blob for s in ("usage limit", "limit reached", "rate limit", "5-hour limit", "limit will reset"))
+
+
+# ---------------- Usage / cost tracking (Reviewer#2 Concern #10) ----------------
+_USAGE_LOG: List[Dict[str, Any]] = []
+
+def _log_usage(label: str, contract: str, attempt: int, call_type: str,
+               provider: str, model: str, prompt_tokens: int, completion_tokens: int,
+               elapsed_s: float, is_fallback: bool = False) -> None:
+    rates = _COST_PER_M_TOKENS.get(model, {"in": 0.0, "out": 0.0})
+    cost = (prompt_tokens / 1e6) * rates["in"] + (completion_tokens / 1e6) * rates["out"]
+    _USAGE_LOG.append({
+        "label": label, "contract": contract, "attempt": attempt, "call_type": call_type,
+        "provider": provider, "model": model,
+        "prompt_tokens": prompt_tokens, "completion_tokens": completion_tokens,
+        "total_tokens": prompt_tokens + completion_tokens,
+        "elapsed_s": round(elapsed_s, 4), "is_fallback": is_fallback,
+        "est_cost_usd": round(cost, 6),
+    })
+
+def dump_usage_log(csv_path: Path) -> Optional[Dict[str, Any]]:
+    """Writes the full call-level usage log and returns an aggregate summary dict."""
+    if not _USAGE_LOG:
+        return None
+    df = pd.DataFrame(_USAGE_LOG)
+    df.to_csv(csv_path, index=False)
+    summary = {
+        "num_calls": len(df),
+        "num_fallback_calls": int(df["is_fallback"].sum()),
+        "total_prompt_tokens": int(df["prompt_tokens"].sum()),
+        "total_completion_tokens": int(df["completion_tokens"].sum()),
+        "total_tokens": int(df["total_tokens"].sum()),
+        "total_elapsed_s": float(df["elapsed_s"].sum()),
+        "avg_elapsed_s_per_call": float(df["elapsed_s"].mean()),
+        "est_total_cost_usd": float(df["est_cost_usd"].sum()),
+        "num_contracts": df["contract"].nunique(),
+    }
+    if summary["num_contracts"] > 0:
+        summary["avg_cost_usd_per_contract"] = summary["est_total_cost_usd"] / summary["num_contracts"]
+        summary["avg_calls_per_contract"] = summary["num_calls"] / summary["num_contracts"]
+    return summary
 
 # Map (display → folder_name_on_disk)
 LABEL_FOLDERS = {
@@ -348,6 +445,61 @@ def build_compact_guidance(
     text = "\n".join(parts)
     return text[:max_chars-3] + "..." if len(text) > max_chars else text
 
+def build_self_consistency_guidance(
+    label_name: str,
+    contract_text: str,
+    pred_lines: List[int],
+    ranked_candidates: List[int],
+    prev_pred_lines: Optional[List[int]],
+    k: int = 2,
+    max_chars: int = 900
+) -> str:
+    """
+    Non-oracle counterpart to build_compact_guidance (Reviewer#2 Concern #1).
+    Builds feedback WITHOUT any ground-truth access: it only uses (a) the fixed
+    per-label rules, (b) ranked candidate lines the model did NOT select (self
+    only, no truth), and (c) agreement/disagreement with the model's own previous
+    attempt, as a self-consistency signal. This is what would realistically be
+    available at real audit time.
+    """
+    code_lines = contract_text.splitlines()
+    pred_set = set(pred_lines)
+    unselected = [c for c in ranked_candidates if c not in pred_set]
+    unselected_sel = _pick_k(unselected, k)
+    unselected_snips = [f"L{ln}: {_snip_line(code_lines, ln)}" for ln in unselected_sel]
+
+    rules = _COMPACT_RULES.get(label_name, {
+        "MUST": ["Focus on lines directly implementing the labeled vulnerability."],
+        "INCLUDE": ["Prefer lines near external calls or critical state changes."],
+        "NEVER": ["Exclude comments, events, and boilerplate."],
+    })
+
+    parts: List[str] = ["=== COMPACT HINTS (non-oracle: no ground truth used) ==="]
+    parts.append(f"Label: {label_name}")
+    parts.append("MUST: " + " ".join(f"- {r}" for r in rules.get("MUST", [])))
+    if rules.get("INCLUDE"): parts.append("INCLUDE: " + " ".join(f"- {r}" for r in rules.get("INCLUDE", [])))
+    if rules.get("NEVER"):   parts.append("NEVER: " + " ".join(f"- {r}" for r in rules.get("NEVER", [])))
+    if unselected_snips:
+        parts.append("HighRankedButNotSelected (double-check these): " + " | ".join(unselected_snips))
+    if prev_pred_lines is not None:
+        agree = sorted(pred_set & set(prev_pred_lines))
+        disagree_new = sorted(pred_set - set(prev_pred_lines))
+        disagree_dropped = sorted(set(prev_pred_lines) - pred_set)
+        parts.append(f"SelfConsistency: agree_with_prev={len(agree)} newly_added={len(disagree_new)} dropped={len(disagree_dropped)}")
+        if disagree_new or disagree_dropped:
+            parts.append("Re-examine lines that changed between attempts before finalizing.")
+    parts.append("FORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON.")
+    text = "\n".join(parts)
+    return text[:max_chars-3] + "..." if len(text) > max_chars else text
+
+def _jaccard(a: List[int], b: List[int]) -> float:
+    A, B = set(a), set(b)
+    if not A and not B:
+        return 1.0
+    if not A or not B:
+        return 0.0
+    return len(A & B) / len(A | B)
+
 # ---------------- Candidate extraction + snippets ----------------
 # Comprehensive coverage of: call{value:...}(), call.value(...), send/transfer and even call(...)
 _RE_LOWLEVEL_ANY = re.compile(
@@ -477,7 +629,9 @@ def build_user_contract_prompt(
     last_pred: Optional[List[int]],
     truth_block: Optional[List[int]],
     condense_window: int,
-    topk_candidates: int
+    topk_candidates: int,
+    use_pruning: bool = True,   # Reviewer#2 Concern #6 / Reviewer#3 Concern #3 (ablation)
+    oracle: bool = True         # Reviewer#2 Concern #1 (non-oracle mode)
 ) -> str:
     lines = contract_text.splitlines()
     parts: List[str] = []
@@ -486,27 +640,33 @@ def build_user_contract_prompt(
     if injected_feedback:
         parts.append("=== PREVIOUS FEEDBACK (for this attempt) ===\n" + injected_feedback.strip())
 
-    # Rank Top-K candidates and build compact context
-    rank = rank_candidates(contract_text, label_name, topk_candidates)
-    cand_list = ",".join(str(x) for x in rank) if rank else ""
+    if use_pruning:
+        # Rank Top-K candidates and build compact context (semantic pruning component)
+        rank = rank_candidates(contract_text, label_name, topk_candidates)
+        cand_list = ",".join(str(x) for x in rank) if rank else ""
 
-    if rank:
-        code_cand, _ = slice_around(lines, rank, radius=condense_window)
-        parts.append("=== CANDIDATE SNIPPETS (Top-K) ===\n" + code_cand)
+        if rank:
+            code_cand, _ = slice_around(lines, rank, radius=condense_window)
+            parts.append("=== CANDIDATE SNIPPETS (Top-K) ===\n" + code_cand)
 
-    if attempt_index >= 2 and last_pred and truth_block:
-        fn = sorted(set(truth_block) - set(last_pred))
-        if fn:
-            code_fn, _ = slice_around(lines, fn[:min(30, len(fn))], radius=max(2, condense_window//2))
-            parts.append("=== MISSED-TRUTH SNIPPETS (focus) ===\n" + code_fn)
+        # MISSED-TRUTH is an oracle-derived hint: only usable when oracle=True
+        if oracle and attempt_index >= 2 and last_pred and truth_block:
+            fn = sorted(set(truth_block) - set(last_pred))
+            if fn:
+                code_fn, _ = slice_around(lines, fn[:min(30, len(fn))], radius=max(2, condense_window//2))
+                parts.append("=== MISSED-TRUTH SNIPPETS (focus) ===\n" + code_fn)
 
-    # Explicit gating
-    parts.append("You MUST choose line numbers ONLY from CandidateLines below.")
-    parts.append("FORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON.")
-    parts.append("CandidateLines: " + cand_list)
-
-    # Intentionally we do not send the entire contract to keep the context compact and targeted
-    parts.append("Analyze the snippets and output only the matching line numbers.")
+        # Explicit gating
+        parts.append("You MUST choose line numbers ONLY from CandidateLines below.")
+        parts.append("FORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON.")
+        parts.append("CandidateLines: " + cand_list)
+        parts.append("Analyze the snippets and output only the matching line numbers.")
+    else:
+        # Ablation: no semantic pruning — send the full numbered contract instead of Top-K snippets.
+        numbered = "\n".join(f"{i:>4}: {l}" for i, l in enumerate(lines, start=1))
+        parts.append("=== FULL CONTRACT (no pruning) ===\n" + numbered)
+        parts.append("FORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON.")
+        parts.append("Analyze the full contract above and output only the matching line numbers.")
 
     return "\n\n".join(parts)
 
@@ -520,7 +680,9 @@ def build_messages_for_attempt(
     last_pred: Optional[List[int]],
     truth_block: Optional[List[int]],
     condense_window: int,
-    topk_candidates: int
+    topk_candidates: int,
+    use_pruning: bool = True,
+    oracle: bool = True
 ) -> List[Dict]:
     msgs: List[Dict] = []
     for s in compress_recent_systems(memory_chat, history_turns):
@@ -533,7 +695,9 @@ def build_messages_for_attempt(
         last_pred=last_pred,
         truth_block=truth_block,
         condense_window=condense_window,
-        topk_candidates=topk_candidates
+        topk_candidates=topk_candidates,
+        use_pruning=use_pruning,
+        oracle=oracle
     )
     msgs.append({"role": "user", "content": user_prompt})
     return msgs
@@ -557,49 +721,232 @@ def append_attempt_to_chat(
     memory_chat.append({"role": "user", "content": analysis_and_feedback_user})
 
 # ---------------- LLM call ----------------
-def call_llm_messages(messages: List[Dict], api_key: str) -> str:
+def _messages_to_anthropic(messages: List[Dict]) -> Tuple[str, List[Dict]]:
+    """
+    Converts this project's OpenAI-style message list (roles: 'user', 'system' —
+    where mid-conversation 'system' entries are actually prior model outputs stashed
+    for memory purposes) into Anthropic's format: a single system string plus a
+    strictly alternating user/assistant message list.
+    """
+    sys_parts: List[str] = []
+    conv: List[Dict] = []
+    for i, m in enumerate(messages):
+        role = m.get("role")
+        content = str(m.get("content", ""))
+        if role == "system" and i == 0:
+            sys_parts.append(content)
+            continue
+        mapped_role = "assistant" if role == "system" else "user"
+        if conv and conv[-1]["role"] == mapped_role:
+            conv[-1]["content"] += "\n\n" + content
+        else:
+            conv.append({"role": mapped_role, "content": content})
+    if not conv or conv[0]["role"] != "user":
+        conv.insert(0, {"role": "user", "content": "(context continues)"})
+    return ("\n\n".join(sys_parts), conv)
+
+def call_llm_messages(
+    messages: List[Dict],
+    api_key: str,
+    provider: Optional[str] = None,
+    model: Optional[str] = None,
+    seed: Optional[int] = None,
+    usage_ctx: Optional[Dict[str, Any]] = None,  # {"label","contract","attempt","call_type"}
+) -> str:
     """
     Robust LLM caller with:
       - Explicit handling of 429 rate limits (parse "try again in Xms" and backoff)
       - Exponential backoff for transient errors (5xx)
       - Fallback retry without temperature if the server rejects temperature
       - Optional model fallback to a lighter variant (e.g., gpt-4o-mini) after repeated 429s
+      - Provider switch between OpenAI and Anthropic (Reviewer#2 Concern #3: model/decoding
+        versioning is now explicit and logged; see usage_ctx/_log_usage)
     """
-    if OpenAI is None:
-        raise RuntimeError("openai package not installed; cannot call LLM in REAL mode.")
-
-    client = OpenAI(api_key=api_key)
-
-    # Optional: if BASE_MODEL is a heavier 4o, allow fallback to a lighter one on repeated 429s
-    model = BASE_MODEL
-    fallback_model = "gpt-4o-mini" if ("gpt-4o" in str(BASE_MODEL) and "mini" not in str(BASE_MODEL)) else None
-
+    provider = (provider or PROVIDER or "openai").lower()
+    model = model or BASE_MODEL
+    ctx = usage_ctx or {}
     max_retries = 6
     backoff = 0.75  # seconds; grows on each retry
     last_err = None
 
+    if provider == "claude_cli":
+        # LOCAL FUNCTIONAL TESTING ONLY. Shells out to the Claude Code CLI in print mode.
+        # Not suitable for reported results: the CLI applies its own system prompt and
+        # harness, the model snapshot and decoding parameters are not controllable or
+        # observable, and no token usage is returned.
+        # Fixed, documented system prompt replaces the CLI default; all built-in tools and MCP
+        # servers are disabled and the call runs from an empty directory, so no project
+        # instructions or tool schemas enter the context.
+        if ctx.get("call_type", "prediction") != "prediction" and messages and messages[0].get("role") == "system":
+            # Auxiliary calls (e.g. the feedback-rule coach) carry their own system message.
+            system_prompt = messages[0]["content"]
+            history = []
+        else:
+            system_prompt = ctx.get("system_prompt") or instruction_block(ctx.get("label", "the specified vulnerability"))
+            history = [m["content"] for m in messages[:-1] if m.get("role") == "system"]
+        prompt_parts = [f"Previous prediction: {h}" for h in history] + [messages[-1]["content"]]
+        prompt = "\n\n".join(prompt_parts)
+        cmd = ["claude", "-p", "--output-format", "json", "--no-session-persistence",
+               "--strict-mcp-config", "--tools", "", "--system-prompt", system_prompt]
+        if model:
+            cmd += ["--model", model]
+        for attempt in range(1, max_retries + 1):
+            t0 = time.time()
+            try:
+                proc = subprocess.run(cmd, input=prompt, capture_output=True, text=True,
+                                      timeout=REQUEST_TIMEOUT_S, cwd=CLI_EMPTY_DIR)
+                elapsed = time.time() - t0
+                raw = (proc.stdout or "").strip()
+                try:
+                    data = json.loads(raw) if raw else {}
+                except json.JSONDecodeError:
+                    data = {}
+                blob = f"{raw} {proc.stderr}".lower()
+                if _looks_like_usage_limit(data, blob):
+                    raise UsageLimitReached((data.get("result") or proc.stderr or raw).strip()[:300])
+                if proc.returncode != 0 or data.get("is_error"):
+                    raise RuntimeError(f"claude CLI error (exit {proc.returncode}): {(data.get('result') or proc.stderr).strip()[:200]}")
+                text = (data.get("result") or "").strip()
+                if not text:
+                    raise RuntimeError("Empty CLI result")
+                usage = data.get("usage") or {}
+                resolved = next(iter(data.get("modelUsage") or {}), model or "cli-default")
+                _log_usage(
+                    label=ctx.get("label", "unknown"), contract=ctx.get("contract", "unknown"),
+                    attempt=ctx.get("attempt", 0), call_type=ctx.get("call_type", "prediction"),
+                    provider=provider, model=resolved,
+                    prompt_tokens=int(usage.get("input_tokens", 0)) + int(usage.get("cache_creation_input_tokens", 0))
+                                  + int(usage.get("cache_read_input_tokens", 0)),
+                    completion_tokens=int(usage.get("output_tokens", 0)),
+                    elapsed_s=elapsed, is_fallback=False,
+                )
+                if _USAGE_LOG and data.get("total_cost_usd") is not None:
+                    _USAGE_LOG[-1]["est_cost_usd"] = round(float(data["total_cost_usd"]), 6)
+                return text
+            except UsageLimitReached:
+                raise
+            except subprocess.TimeoutExpired as e:
+                last_err = e
+                print(f"[WARN] claude CLI timed out after {REQUEST_TIMEOUT_S}s (attempt {attempt}/{max_retries})")
+            except Exception as e:
+                last_err = e
+                print(f"[WARN] claude CLI error: {e}; retrying in {backoff:.2f}s (attempt {attempt}/{max_retries})")
+            time.sleep(backoff)
+            backoff = min(backoff * 1.5, 5.0)
+        raise RuntimeError(f"claude CLI failed after {max_retries} retries: {last_err}")
+
+    if provider == "anthropic":
+        if anthropic is None:
+            raise RuntimeError("anthropic package not installed; cannot call LLM with provider=anthropic.")
+        # api_key=None lets the SDK resolve credentials itself: ANTHROPIC_API_KEY,
+        # ANTHROPIC_AUTH_TOKEN, or an 'ant auth login' OAuth profile on disk.
+        client = (anthropic.Anthropic(api_key=api_key, timeout=REQUEST_TIMEOUT_S) if api_key
+                  else anthropic.Anthropic(timeout=REQUEST_TIMEOUT_S))
+        system_str, conv = _messages_to_anthropic(messages)
+        for attempt in range(1, max_retries + 1):
+            t0 = time.time()
+            try:
+                kwargs = {"model": model, "max_tokens": MAX_OUTPUT_TOKENS, "messages": conv}
+                if system_str:
+                    kwargs["system"] = system_str
+                resp = client.messages.create(**kwargs)
+                elapsed = time.time() - t0
+                text = "".join(b.text for b in resp.content if getattr(b, "type", "") == "text").strip()
+                if not text:
+                    raise RuntimeError("Empty completion content")
+                usage = getattr(resp, "usage", None)
+                _log_usage(
+                    label=ctx.get("label", "unknown"), contract=ctx.get("contract", "unknown"),
+                    attempt=ctx.get("attempt", 0), call_type=ctx.get("call_type", "prediction"),
+                    provider=provider, model=model,
+                    prompt_tokens=getattr(usage, "input_tokens", 0) or 0,
+                    completion_tokens=getattr(usage, "output_tokens", 0) or 0,
+                    elapsed_s=elapsed, is_fallback=False,
+                )
+                return text
+            except Exception as e:
+                last_err = e
+                msg = str(e)
+                if ("429" in msg) or ("rate_limit" in msg.lower()) or ("overloaded" in msg.lower()):
+                    sleep_s = backoff
+                    print(f"[WARN] Anthropic rate limit/overload. Sleeping {sleep_s:.2f}s (attempt {attempt}/{max_retries})")
+                    time.sleep(sleep_s)
+                    backoff = min(backoff * 1.8, 8.0)
+                    continue
+                sleep_s = backoff
+                print(f"[WARN] Anthropic API error: {e}; retrying in {sleep_s:.2f}s (attempt {attempt}/{max_retries})")
+                time.sleep(sleep_s)
+                backoff = min(backoff * 1.5, 5.0)
+        raise RuntimeError(f"Anthropic API failed after {max_retries} retries: {last_err}")
+
+    # ---- provider in {'openai','gemini','groq'} — all OpenAI-wire-compatible ----
+    if OpenAI is None:
+        raise RuntimeError("openai package not installed; cannot call LLM in REAL mode.")
+
+    base_url = PROVIDER_BASE_URL.get(provider)  # None for 'openai' -> SDK default
+    client = (OpenAI(api_key=api_key, base_url=base_url, timeout=REQUEST_TIMEOUT_S) if base_url
+              else OpenAI(api_key=api_key, timeout=REQUEST_TIMEOUT_S))
+
+    # Optional: if the model is a heavier 4o, allow fallback to a lighter one on repeated 429s
+    fallback_model = "gpt-4o-mini" if ("gpt-4o" in str(model) and "mini" not in str(model)) else None
+    used_fallback = False
+
+    # GPT-5 / o-series reject 'max_tokens' and require 'max_completion_tokens'; switched on demand.
+    token_param = "max_tokens"
+
     for attempt in range(1, max_retries + 1):
         try:
-            kwargs = {"model": model, "messages": messages}
+            kwargs = {"model": model, "messages": messages, token_param: MAX_OUTPUT_TOKENS}
             if TEMPERATURE is not None:
                 kwargs["temperature"] = TEMPERATURE
+            if seed is not None and provider == "openai":  # 'seed' isn't a Gemini/Groq-compat param
+                kwargs["seed"] = seed
 
+            t0 = time.time()
             resp = client.chat.completions.create(**kwargs)
+            elapsed = time.time() - t0
             text = (resp.choices[0].message.content or "").strip()
             if not text:
                 raise RuntimeError("Empty completion content")
+            usage = getattr(resp, "usage", None)
+            _log_usage(
+                label=ctx.get("label", "unknown"), contract=ctx.get("contract", "unknown"),
+                attempt=ctx.get("attempt", 0), call_type=ctx.get("call_type", "prediction"),
+                provider=provider, model=model,
+                prompt_tokens=getattr(usage, "prompt_tokens", 0) or 0,
+                completion_tokens=getattr(usage, "completion_tokens", 0) or 0,
+                elapsed_s=elapsed, is_fallback=used_fallback,
+            )
             return text
 
         except Exception as e:
             last_err = e
             msg = str(e)
 
+            # GPT-5/o-series: swap max_tokens -> max_completion_tokens and retry immediately.
+            if token_param == "max_tokens" and "max_completion_tokens" in msg:
+                print("[INFO] Switching to 'max_completion_tokens' for this model.")
+                token_param = "max_completion_tokens"
+                continue
+
             # Retry without temperature if the API complains about it
             if "param': 'temperature'" in msg or "Unsupported value" in msg:
                 try:
-                    resp = client.chat.completions.create(model=model, messages=messages)
+                    t0 = time.time()
+                    resp = client.chat.completions.create(
+                        model=model, messages=messages, **{token_param: MAX_OUTPUT_TOKENS})
+                    elapsed = time.time() - t0
                     text = (resp.choices[0].message.content or "").strip()
                     if text:
+                        usage = getattr(resp, "usage", None)
+                        _log_usage(
+                            label=ctx.get("label", "unknown"), contract=ctx.get("contract", "unknown"),
+                            attempt=ctx.get("attempt", 0), call_type=ctx.get("call_type", "prediction"),
+                            provider=provider, model=model,
+                            prompt_tokens=getattr(usage, "prompt_tokens", 0) or 0,
+                            completion_tokens=getattr(usage, "completion_tokens", 0) or 0,
+                            elapsed_s=elapsed, is_fallback=used_fallback,
+                        )
                         return text
                 except Exception as e2:
                     print(f"[WARN] retry without temperature failed: {e2}")
@@ -622,6 +969,7 @@ def call_llm_messages(messages: List[Dict], api_key: str) -> str:
                 if fallback_model and attempt >= 2 and model != fallback_model:
                     print(f"[INFO] Switching model to {fallback_model} due to repeated 429.")
                     model = fallback_model
+                    used_fallback = True
                 continue
 
             # Transient server-side errors (5xx)
@@ -730,6 +1078,17 @@ def _should_stop(policy: str,
                 (has_line_truth and prec_l >= threshold and rec_l >= threshold))
     return False
 
+def _should_stop_non_oracle(cur_pred: List[int], prev_pred: Optional[List[int]],
+                             convergence_threshold: float = 0.9) -> bool:
+    """
+    Truth-free stopping rule (Reviewer#2 Concern #1): stop once the model's
+    prediction set has converged across consecutive attempts (self-consistency),
+    since no metric-derived label is available at real audit time.
+    """
+    if prev_pred is None:
+        return False
+    return _jaccard(cur_pred, prev_pred) >= convergence_threshold
+
 # ---------------- Best-attempt selection ----------------
 @dataclass
 class AttemptResult:
@@ -763,6 +1122,27 @@ def _select_best_attempt(attempts: List[AttemptResult]) -> AttemptResult:
         avg = (x.b_f1 + x.l_f1) / 2.0
         return (avg, x.b_f1, x.l_f1, x.b_rec, x.l_rec, -x.attempt_idx)
     return sorted(attempts, key=_key, reverse=True)[0]
+
+def _select_best_attempt_non_oracle(attempts: List[AttemptResult]) -> AttemptResult:
+    """
+    Truth-free counterpart to _select_best_attempt (Reviewer#2 Concern #1).
+    Selects the attempt with the highest self-consistency (mean Jaccard
+    agreement with every other attempt's prediction set); ties broken toward
+    the later attempt (more feedback rounds seen), since no ground-truth
+    F1 is available at real audit time.
+    """
+    if not attempts:
+        raise RuntimeError("No attempts available for selection.")
+    if len(attempts) == 1:
+        return attempts[0]
+
+    def _agreement(a: AttemptResult) -> float:
+        others = [b for b in attempts if b is not a]
+        return sum(_jaccard(a.pred_lines, b.pred_lines) for b in others) / len(others)
+
+    scored = [(_agreement(a), a.attempt_idx, a) for a in attempts]
+    scored.sort(key=lambda t: (t[0], t[1]), reverse=True)
+    return scored[0][2]
 
 # ---------------- NEW: Memory summarization & smart feedback helpers ----------------
 def extract_feedback_strings(memory_chat: List[Dict], k: int = 200) -> List[str]:
@@ -822,9 +1202,9 @@ def make_one_line_rule_local(label: str, err: Dict[str,Any], rule_chars:int=180)
     return hint[:rule_chars]
 
 def make_one_line_rule_llm(api_key: str, model: str, label: str, memory_summary: str,
-                           err: Dict[str,Any], rule_chars:int=180) -> str:
-    if OpenAI is None:
-        return make_one_line_rule_local(label, err, rule_chars)
+                           err: Dict[str,Any], rule_chars:int=180,
+                           provider: Optional[str] = None, seed: Optional[int] = None,
+                           usage_ctx: Optional[Dict[str, Any]] = None) -> str:
     sys_msg = ("You are a Solidity security coach. Output ONE imperative rule (<=%d chars) "
                "to improve the NEXT attempt; prioritize PRECISION, preserve RECALL.") % rule_chars
     user_msg = (f"[label]={label}\n"
@@ -834,14 +1214,11 @@ def make_one_line_rule_llm(api_key: str, model: str, label: str, memory_summary:
                 f"FN={'; '.join(err.get('fn_snips',[]))}\n"
                 "Return ONE sentence. No bullets.")
     try:
-        client = OpenAI(api_key=api_key)
-        resp = client.chat.completions.create(
-            model=model,
-            messages=[{"role":"system","content":sys_msg},
-                      {"role":"user","content":user_msg}],
-            # max_tokens=64, temperature=0
+        text = call_llm_messages(
+            messages=[{"role": "system", "content": sys_msg}, {"role": "user", "content": user_msg}],
+            api_key=api_key, provider=provider, model=model, seed=seed,
+            usage_ctx={**(usage_ctx or {}), "call_type": "feedback_rule"},
         )
-        text = (resp.choices[0].message.content or "").strip()
         text = re.sub(r"\s+", " ", text)[:rule_chars]
         return text if len(text) >= 8 else make_one_line_rule_local(label, err, rule_chars)
     except Exception as e:
@@ -874,8 +1251,22 @@ def process_label_real(
     mem_keep_recent: int,
     distill_every: int,
     contract_counter_state: Dict[str, int],
-    limit_contracts: Optional[int] = None  # NEW: maximum number of contracts to process for this label in this run
+    limit_contracts: Optional[int] = None,  # NEW: maximum number of contracts to process for this label in this run
+    # NEW: provider/model + reproducibility (Reviewer#2 Concerns #2, #3, #9)
+    provider: str = "openai",
+    model: Optional[str] = None,
+    llm_seed: Optional[int] = None,
+    # NEW: oracle vs non-oracle assessment (Reviewer#2 Concern #1)
+    oracle: bool = True,
+    # NEW: ablation switches (Reviewer#2 Concern #6 / Reviewer#3 Concern #3)
+    use_pruning: bool = True,
+    use_feedback: bool = True,
+    # First N contracts run in oracle mode to warm the memory; they are excluded from reported metrics.
+    warmup_contracts: int = 0,
+    # Skip contracts that already have a saved result row (continue a run cut off by a usage limit).
+    resume: bool = False,
 ):
+    oracle_default = oracle
     label_dir = contracts_root / folder_name
     if not label_dir.exists():
         print(f"[SKIP] Missing directory: {label_dir}")
@@ -889,7 +1280,10 @@ def process_label_real(
     memory_chat = load_or_migrate_chat(memory_path, folder_name)
     print(f"[INFO] Loaded memory chat for {label_key} ({len(memory_chat)} messages).")
 
-    sol_files = sorted(label_dir.glob("buggy_*.sol"))
+    sol_files = sorted(label_dir.glob("buggy_*.sol"),
+                       key=lambda p: int(re.search(r'(\d+)', p.stem).group(1)))
+    rows_dir = results_dir / "rows"
+    ensure_dir(rows_dir)
     if not sol_files:
         print(f"[WARN] No contracts found in {label_dir}")
         return
@@ -906,12 +1300,20 @@ def process_label_real(
     if label_key_for_counter not in contract_counter_state:
         contract_counter_state[label_key_for_counter] = 0
 
-    for sol_file in sol_files:
+    for pos, sol_file in enumerate(sol_files):
         m = re.search(r'buggy_(\d+)\.sol', sol_file.name)
         if not m:
             print(f"[SKIP] Non-matching filename: {sol_file.name}")
             continue
         idx = int(m.group(1))
+        is_warmup = pos < warmup_contracts
+        phase = "warmup" if is_warmup else "eval"
+        oracle = oracle_default or is_warmup
+        row_path = rows_dir / f"{sol_file.stem}.json"
+        if resume and row_path.exists():
+            folder_rows.append(json.load(open(row_path, encoding="utf-8")))
+            print(f"[RESUME] {sol_file.name} already done ({phase}); skipping.")
+            continue
         meta_file = label_dir / f"BugLog_{idx}.csv"
         if not meta_file.exists():
             print(f"[WARN] Missing metadata for {sol_file.name}")
@@ -941,6 +1343,8 @@ def process_label_real(
         attempt_results: List[AttemptResult] = []
         numeric_attempts: List[AttemptResult] = []
 
+        prev_pred_for_consistency: Optional[List[int]] = None
+
         while True:
             attempt += 1
             messages = build_messages_for_attempt(
@@ -953,13 +1357,18 @@ def process_label_real(
                 last_pred=last_numeric_pred if last_numeric_pred else None,
                 truth_block=truth_block,
                 condense_window=condense_window,
-                topk_candidates=topk_candidates
+                topk_candidates=topk_candidates,
+                use_pruning=use_pruning,
+                oracle=oracle
             )
 
             # Buffer header (will decide later)
             header = f"\n[REAL::{folder_name}] {sol_file.name} | Attempt {attempt}"
 
-            llm_text = call_llm_messages(messages, api_key).strip()
+            llm_text = call_llm_messages(
+                messages, api_key, provider=provider, model=model, seed=llm_seed,
+                usage_ctx={"label": folder_name, "contract": sol_file.name, "attempt": attempt, "call_type": "prediction"}
+            ).strip()
             last_llm_text = llm_text
 
             found_nums = re.findall(r'\b\d+\b', llm_text)
@@ -990,47 +1399,75 @@ def process_label_real(
 
                 last_numeric_pred = pred_lines[:]
 
-                # Base compact feedback (candidate-centric)
-                fb_local_compact = build_compact_guidance(
-                    label_name=folder_name,
-                    contract_text=contract_text,
-                    pred_lines=pred_lines,
-                    truth_block=truth_block,
-                    truth_point=truth_point,
-                    prec_block=prec_b,
-                    rec_block=rec_b,
-                    k=2,
-                    max_chars=min(900, fb_max_chars)
-                )
-
-                # Error profile for one-line rule
-                err_prof = build_error_profile_for_rule(pred_lines, truth_block, contract_text.splitlines(), k=2)
-
-                # One-line rule from memory + current errors
-                if smart_feedback == "llm":
-                    fb_rule = make_one_line_rule_llm(api_key, BASE_MODEL, folder_name, memory_summary, err_prof, rule_chars=fb_rule_chars)
-                elif smart_feedback == "local":
-                    fb_rule = make_one_line_rule_local(folder_name, err_prof, rule_chars=fb_rule_chars)
-                else:
+                if not use_feedback:
+                    # Ablation: feedback component disabled entirely.
+                    fb_local_compact = ""
                     fb_rule = ""
-
-                # Compose final feedback injected to next attempt
-                fb_parts = []
-                if memory_summary:
-                    fb_parts.append(memory_summary)
-                if fb_rule:
-                    fb_parts.append("=== NEXT RULE ===\n" + fb_rule)
-                fb_parts.append(fb_local_compact)
-                fb = "\n\n".join(fb_parts)
+                    fb = ""
+                elif oracle:
+                    # Base compact feedback (candidate-centric, ground-truth informed)
+                    fb_local_compact = build_compact_guidance(
+                        label_name=folder_name,
+                        contract_text=contract_text,
+                        pred_lines=pred_lines,
+                        truth_block=truth_block,
+                        truth_point=truth_point,
+                        prec_block=prec_b,
+                        rec_block=rec_b,
+                        k=2,
+                        max_chars=min(900, fb_max_chars)
+                    )
+                    # Error profile for one-line rule
+                    err_prof = build_error_profile_for_rule(pred_lines, truth_block, contract_text.splitlines(), k=2)
+                    if smart_feedback == "llm":
+                        fb_rule = make_one_line_rule_llm(
+                            api_key, model or BASE_MODEL, folder_name, memory_summary, err_prof, rule_chars=fb_rule_chars,
+                            provider=provider, seed=llm_seed,
+                            usage_ctx={"label": folder_name, "contract": sol_file.name, "attempt": attempt}
+                        )
+                    elif smart_feedback == "local":
+                        fb_rule = make_one_line_rule_local(folder_name, err_prof, rule_chars=fb_rule_chars)
+                    else:
+                        fb_rule = ""
+                    fb_parts = []
+                    if memory_summary:
+                        fb_parts.append(memory_summary)
+                    if fb_rule:
+                        fb_parts.append("=== NEXT RULE ===\n" + fb_rule)
+                    fb_parts.append(fb_local_compact)
+                    fb = "\n\n".join(fb_parts)
+                else:
+                    # Non-oracle (Reviewer#2 Concern #1): feedback built with NO ground-truth access —
+                    # only self-consistency across attempts + fixed per-label rules.
+                    rank_now = rank_candidates(contract_text, folder_name, topk_candidates) if use_pruning else []
+                    fb_local_compact = build_self_consistency_guidance(
+                        label_name=folder_name,
+                        contract_text=contract_text,
+                        pred_lines=pred_lines,
+                        ranked_candidates=rank_now,
+                        prev_pred_lines=prev_pred_for_consistency,
+                        k=2,
+                        max_chars=min(900, fb_max_chars)
+                    )
+                    fb_rule = ""
+                    fb_parts = []
+                    if memory_summary:
+                        fb_parts.append(memory_summary)
+                    fb_parts.append(fb_local_compact)
+                    fb = "\n\n".join(fb_parts)
 
                 system_content = f"[prediction] {','.join(str(x) for x in pred_lines)}"
-                analysis_user = (
-                    f"[analysis] "
-                    f"[BLOCK/{block_eval}] P={prec_b:.4f} R={rec_b:.4f} F1*100={f1x100_b:.2f}"
-                    + (f" HitRate*100={100*hitrate_b:.2f}" if hitrate_b is not None else "")
-                    + f" ; [LINE±{line_tolerance}] P={prec_l:.4f} R={rec_l:.4f} F1*100={f1x100_l:.2f} Acc*100={100*acc_l:.2f} ; "
-                    f"[feedback_for_next] {fb}"
-                )
+                if oracle:
+                    analysis_user = (
+                        f"[analysis] "
+                        f"[BLOCK/{block_eval}] P={prec_b:.4f} R={rec_b:.4f} F1*100={f1x100_b:.2f}"
+                        + (f" HitRate*100={100*hitrate_b:.2f}" if hitrate_b is not None else "")
+                        + f" ; [LINE±{line_tolerance}] P={prec_l:.4f} R={rec_l:.4f} F1*100={f1x100_l:.2f} Acc*100={100*acc_l:.2f} ; "
+                        f"[feedback_for_next] {fb}"
+                    )
+                else:
+                    # Non-oracle: no score derived from the ground truth is written to memory.
+                    analysis_user = f"[analysis] non-oracle ; [feedback_for_next] {fb}"
                 user_prompt_logged = messages[-1]["content"]
 
                 console_report = (
@@ -1055,13 +1492,22 @@ def process_label_real(
                 numeric_attempts.append(ar)
 
                 # Early stop decision
-                stop_now = _should_stop(
-                    policy=early_stop,
-                    prec_b=prec_b, rec_b=rec_b,
-                    prec_l=prec_l, rec_l=rec_l,
-                    threshold=threshold,
-                    has_line_truth=bool(truth_point)
-                )
+                if not use_feedback:
+                    # Single-shot / no-feedback ablation: never iterate.
+                    stop_now = True
+                elif oracle:
+                    stop_now = _should_stop(
+                        policy=early_stop,
+                        prec_b=prec_b, rec_b=rec_b,
+                        prec_l=prec_l, rec_l=rec_l,
+                        threshold=threshold,
+                        has_line_truth=bool(truth_point)
+                    )
+                else:
+                    # Non-oracle: truth-free convergence criterion (Reviewer#2 Concern #1)
+                    stop_now = _should_stop_non_oracle(pred_lines, prev_pred_for_consistency)
+
+                prev_pred_for_consistency = pred_lines[:]
 
                 if stop_now or attempt >= max_attempts:
                     carried_feedback_across_contracts = fb_rule or fb_local_compact or memory_summary
@@ -1093,7 +1539,7 @@ def process_label_real(
                 )
                 attempt_results.append(ar)
 
-                if attempt < max_attempts:
+                if use_feedback and attempt < max_attempts:
                     immediate_feedback = (
                         "Return only comma-separated integers (e.g., 12,27). "
                         "No words, no ranges, no JSON, no brackets."
@@ -1104,7 +1550,7 @@ def process_label_real(
 
         # ---- Selection & persistence ----
         if numeric_attempts:
-            best = _select_best_attempt(numeric_attempts)
+            best = _select_best_attempt(numeric_attempts) if oracle else _select_best_attempt_non_oracle(numeric_attempts)
             final_lines = best.pred_lines[:]
             final_prec_b, final_rec_b = best.b_prec, best.b_rec
             final_f1x100_b = round(100.0 * best.b_f1, 2)
@@ -1125,8 +1571,11 @@ def process_label_real(
             json.dump(memory_chat, open(memory_path, "w"), indent=2)
 
             # Add to folder summary
-            folder_rows.append({
+            row = {
                 "filename": sol_file.name,
+                "phase": phase,
+                "selected_attempt": best.attempt_idx,
+                "attempts_run": len(attempt_results),
                 "BlockDetection.P": best.b_prec,
                 "BlockDetection.Recall": best.b_rec,
                 "BlockDetection.F1-Score": best.b_f1,
@@ -1135,7 +1584,10 @@ def process_label_real(
                 "LineDetection.Recall": best.l_rec,
                 "LineDetection.F1-Score": best.l_f1,
                 "LineDetection.Accuracy": best.l_acc,
-            })
+                "predicted_lines": final_lines,
+            }
+            folder_rows.append(row)
+            json.dump(row, open(row_path, "w", encoding="utf-8"), indent=1)
 
             out_csv = results_dir / f"{sol_file.stem}_pred.csv"
             pd.DataFrame({"predicted_lines": final_lines}).to_csv(out_csv, index=False)
@@ -1149,8 +1601,11 @@ def process_label_real(
                 except Exception:
                     print(ar.console_report)
 
-            folder_rows.append({
+            row = {
                 "filename": sol_file.name,
+                "phase": phase,
+                "selected_attempt": None,
+                "attempts_run": len(attempt_results),
                 "BlockDetection.P": 0.0,
                 "BlockDetection.Recall": 0.0,
                 "BlockDetection.F1-Score": 0.0,
@@ -1159,7 +1614,10 @@ def process_label_real(
                 "LineDetection.Recall": 0.0,
                 "LineDetection.F1-Score": 0.0,
                 "LineDetection.Accuracy": 0.0,
-            })
+                "predicted_lines": [],
+            }
+            folder_rows.append(row)
+            json.dump(row, open(row_path, "w", encoding="utf-8"), indent=1)
             print(f"   FINAL → No numeric predictions to save for {sol_file.stem}. Skipping file.")
 
         # ---- PRUNE + DISTILL (memory bloat control), done per contract with cadence ----
@@ -1188,7 +1646,7 @@ def process_label_real(
             df_folder = pd.DataFrame(folder_rows)
             # Order columns cleanly
             cols = [
-                "filename",
+                "filename", "phase", "selected_attempt", "attempts_run",
                 "BlockDetection.P", "BlockDetection.Recall", "BlockDetection.F1-Score", "BlockDetection.HitRate",
                 "LineDetection.P", "LineDetection.Recall", "LineDetection.F1-Score", "LineDetection.Accuracy",
             ]
@@ -1197,10 +1655,14 @@ def process_label_real(
             df_folder = df_folder[cols]
             folder_csv = results_dir / f"{folder_name}_result.csv"
             df_folder.to_csv(folder_csv, index=False)
+            # Reported metrics use evaluation contracts only; warm-up contracts are excluded.
+            df_eval = df_folder[df_folder["phase"] == "eval"] if "phase" in df_folder.columns else df_folder
+            n_eval = len(df_eval)
+            n_warmup = len(df_folder) - n_eval
             # Macro averages (simple means)
             def _mean_safe(series_name: str) -> float:
-                if series_name not in df_folder.columns: return 0.0
-                return float(pd.to_numeric(df_folder[series_name], errors="coerce").mean())
+                if series_name not in df_eval.columns or df_eval.empty: return 0.0
+                return float(pd.to_numeric(df_eval[series_name], errors="coerce").mean())
             macro_block_p = _mean_safe("BlockDetection.P")
             macro_block_r = _mean_safe("BlockDetection.Recall")
             macro_block_f1 = _mean_safe("BlockDetection.F1-Score")
@@ -1208,10 +1670,33 @@ def process_label_real(
             macro_line_r  = _mean_safe("LineDetection.Recall")
             macro_line_f1 = _mean_safe("LineDetection.F1-Score")
             print(f"[INFO] Saved folder summary → {folder_csv}")
-            print(f"[SUMMARY::{folder_name}] MACRO Block P/R/F1 = {macro_block_p:.3f}/{macro_block_r:.3f}/{macro_block_f1:.3f} | "
+            print(f"[SUMMARY::{folder_name}] eval contracts={n_eval} (warm-up excluded={n_warmup}) | "
+                  f"MACRO Block P/R/F1 = {macro_block_p:.3f}/{macro_block_r:.3f}/{macro_block_f1:.3f} | "
                   f"MACRO Line P/R/F1 = {macro_line_p:.3f}/{macro_line_r:.3f}/{macro_line_f1:.3f}")
+
+            # ---- Usage/cost log for this label run (Reviewer#2 Concern #10) ----
+            usage_csv = results_dir / f"{folder_name}_usage.csv"
+            usage_summary = dump_usage_log(usage_csv)
+            _USAGE_LOG.clear()
+            if usage_summary:
+                print(f"[INFO] Saved usage/cost log → {usage_csv}")
+                print(f"[USAGE::{folder_name}] calls={usage_summary['num_calls']} "
+                      f"tokens={usage_summary['total_tokens']} "
+                      f"est_cost_usd={usage_summary['est_total_cost_usd']:.4f} "
+                      f"avg_s/call={usage_summary['avg_elapsed_s_per_call']:.2f}")
+
+            return {
+                "label": folder_name, "provider": provider, "model": model or BASE_MODEL,
+                "oracle": oracle_default, "warmup_contracts": warmup_contracts,
+                "n_eval": n_eval, "n_warmup": n_warmup,
+                "use_pruning": use_pruning, "use_feedback": use_feedback,
+                "macro_block_p": macro_block_p, "macro_block_r": macro_block_r, "macro_block_f1": macro_block_f1,
+                "macro_line_p": macro_line_p, "macro_line_r": macro_line_r, "macro_line_f1": macro_line_f1,
+                "usage_summary": usage_summary,
+            }
     except Exception as e:
         print(f"[WARN] Could not save folder summary: {e}")
+    return None
 
 # ---------------- TEST mode ----------------
 def find_sample_pred_csv(test_pred_root: Path, i: int) -> Optional[Path]:
@@ -1318,7 +1803,10 @@ def main():
     ap.add_argument("--contracts_root", help="Root of labeled contract folders (required in real mode).")
     ap.add_argument("--results_root", required=True, help="Where to save final prediction CSVs.")
     ap.add_argument("--memory_root", required=True, help="Where to save full chat memory JSONs.")
-    ap.add_argument("--api_key", required=True, help="LLM API key.")
+    ap.add_argument("--api_key", default=None,
+                    help="LLM API key. Optional for provider=anthropic: if omitted, the SDK resolves "
+                         "credentials itself (ANTHROPIC_API_KEY, ANTHROPIC_AUTH_TOKEN, or an "
+                         "'ant auth login' profile). Required for the OpenAI-compatible providers.")
     ap.add_argument("--threshold", type=float, default=0.7, help="Precision/Recall threshold.")
     ap.add_argument("--max_attempts", type=int, default=3, help="Maximum attempts per contract.")  # <-- 3 attempts
     ap.add_argument("--history_turns", type=int, default=HISTORY_TURNS_DEFAULT, help="How many recent SYSTEM msgs to include.")
@@ -1366,7 +1854,65 @@ def main():
     ap.add_argument("--all_labels", action="store_true",
                     help="Process ALL labels (legacy behavior). If set, ignores --label_index prompt behavior.")
 
+    # NEW: provider/model selection (Reviewer#2 Concern #3 — explicit, logged model versioning)
+    ap.add_argument("--provider", choices=["openai", "anthropic", "claude_cli", "gemini", "groq", "openrouter"], default="openai",
+                    help="LLM provider. 'anthropic' enables Claude models (e.g. claude-opus-5); "
+                         "'gemini'/'groq'/'openrouter' use their free-tier, OpenAI-wire-compatible endpoints.")
+    ap.add_argument("--model", default=None,
+                    help="Model id (e.g. gpt-4o, gpt-5, claude-opus-5, gemini-2.0-flash, "
+                         "meta-llama/llama-3.3-70b-instruct:free). "
+                         "Defaults per-provider.")
+
+    # NEW: oracle vs non-oracle evaluation (Reviewer#2 Concern #1)
+    ap.add_argument("--oracle", choices=["on", "off"], default="on",
+                    help="'on' (legacy/ceiling): feedback+selection use ground truth. "
+                         "'off': feedback+selection are truth-free, as at real audit time.")
+
+    # NEW: ablation controls (Reviewer#2 Concern #6 / Reviewer#3 Concern #3)
+    ap.add_argument("--ablation", choices=["full", "single_shot", "pruning_only", "feedback_only"], default="full",
+                    help="full=pruning+feedback (baseline); single_shot=no pruning,no feedback,1 attempt; "
+                         "pruning_only=pruning,no feedback,1 attempt; feedback_only=no pruning,feedback,multi-attempt.")
+    ap.add_argument("--use_pruning", choices=["on", "off"], default=None,
+                    help="Override the pruning component independent of --ablation preset.")
+    ap.add_argument("--use_feedback", choices=["on", "off"], default=None,
+                    help="Override the feedback component independent of --ablation preset.")
+
+    # NEW: statistical stability across repeated runs (Reviewer#2 Concern #9)
+    ap.add_argument("--warmup_contracts", type=int, default=0,
+                    help="Run the first N contracts of each label in oracle mode to warm the memory; "
+                         "they are excluded from the reported metrics. Remaining contracts use --oracle.")
+    ap.add_argument("--resume", action="store_true",
+                    help="Skip contracts that already have a saved result row (continue after a usage-limit stop).")
+    ap.add_argument("--num_runs", type=int, default=1,
+                    help="Repeat the selected label run this many times (independent memory/results per run) "
+                         "to report mean/std across runs.")
+    ap.add_argument("--seed", type=int, default=None,
+                    help="Decoding seed passed to the provider when supported (OpenAI 'seed' param), for determinism controls.")
+
     args = ap.parse_args()
+
+    # Resolve provider/model globals used by call_llm_messages/make_one_line_rule_llm defaults.
+    global BASE_MODEL, PROVIDER
+    PROVIDER = args.provider
+    BASE_MODEL = args.model or DEFAULT_MODEL_BY_PROVIDER.get(args.provider, "gpt-4o")
+
+    # Resolve ablation preset -> (use_pruning, use_feedback, max_attempts), then let explicit
+    # --use_pruning/--use_feedback overrides win.
+    _ABLATION_PRESETS = {
+        "full":          {"use_pruning": True,  "use_feedback": True,  "max_attempts": args.max_attempts},
+        "single_shot":   {"use_pruning": False, "use_feedback": False, "max_attempts": 1},
+        "pruning_only":  {"use_pruning": True,  "use_feedback": False, "max_attempts": 1},
+        "feedback_only": {"use_pruning": False, "use_feedback": True,  "max_attempts": args.max_attempts},
+    }
+    preset = _ABLATION_PRESETS[args.ablation]
+    resolved_use_pruning = preset["use_pruning"] if args.use_pruning is None else (args.use_pruning == "on")
+    resolved_use_feedback = preset["use_feedback"] if args.use_feedback is None else (args.use_feedback == "on")
+    resolved_max_attempts = preset["max_attempts"]
+    resolved_oracle = (args.oracle == "on")
+
+    # Only the Anthropic SDK can resolve credentials on its own (env vars or an OAuth profile).
+    if args.api_key is None and args.provider not in ("anthropic", "claude_cli"):
+        raise SystemExit(f"--api_key is required for provider={args.provider}.")
 
     results_root = Path(args.results_root)
     memory_root = Path(args.memory_root)
@@ -1387,7 +1933,10 @@ def main():
             log_fp.write(f"contracts_root={args.contracts_root}\n")
         log_fp.write(
             "params: "
-            f"threshold={args.threshold} max_attempts={args.max_attempts} "
+            f"provider={PROVIDER} model={BASE_MODEL} seed={args.seed} "
+            f"oracle={resolved_oracle} ablation={args.ablation} use_pruning={resolved_use_pruning} "
+            f"use_feedback={resolved_use_feedback} num_runs={args.num_runs} "
+            f"threshold={args.threshold} max_attempts={resolved_max_attempts} "
             f"history_turns={args.history_turns} condense_window={args.condense_window} "
             f"topk_candidates={args.topk_candidates} block_dilation={args.block_dilation} "
             f"block_eval={args.block_eval} line_tolerance={args.line_tolerance} "
@@ -1434,37 +1983,72 @@ def main():
     # --- NEW: Interactive/specified label selection (default), while preserving legacy "all labels" path. ---
     labels_list = list(LABEL_FOLDERS.items())  # [(display_name, folder_name_on_disk), ...]
 
+    def _run_one_label(label_key: str, folder_name: str, this_results_root: Path, this_memory_root: Path,
+                        counter_state: Dict[str, int]) -> Optional[Dict[str, Any]]:
+        return process_label_real(
+            label_key=label_key,
+            folder_name=folder_name,
+            contracts_root=contracts_root,
+            results_root=this_results_root,
+            memory_root=this_memory_root,
+            api_key=args.api_key,
+            threshold=args.threshold,
+            max_attempts=resolved_max_attempts,
+            history_turns=args.history_turns,
+            condense_window=args.condense_window,
+            topk_candidates=args.topk_candidates,
+            block_dilation=args.block_dilation,
+            early_stop=args.early_stop,
+            block_eval=args.block_eval,
+            line_tolerance=args.line_tolerance,
+            smart_feedback=args.smart_feedback,
+            fb_history_k=args.fb_history_k,
+            fb_max_chars=args.fb_max_chars,
+            fb_rule_chars=args.fb_rule_chars,
+            mem_max_msgs=args.mem_max_msgs,
+            mem_keep_recent=args.mem_keep_recent,
+            distill_every=args.distill_every,
+            contract_counter_state=counter_state,
+            limit_contracts=args.limit_contracts,
+            provider=PROVIDER,
+            model=BASE_MODEL,
+            llm_seed=args.seed,
+            oracle=resolved_oracle,
+            use_pruning=resolved_use_pruning,
+            use_feedback=resolved_use_feedback,
+            warmup_contracts=args.warmup_contracts,
+            resume=args.resume,
+        )
+
+    def _run_with_stability(labels_to_run: List[Tuple[str, str]]):
+        run_rows: List[Dict[str, Any]] = []
+        for run_idx in range(1, args.num_runs + 1):
+            if args.num_runs > 1:
+                run_results_root = results_root / f"run_{run_idx}"
+                run_memory_root = memory_root / f"run_{run_idx}"
+                ensure_label_dirs(run_results_root); ensure_label_dirs(run_memory_root)
+                print(f"\n--- Stability run {run_idx}/{args.num_runs} (Reviewer#2 Concern #9) ---")
+            else:
+                run_results_root, run_memory_root = results_root, memory_root
+            counter_state: Dict[str, int] = {}
+            for label_key, folder_name in labels_to_run:
+                print(f"\n=== REAL MODE: Processing Label '{label_key}' → folder '{folder_name}' "
+                      f"[provider={PROVIDER} model={BASE_MODEL} oracle={resolved_oracle} ablation={args.ablation}] ===")
+                res = _run_one_label(label_key, folder_name, run_results_root, run_memory_root, counter_state)
+                if res:
+                    res["run_idx"] = run_idx
+                    run_rows.append(res)
+
+        if args.num_runs > 1 and run_rows:
+            df = pd.DataFrame(run_rows)
+            stability_csv = results_root / "stability_summary.csv"
+            df.to_csv(stability_csv, index=False)
+            agg = df.groupby("label")[["macro_block_f1", "macro_line_f1"]].agg(["mean", "std"])
+            print(f"\n[INFO] Saved per-run results → {stability_csv}")
+            print(f"[STABILITY] across {args.num_runs} runs (mean ± std):\n{agg}")
+
     if args.all_labels:
-        # Legacy behavior: iterate all labels (kept to avoid removing existing code paths).
-        for label_key, folder_name in LABEL_FOLDERS.items():
-            print(f"\n=== REAL MODE: Processing Label '{label_key}' → folder '{folder_name}' ===")
-            process_label_real(
-                label_key=label_key,
-                folder_name=folder_name,
-                contracts_root=contracts_root,
-                results_root=results_root,
-                memory_root=memory_root,
-                api_key=args.api_key,
-                threshold=args.threshold,
-                max_attempts=args.max_attempts,
-                history_turns=args.history_turns,
-                condense_window=args.condense_window,
-                topk_candidates=args.topk_candidates,
-                block_dilation=args.block_dilation,
-                early_stop=args.early_stop,
-                block_eval=args.block_eval,
-                line_tolerance=args.line_tolerance,
-                # NEW
-                smart_feedback=args.smart_feedback,
-                fb_history_k=args.fb_history_k,
-                fb_max_chars=args.fb_max_chars,
-                fb_rule_chars=args.fb_rule_chars,
-                mem_max_msgs=args.mem_max_msgs,
-                mem_keep_recent=args.mem_keep_recent,
-                distill_every=args.distill_every,
-                contract_counter_state=contract_counter_state,
-                limit_contracts=args.limit_contracts  # still honored in all-labels mode
-            )
+        _run_with_stability(labels_list)
         print("\nREAL mode completed.")
         return
 
@@ -1489,35 +2073,13 @@ def main():
         else:
             raise SystemExit("--label_index must be between 1 and 7.")
 
-    print(f"\n=== REAL MODE: Processing ONLY Label '{label_key}' → folder '{folder_name}' ===")
-    process_label_real(
-        label_key=label_key,
-        folder_name=folder_name,
-        contracts_root=contracts_root,
-        results_root=results_root,
-        memory_root=memory_root,
-        api_key=args.api_key,
-        threshold=args.threshold,
-        max_attempts=args.max_attempts,
-        history_turns=args.history_turns,
-        condense_window=args.condense_window,
-        topk_candidates=args.topk_candidates,
-        block_dilation=args.block_dilation,
-        early_stop=args.early_stop,
-        block_eval=args.block_eval,
-        line_tolerance=args.line_tolerance,
-        # NEW
-        smart_feedback=args.smart_feedback,
-        fb_history_k=args.fb_history_k,
-        fb_max_chars=args.fb_max_chars,
-        fb_rule_chars=args.fb_rule_chars,
-        mem_max_msgs=args.mem_max_msgs,
-        mem_keep_recent=args.mem_keep_recent,
-        distill_every=args.distill_every,
-        contract_counter_state=contract_counter_state,
-        limit_contracts=args.limit_contracts  # NEW: cap to 50 by default
-    )
+    _run_with_stability([(label_key, folder_name)])
     print("\nREAL mode completed for the selected label.")
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except UsageLimitReached as e:
+        print(f"\n[STOP] Claude usage limit reached: {e}\n"
+              "Completed contracts are saved. Rerun the same command with --resume after the limit resets.")
+        sys.exit(75)
