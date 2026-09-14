@@ -128,8 +128,31 @@ Do not upload proprietary or sensitive code to external APIs.
 LineGuard is a memory-aware LLM-based framework that detects and localizes security vulnerabilities in Solidity smart contracts at the line level. The input of our proposed architecture is a line-numbered smart contract. LineGuard includes five components: (1) Prompt Initialization, which loads rules and configurations; (2) Semantic Pruning, which filters code to keep vulnerability-relevant lines; (3) Sequential Contract Analysis, which builds prompts with feedback from previous attempts; (4) LLM Core, which performs inference using GPT-4o/ GPT-5; and (5) Memory-Aware Feedback, which summarizes previous results to improve the next attempt. The output of our architecture is a security report listing detected vulnerabilities with exact line numbers and their types. Our benchmarks for evaluating performance are precision, recall, and F1-score. In our experimental result, LineGuard achieved an average precision of 0.92, recall of 0.72, and an overall F1-score of 0.81 on seven types of vulnerabilities, evaluated on almost 400 benign and buggy smart contracts.
 
 
+## Dataset provenance and integrity
+
+The line-level ground-truth dataset lives in `buggy_contracts/` and consists of **350 contracts**,
+50 in each of the 7 vulnerability categories (Re-entrancy, Timestamp-Dependency, Unchecked-Send,
+Unhandled-Exceptions, TOD, Overflow-Underflow, tx.origin). Each contract `buggy_{i}.sol` is paired
+with its annotation `BugLog_{i}.csv`.
+
+* **Origin.** The contracts derive from the SolidiFI benchmark, which provides block-level
+  vulnerability spans. The exact line-level annotations in `BugLog_{i}.csv` were produced by manual
+  auditing for this work.
+* **Line numbering.** 1-based (the first line of a file is line 1). Blank and comment-only lines are
+  counted in the numbering; they are simply ignored by the candidate-extraction heuristics.
+* **Integrity.** `buggy_contracts/SHA256SUMS.txt` lists the SHA-256 digest of all 700 dataset files.
+  Verify a copy with:
+
+  ```bash
+  cd buggy_contracts && shasum -a 256 -c SHA256SUMS.txt
+  ```
+
+  The manifest itself has SHA-256
+  `e49672d27f3f875a303e96ad3a74ea017c066ee3d0548c4703b061b0fa178837`.
+
 ## License
 
-Apache 2.0
+Apache License 2.0 — see [LICENSE](LICENSE). This covers both the source code and the
+line-level annotations released in `buggy_contracts/`.
 
 ---
