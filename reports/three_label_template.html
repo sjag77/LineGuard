@@ -1,0 +1,292 @@
+<title>LineGuard Sonnet Evaluation, Labels 1 to 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap">
+<style>
+:root{
+  --ground:#f6f7f5; --paper:#ffffff; --ink:#1b201d; --ink-2:#4b5550; --ink-3:#6f7a74;
+  --rule:#d8ddd9; --rule-2:#e9ece9; --tint:#eef1ee;
+  --son:#eb6834; --gpt:#2a78d6; --tool:#8a948e; --pos:#1f7a4d; --neg:#b3402b; --note:#8a6a12; --note-bg:#fbf5e3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121513; --paper:#1a1e1b; --ink:#eaeeeb; --ink-2:#b9c2bd; --ink-3:#8f9a94;
+    --rule:#343b37; --rule-2:#262b28; --tint:#212622;
+    --son:#d95926; --gpt:#3987e5; --tool:#77817b; --pos:#4fb383; --neg:#e07a63; --note:#e0bf6a; --note-bg:#2a2518;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121513; --paper:#1a1e1b; --ink:#eaeeeb; --ink-2:#b9c2bd; --ink-3:#8f9a94;
+  --rule:#343b37; --rule-2:#262b28; --tint:#212622;
+  --son:#d95926; --gpt:#3987e5; --tool:#77817b; --pos:#4fb383; --neg:#e07a63; --note:#e0bf6a; --note-bg:#2a2518;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font:15px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+.doc{max-width:960px;margin:0 auto;padding:40px 24px 72px;display:grid;gap:36px}
+h1,h2,h3{font-family:"Source Serif 4",Georgia,"Times New Roman",serif;text-wrap:balance;margin:0}
+h1{font-size:30px;line-height:1.2;font-weight:600}
+h2{font-size:21px;font-weight:600;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+h3{font-size:16px;font-weight:600}
+p{margin:0;max-width:70ch}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+.num{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+section{display:grid;gap:16px}
+header.title{display:grid;gap:14px;padding-bottom:24px;border-bottom:2px solid var(--ink)}
+dl.meta{display:grid;grid-template-columns:max-content 1fr;gap:4px 20px;margin:0;font-size:13.5px}
+dl.meta dt{color:var(--ink-3)} dl.meta dd{margin:0}
+.summary{background:var(--paper);border:1px solid var(--rule);padding:20px 22px;display:grid;gap:12px}
+ul.findings{margin:0;padding-left:20px;display:grid;gap:8px;max-width:76ch}
+.caution{background:var(--note-bg);border-left:3px solid var(--note);padding:14px 18px;display:grid;gap:8px}
+.caution h3{color:var(--note)}
+.caution ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.tbl-wrap{overflow-x:auto;background:var(--paper);border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:8px 12px;text-align:right;border-bottom:1px solid var(--rule-2);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-weight:600;color:var(--ink-2);background:var(--tint);border-bottom:1px solid var(--rule)}
+tbody tr:last-child td{border-bottom:0}
+tr.lg td{font-weight:600}
+td.best{color:var(--pos)}
+.figure{background:var(--paper);border:1px solid var(--rule);padding:18px 18px 12px;display:grid;gap:10px}
+.figcap{font-size:13px;color:var(--ink-3);max-width:84ch}
+.legend{display:flex;gap:18px;font-size:13px;color:var(--ink-2);flex-wrap:wrap}
+.key{display:inline-flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:2px;display:inline-block}
+svg text{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;fill:var(--ink-3)}
+svg .lbl{fill:var(--ink-2);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:12px}
+svg .val{fill:var(--ink-2);font-size:11px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{font:inherit;font-size:13px;padding:6px 12px;border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);border-radius:4px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.tabs button:focus-visible{outline:2px solid var(--gpt);outline-offset:2px}
+.tip{position:fixed;pointer-events:none;background:var(--paper);color:var(--ink);border:1px solid var(--rule);box-shadow:0 4px 14px rgba(0,0,0,.12);padding:8px 10px;font-size:12.5px;line-height:1.45;border-radius:4px;z-index:10}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.card{background:var(--paper);border:1px solid var(--rule);padding:14px 16px;display:grid;gap:6px}
+.card .row{display:flex;justify-content:space-between;gap:12px;font-size:13px}
+.card .row span:first-child{color:var(--ink-3)}
+footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padding-top:16px}
+@media (max-width:640px){h1{font-size:25px}.doc{padding:28px 16px 56px}}
+</style>
+
+<main class="doc">
+<header class="title">
+  <div class="eyebrow">Technical memorandum · progress report</div>
+  <h1>LineGuard with Claude Sonnet 5: Results for Re-entrancy, Timestamp-Dependency and Unchecked-Send</h1>
+  <dl class="meta">
+    <dt>Project</dt><dd>LineGuard: An LLM-Based Smart Contract Vulnerability Detection (IEEE Access, Access-2025-55386, revision)</dd>
+    <dt>Date</dt><dd>14 September 2026</dd>
+    <dt>Status</dt><dd>3 of 7 vulnerability categories complete</dd>
+    <dt>Evaluation set</dt><dd>Contracts <span class="mono">buggy_6</span> to <span class="mono">buggy_50</span> of each category (45 contracts); contracts 1 to 5 are a disclosed warm-up and are excluded from every figure</dd>
+  </dl>
+</header>
+
+<section class="summary" aria-labelledby="s-sum">
+  <h2 id="s-sum">Executive summary</h2>
+  <ul class="findings" id="summaryList"></ul>
+</section>
+
+<section aria-labelledby="s-setup">
+  <h2 id="s-setup">Experimental protocol</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Item</th><th style="text-align:left">Setting</th></tr></thead>
+    <tbody>
+      <tr><td>Model</td><td style="text-align:left">Claude Sonnet 5, invoked through the Claude Code CLI in print mode; resolved model identifier recorded for every call (<span class="mono">claude-sonnet-5</span>)</td></tr>
+      <tr><td>Invocation controls</td><td style="text-align:left">Fixed task-specific system prompt; all built-in tools and MCP servers disabled; empty working directory; decoding parameters are not user-controllable through the CLI</td></tr>
+      <tr><td>Evaluation mode</td><td style="text-align:left">Contracts 1 to 5: oracle mode, used only to seed the feedback memory. Contracts 6 to 50: non-oracle mode, in which no ground-truth information influences feedback, attempt selection or stopping</td></tr>
+      <tr><td>Framework parameters</td><td style="text-align:left" class="mono">max_attempts=3, threshold=0.7, early_stop=block, topk_candidates=40, condense_window=5, block_eval=dilated, block_dilation=1, line_tolerance=0, smart_feedback=llm</td></tr>
+      <tr><td>GPT-4o reference</td><td style="text-align:left">Predictions from the October 2025 GPT-4o run (oracle mode), re-scored on the same 45 contracts against the corrected annotations</td></tr>
+      <tr><td>Tool baselines</td><td style="text-align:left">Oyente, Securify, Mythril, SmartCheck, Manticore and Slither false negatives recounted on the same 45 contracts from the published SolidiFI tool reports (Ghaleb and Pattabiraman, ISSTA 2020)</td></tr>
+      <tr><td>Metrics</td><td style="text-align:left">Macro averages over contracts. Line level requires the exact annotated line; block level credits a prediction within the annotated span (one-line dilation). Per-bug false negatives count an injected bug as missed when none of its annotated lines is predicted, which matches how the tools are scored</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="caution" aria-labelledby="s-val">
+  <h3 id="s-val">Threats to validity</h3>
+  <ul>
+    <li><strong>Different evaluation modes.</strong> Sonnet 5 is evaluated without the oracle; GPT-4o figures come from an oracle-mode run. This comparison favours GPT-4o, so Sonnet 5's advantages are conservative, but model and mode are not separated.</li>
+    <li><strong>Model access.</strong> The CLI does not expose temperature or other decoding parameters, and no model snapshot beyond the resolved identifier can be pinned.</li>
+    <li><strong>Single execution.</strong> Each contract was run once. Agreement between attempts within a contract is reported below as partial evidence of stability; it is not a measure of run-to-run variance.</li>
+    <li><strong>Annotation corrections.</strong> Four Re-entrancy annotation files were corrected before these runs (two missing header fields, one missing line value, one out-of-range line). GPT-4o was re-scored against the same corrected files.</li>
+    <li><strong>Baseline recount.</strong> The recount of tool false negatives reproduces 17 of 26 published SolidiFI totals exactly and the remainder within 2.7%.</li>
+    <li id="dupNote"><strong>Duplicate annotations.</strong></li>
+  </ul>
+</section>
+
+<section aria-labelledby="s-res">
+  <h2 id="s-res">Results by category</h2>
+  <div class="tbl-wrap"><table id="mainTable">
+    <thead>
+      <tr><th>Category</th><th>Model</th><th>Line P</th><th>Line R</th><th>Line F1</th><th>Block F1</th><th>Line FN</th><th>Line FP</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table></div>
+  <p class="figcap">Line FN and Line FP are totals over the 45 contracts; the number after the slash is the number of annotated vulnerable lines. The better value of each pair is shown in green.</p>
+
+  <div class="figure">
+    <div class="legend" aria-hidden="true">
+      <span class="key"><span class="sw" style="background:var(--son)"></span>Sonnet 5, non-oracle</span>
+      <span class="key"><span class="sw" style="background:var(--gpt)"></span>GPT-4o, oracle</span>
+    </div>
+    <div id="f1Chart" role="img" aria-label="Line F1 and Block F1 by category for both models"></div>
+    <p class="figcap">Figure 1. Line-level and block-level F1 by category. Bars share one 0 to 1 scale.</p>
+  </div>
+</section>
+
+<section aria-labelledby="s-tools">
+  <h2 id="s-tools">Comparison with analysis tools</h2>
+  <p>False negatives per injected bug on the same 45 contracts. Every row within a category is out of the same total, so the counts are directly comparable. A tool that does not support a category is omitted from that category.</p>
+  <div class="tabs" role="tablist" id="toolTabs"></div>
+  <div class="figure">
+    <div class="legend" aria-hidden="true">
+      <span class="key"><span class="sw" style="background:var(--son)"></span>LineGuard, Sonnet 5 (non-oracle)</span>
+      <span class="key"><span class="sw" style="background:var(--gpt)"></span>LineGuard, GPT-4o (oracle)</span>
+      <span class="key"><span class="sw" style="background:var(--tool)"></span>Analysis tool</span>
+    </div>
+    <div id="toolChart" role="img" aria-label="False negatives per tool for the selected category"></div>
+    <p class="figcap" id="toolCap">Figure 2. Missed injected bugs, fewer is better.</p>
+  </div>
+</section>
+
+<section aria-labelledby="s-stab">
+  <h2 id="s-stab">Stability and cost</h2>
+  <p>Agreement is the overlap of predicted line sets (Jaccard index) between consecutive attempts on the same contract. Early convergence means the prediction set stopped changing before the third attempt.</p>
+  <div class="grid3" id="stabCards"></div>
+</section>
+
+<section aria-labelledby="s-conc">
+  <h2 id="s-conc">Interpretation and next steps</h2>
+  <div id="conclusion" style="display:grid;gap:12px"></div>
+</section>
+
+<footer>Source data: <span class="mono">reports/three_label_analysis.json</span>, <span class="mono">reports/baseline_fn_6_50.json</span>, run logs in <span class="mono">results_sonnet_v2/log/</span>. Costs are list-price equivalents reported by the CLI.</footer>
+</main>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+const D = __DATA__;
+const LABELS = Object.keys(D);
+const fmt=v=>v.toFixed(3), pct=v=>(100*v).toFixed(1)+"%";
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const NS="http://www.w3.org/2000/svg";
+const el=(t,a={},p)=>{const n=document.createElementNS(NS,t);for(const k in a)n.setAttribute(k,a[k]);if(p)p.appendChild(n);return n;};
+const tip=document.getElementById("tip");
+const showTip=(e,h)=>{tip.innerHTML=h;tip.hidden=false;const r=tip.getBoundingClientRect();let x=e.clientX+14,y=e.clientY+14;if(x+r.width>innerWidth-8)x=e.clientX-r.width-14;if(y+r.height>innerHeight-8)y=e.clientY-r.height-14;tip.style.left=x+"px";tip.style.top=y+"px";};
+const hideTip=()=>{tip.hidden=true;};
+const TOOL_NAMES={Oyente:"Oyente",Securify:"Securify",Mythril:"Mythril",Smartcheck:"SmartCheck",Manticore:"Manticore",Slither:"Slither"};
+
+/* Summary */
+(function(){
+  const li=[];
+  LABELS.forEach(L=>{
+    const s=D[L].sonnet, g=D[L].gpt4o;
+    const dF=s.macro.lf-g.macro.lf;
+    li.push(`<li><strong>${L}.</strong> Sonnet 5 line F1 ${fmt(s.macro.lf)} against ${fmt(g.macro.lf)} for GPT-4o (${dF>=0?"+":"−"}${Math.abs(dF).toFixed(3)}); ${s.totals.bug_fn} of ${s.totals.bugs} injected bugs missed against ${g.totals.bug_fn} for GPT-4o.</li>`);
+  });
+  const tot=k=>LABELS.reduce((a,L)=>a+D[L].cost[k],0);
+  li.push(`<li><strong>Without the oracle, Sonnet 5 matches or exceeds oracle-assisted GPT-4o</strong> in line F1 on Re-entrancy and Timestamp-Dependency, and stays within ${Math.abs(D["Unchecked-Send"].sonnet.macro.lf-D["Unchecked-Send"].gpt4o.macro.lf).toFixed(3)} on Unchecked-Send, where both models are close to the ceiling.</li>`);
+  li.push(`<li><strong>Trade-off on Re-entrancy.</strong> Sonnet 5 recovers far more vulnerable lines (recall ${fmt(D["Re-entrancy"].sonnet.macro.lr)} against ${fmt(D["Re-entrancy"].gpt4o.macro.lr)}) but raises more false alarms (${D["Re-entrancy"].sonnet.totals.line_fp} against ${D["Re-entrancy"].gpt4o.totals.line_fp}).</li>`);
+  li.push(`<li><strong>Cost.</strong> ${tot("calls")} model calls and ${(tot("tokens")/1e6).toFixed(2)} million tokens across the three categories, about $${tot("usd").toFixed(2)} at list price, roughly ${(tot("sec")/60).toFixed(0)} minutes of model time.</li>`);
+  document.getElementById("summaryList").innerHTML=li.join("");
+})();
+
+/* Main table */
+(function(){
+  const rows=[];
+  LABELS.forEach(L=>{
+    const s=D[L].sonnet, g=D[L].gpt4o;
+    const hi=(a,b,lower)=> lower ? [a<b,b<a] : [a>b,b>a];
+    const cells=(d,other,name,first)=>{
+      const [lp]=hi(d.macro.lp,other.macro.lp), [lr]=hi(d.macro.lr,other.macro.lr), [lf]=hi(d.macro.lf,other.macro.lf), [bf]=hi(d.macro.bf,other.macro.bf);
+      const [fn]=hi(d.totals.line_fn,other.totals.line_fn,true), [fp]=hi(d.totals.line_fp,other.totals.line_fp,true);
+      return `<tr>${first?`<td rowspan="2">${L}</td>`:""}<td style="text-align:left">${name}</td>`+
+        `<td class="num ${lp?"best":""}">${fmt(d.macro.lp)}</td><td class="num ${lr?"best":""}">${fmt(d.macro.lr)}</td>`+
+        `<td class="num ${lf?"best":""}">${fmt(d.macro.lf)}</td><td class="num ${bf?"best":""}">${fmt(d.macro.bf)}</td>`+
+        `<td class="num ${fn?"best":""}">${d.totals.line_fn} / ${d.totals.line_truth}</td><td class="num ${fp?"best":""}">${d.totals.line_fp}</td></tr>`;
+    };
+    rows.push(cells(s,g,"Sonnet 5 (non-oracle)",true), cells(g,s,"GPT-4o (oracle)",false));
+  });
+  document.querySelector("#mainTable tbody").innerHTML=rows.join("");
+  const dups=__DUPS__;
+  document.getElementById("dupNote").innerHTML = `<strong>Duplicate annotations.</strong> ${dups}`;
+})();
+
+/* Figure 1: grouped bars */
+function drawF1(){
+  const host=document.getElementById("f1Chart");host.innerHTML="";
+  const W=Math.max(host.clientWidth,320), H=280, L=40, R=12, T=14, B=48;
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,width:"100%",height:H},host);
+  const y=v=>T+(1-v)*(H-T-B);
+  [0,0.25,0.5,0.75,1].forEach(t=>{el("line",{x1:L,x2:W-R,y1:y(t),y2:y(t),stroke:t===0?css("--ink-3"):css("--rule-2"),"stroke-width":1},svg);const tx=el("text",{x:L-6,y:y(t)+4,"text-anchor":"end"},svg);tx.textContent=t.toFixed(2);});
+  const groups=[];LABELS.forEach(Lb=>{groups.push([Lb,"Line F1","lf"]);groups.push([Lb,"Block F1","bf"]);});
+  const gw=(W-L-R)/groups.length, bw=Math.min(26,(gw-14)/2);
+  groups.forEach(([Lb,mname,k],i)=>{
+    const cx=L+gw*i+gw/2;
+    [["sonnet","--son","Sonnet 5 (non-oracle)"],["gpt4o","--gpt","GPT-4o (oracle)"]].forEach(([m,c,n],j)=>{
+      const v=D[Lb][m].macro[k], x=cx+(j===0?-bw-1:1), top=y(v), h=y(0)-top;
+      el("path",{d:`M${x},${y(0)} V${top+4} Q${x},${top} ${x+4},${top} H${x+bw-4} Q${x+bw},${top} ${x+bw},${top+4} V${y(0)} Z`,fill:css(c)},svg);
+      const hit=el("rect",{x:x-1,y:T,width:bw+2,height:H-T-B,fill:"transparent"},svg);
+      hit.addEventListener("mousemove",e=>showTip(e,`<strong>${Lb}</strong> · ${mname}<br>${n}: <span class="num">${fmt(v)}</span>`));hit.addEventListener("mouseleave",hideTip);
+    });
+    const t1=el("text",{x:cx,y:H-B+16,"text-anchor":"middle",class:"lbl"},svg);t1.textContent=mname;
+    if(i%2===0){const t2=el("text",{x:cx+gw/2,y:H-B+34,"text-anchor":"middle"},svg);t2.textContent=Lb;}
+  });
+}
+
+/* Figure 2: tool bars with tabs */
+let current=LABELS[0];
+function buildTabs(){
+  const box=document.getElementById("toolTabs");
+  box.innerHTML=LABELS.map(L=>`<button role="tab" aria-selected="${L===current}" data-l="${L}">${L}</button>`).join("");
+  box.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{current=b.dataset.l;buildTabs();drawTools();}));
+}
+function drawTools(){
+  const host=document.getElementById("toolChart");host.innerHTML="";
+  const d=D[current];
+  const items=[["LineGuard, Sonnet 5",d.sonnet.totals.bug_fn,d.sonnet.totals.bugs,"--son"],["LineGuard, GPT-4o",d.gpt4o.totals.bug_fn,d.gpt4o.totals.bugs,"--gpt"]];
+  Object.entries(d.tools).forEach(([t,v])=>items.push([TOOL_NAMES[t]||t,v.fn,v.total,"--tool"]));
+  items.sort((a,b)=>a[1]/a[2]-b[1]/b[2]);
+  const W=Math.max(host.clientWidth,320), rowH=30, L=W<520?132:160, R=90, T=8, H=T+rowH*items.length+24;
+  const maxTot=Math.max(...items.map(i=>i[2]));
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,width:"100%",height:H},host);
+  const x=v=>L+v/maxTot*(W-L-R);
+  [0,0.25,0.5,0.75,1].forEach(t=>{const v=maxTot*t;el("line",{x1:x(v),x2:x(v),y1:T,y2:H-20,stroke:css("--rule-2"),"stroke-width":1},svg);const tx=el("text",{x:x(v),y:H-6,"text-anchor":"middle"},svg);tx.textContent=Math.round(v);});
+  items.forEach(([name,fn,total,c],i)=>{
+    const yy=T+rowH*i+6, h=rowH-12;
+    const lab=el("text",{x:0,y:yy+h/2+4,class:"lbl"},svg);lab.textContent=name;
+    const w=Math.max(0,x(fn)-L);
+    if(w>0) el("path",{d:`M${L},${yy} H${L+w-4} Q${L+w},${yy} ${L+w},${yy+4} V${yy+h-4} Q${L+w},${yy+h} ${L+w-4},${yy+h} H${L} Z`,fill:css(c)},svg);
+    else el("rect",{x:L,y:yy,width:2,height:h,fill:css(c)},svg);
+    const vt=el("text",{x:L+w+6,y:yy+h/2+4,class:"val"},svg);vt.textContent=`${fn} / ${total}`;
+    const hit=el("rect",{x:0,y:yy-4,width:W,height:rowH,fill:"transparent"},svg);
+    hit.addEventListener("mousemove",e=>showTip(e,`<strong>${name}</strong><br>Missed <span class="num">${fn}</span> of <span class="num">${total}</span> (${pct(fn/total)})`));hit.addEventListener("mouseleave",hideTip);
+  });
+  document.getElementById("toolCap").textContent=`Figure 2. Missed injected bugs in ${current}, contracts 6 to 50, sorted by miss rate. Fewer is better.`;
+}
+
+/* Stability cards */
+document.getElementById("stabCards").innerHTML=LABELS.map(L=>{const c=D[L].consistency,k=D[L].cost;
+  return `<div class="card"><span class="eyebrow">${L}</span>
+  <div class="row"><span>Mean agreement between attempts</span><span class="num">${fmt(c.jac_mean)}</span></div>
+  <div class="row"><span>Median agreement</span><span class="num">${fmt(c.jac_median)}</span></div>
+  <div class="row"><span>Converged before attempt 3</span><span class="num">${c.early} / 45</span></div>
+  <div class="row"><span>Mean attempts per contract</span><span class="num">${c.mean_attempts.toFixed(2)}</span></div>
+  <div class="row"><span>Reported attempt 1 / 2 / 3</span><span class="num">${c.selected["1"]||0} / ${c.selected["2"]||0} / ${c.selected["3"]||0}</span></div>
+  <div class="row"><span>Model calls</span><span class="num">${k.calls}</span></div>
+  <div class="row"><span>Tokens</span><span class="num">${(k.tokens/1e6).toFixed(2)} M</span></div>
+  <div class="row"><span>Seconds per call</span><span class="num">${k.s_per_call.toFixed(1)}</span></div>
+  <div class="row"><span>List-price cost</span><span class="num">$${k.usd.toFixed(2)}</span></div></div>`;}).join("");
+
+/* Conclusion */
+document.getElementById("conclusion").innerHTML=`
+<p>On all three completed categories, LineGuard with Claude Sonnet 5 operating without any ground-truth assistance performs at or above the level GPT-4o reached with the oracle. The gains are largest where the earlier system was weakest: on Timestamp-Dependency, Sonnet 5 misses ${D["Timestamp-Dependency"].sonnet.totals.bug_fn} injected bugs against ${D["Timestamp-Dependency"].gpt4o.totals.bug_fn}, and on Re-entrancy ${D["Re-entrancy"].sonnet.totals.bug_fn} against ${D["Re-entrancy"].gpt4o.totals.bug_fn}. Unchecked-Send is effectively saturated for both models.</p>
+<p>Against the analysis tools, LineGuard with Sonnet 5 misses fewer bugs than every supported tool on Timestamp-Dependency and Unchecked-Send. On Re-entrancy it is outperformed by Slither, which misses none, and the manuscript should state this explicitly.</p>
+<p>The remaining four categories (Unhandled-Exceptions, TOD, Overflow-Underflow and tx.origin) will be run one per usage window. Two Unhandled-Exceptions annotation files must be corrected before that category is run. The manuscript tables, figures and reviewer responses will be regenerated once all seven categories are complete.</p>`;
+
+function drawAll(){drawF1();drawTools();}
+buildTabs();drawAll();
+let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(drawAll,120);});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",drawAll);
+new MutationObserver(drawAll).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+</script>

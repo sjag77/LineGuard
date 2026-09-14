@@ -1,0 +1,11 @@
+{
+ "mean_attempts": 2.6666666666666665,
+ "early_converged": 15,
+ "mean_jaccard": 0.8559612099954644,
+ "median_jaccard": 0.8875,
+ "selected_dist": {
+  "1": 8,
+  "3": 19,
+  "2": 18
+ }
+}

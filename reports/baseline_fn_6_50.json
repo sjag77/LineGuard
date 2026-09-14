@@ -1,0 +1,5526 @@
+{
+ "Oyente": {
+  "Re-entrancy": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 13
+    },
+    "2": {
+     "injected": 20,
+     "fn": 15
+    },
+    "3": {
+     "injected": 21,
+     "fn": 15
+    },
+    "4": {
+     "injected": 18,
+     "fn": 13
+    },
+    "5": {
+     "injected": 31,
+     "fn": 21
+    },
+    "6": {
+     "injected": 30,
+     "fn": 21
+    },
+    "7": {
+     "injected": 31,
+     "fn": 21
+    },
+    "8": {
+     "injected": 31,
+     "fn": 21
+    },
+    "9": {
+     "injected": 24,
+     "fn": 16
+    },
+    "10": {
+     "injected": 8,
+     "fn": 5
+    },
+    "11": {
+     "injected": 30,
+     "fn": 21
+    },
+    "12": {
+     "injected": 37,
+     "fn": 29
+    },
+    "13": {
+     "injected": 17,
+     "fn": 13
+    },
+    "14": {
+     "injected": 22,
+     "fn": 15
+    },
+    "15": {
+     "injected": 17,
+     "fn": 13
+    },
+    "16": {
+     "injected": 42,
+     "fn": 34
+    },
+    "17": {
+     "injected": 30,
+     "fn": 21
+    },
+    "18": {
+     "injected": 42,
+     "fn": 39
+    },
+    "19": {
+     "injected": 28,
+     "fn": 19
+    },
+    "20": {
+     "injected": 31,
+     "fn": 22
+    },
+    "21": {
+     "injected": 27,
+     "fn": 19
+    },
+    "22": {
+     "injected": 36,
+     "fn": 29
+    },
+    "23": {
+     "injected": 26,
+     "fn": 18
+    },
+    "24": {
+     "injected": 42,
+     "fn": 37
+    },
+    "25": {
+     "injected": 21,
+     "fn": 15
+    },
+    "26": {
+     "injected": 23,
+     "fn": 16
+    },
+    "27": {
+     "injected": 42,
+     "fn": 36
+    },
+    "28": {
+     "injected": 29,
+     "fn": 20
+    },
+    "29": {
+     "injected": 19,
+     "fn": 14
+    },
+    "30": {
+     "injected": 42,
+     "fn": 36
+    },
+    "31": {
+     "injected": 15,
+     "fn": 11
+    },
+    "32": {
+     "injected": 21,
+     "fn": 15
+    },
+    "33": {
+     "injected": 25,
+     "fn": 17
+    },
+    "34": {
+     "injected": 36,
+     "fn": 27
+    },
+    "35": {
+     "injected": 34,
+     "fn": 25
+    },
+    "36": {
+     "injected": 36,
+     "fn": 29
+    },
+    "37": {
+     "injected": 34,
+     "fn": 25
+    },
+    "38": {
+     "injected": 29,
+     "fn": 20
+    },
+    "39": {
+     "injected": 11,
+     "fn": 7
+    },
+    "40": {
+     "injected": 24,
+     "fn": 16
+    },
+    "41": {
+     "injected": 17,
+     "fn": 13
+    },
+    "42": {
+     "injected": 25,
+     "fn": 17
+    },
+    "43": {
+     "injected": 29,
+     "fn": 20
+    },
+    "44": {
+     "injected": 30,
+     "fn": 21
+    },
+    "45": {
+     "injected": 28,
+     "fn": 21
+    },
+    "46": {
+     "injected": 7,
+     "fn": 4
+    },
+    "47": {
+     "injected": 40,
+     "fn": 36
+    },
+    "48": {
+     "injected": 31,
+     "fn": 22
+    },
+    "49": {
+     "injected": 11,
+     "fn": 7
+    },
+    "50": {
+     "injected": 25,
+     "fn": 17
+    }
+   },
+   "total_fn_all": 997,
+   "total_injected_all": 1343,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 920,
+   "total_injected_subset": 1235
+  },
+  "Timestamp-Dependency": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 18
+    },
+    "2": {
+     "injected": 20,
+     "fn": 20
+    },
+    "3": {
+     "injected": 21,
+     "fn": 21
+    },
+    "4": {
+     "injected": 19,
+     "fn": 19
+    },
+    "5": {
+     "injected": 31,
+     "fn": 31
+    },
+    "6": {
+     "injected": 30,
+     "fn": 30
+    },
+    "7": {
+     "injected": 31,
+     "fn": 31
+    },
+    "8": {
+     "injected": 31,
+     "fn": 31
+    },
+    "9": {
+     "injected": 26,
+     "fn": 26
+    },
+    "10": {
+     "injected": 9,
+     "fn": 9
+    },
+    "11": {
+     "injected": 32,
+     "fn": 32
+    },
+    "12": {
+     "injected": 39,
+     "fn": 39
+    },
+    "13": {
+     "injected": 17,
+     "fn": 17
+    },
+    "14": {
+     "injected": 22,
+     "fn": 22
+    },
+    "15": {
+     "injected": 17,
+     "fn": 17
+    },
+    "16": {
+     "injected": 42,
+     "fn": 42
+    },
+    "17": {
+     "injected": 31,
+     "fn": 31
+    },
+    "18": {
+     "injected": 45,
+     "fn": 45
+    },
+    "19": {
+     "injected": 29,
+     "fn": 29
+    },
+    "20": {
+     "injected": 31,
+     "fn": 31
+    },
+    "21": {
+     "injected": 28,
+     "fn": 28
+    },
+    "22": {
+     "injected": 36,
+     "fn": 36
+    },
+    "23": {
+     "injected": 26,
+     "fn": 26
+    },
+    "24": {
+     "injected": 45,
+     "fn": 45
+    },
+    "25": {
+     "injected": 21,
+     "fn": 21
+    },
+    "26": {
+     "injected": 23,
+     "fn": 23
+    },
+    "27": {
+     "injected": 45,
+     "fn": 45
+    },
+    "28": {
+     "injected": 29,
+     "fn": 29
+    },
+    "29": {
+     "injected": 21,
+     "fn": 21
+    },
+    "30": {
+     "injected": 45,
+     "fn": 45
+    },
+    "31": {
+     "injected": 17,
+     "fn": 17
+    },
+    "32": {
+     "injected": 21,
+     "fn": 21
+    },
+    "33": {
+     "injected": 26,
+     "fn": 26
+    },
+    "34": {
+     "injected": 38,
+     "fn": 38
+    },
+    "35": {
+     "injected": 34,
+     "fn": 34
+    },
+    "36": {
+     "injected": 36,
+     "fn": 36
+    },
+    "37": {
+     "injected": 36,
+     "fn": 36
+    },
+    "38": {
+     "injected": 29,
+     "fn": 29
+    },
+    "39": {
+     "injected": 11,
+     "fn": 11
+    },
+    "40": {
+     "injected": 24,
+     "fn": 24
+    },
+    "41": {
+     "injected": 17,
+     "fn": 17
+    },
+    "42": {
+     "injected": 26,
+     "fn": 26
+    },
+    "43": {
+     "injected": 30,
+     "fn": 30
+    },
+    "44": {
+     "injected": 30,
+     "fn": 30
+    },
+    "45": {
+     "injected": 28,
+     "fn": 28
+    },
+    "46": {
+     "injected": 7,
+     "fn": 7
+    },
+    "47": {
+     "injected": 41,
+     "fn": 41
+    },
+    "48": {
+     "injected": 33,
+     "fn": 33
+    },
+    "49": {
+     "injected": 11,
+     "fn": 11
+    },
+    "50": {
+     "injected": 26,
+     "fn": 26
+    }
+   },
+   "total_fn_all": 1381,
+   "total_injected_all": 1381,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 1272,
+   "total_injected_subset": 1272
+  },
+  "Unhandled-Exceptions": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 16
+    },
+    "2": {
+     "injected": 20,
+     "fn": 16
+    },
+    "3": {
+     "injected": 21,
+     "fn": 17
+    },
+    "4": {
+     "injected": 18,
+     "fn": 16
+    },
+    "5": {
+     "injected": 31,
+     "fn": 22
+    },
+    "6": {
+     "injected": 30,
+     "fn": 23
+    },
+    "7": {
+     "injected": 31,
+     "fn": 25
+    },
+    "8": {
+     "injected": 31,
+     "fn": 22
+    },
+    "9": {
+     "injected": 24,
+     "fn": 20
+    },
+    "10": {
+     "injected": 8,
+     "fn": 7
+    },
+    "11": {
+     "injected": 31,
+     "fn": 25
+    },
+    "12": {
+     "injected": 37,
+     "fn": 28
+    },
+    "13": {
+     "injected": 17,
+     "fn": 15
+    },
+    "14": {
+     "injected": 22,
+     "fn": 18
+    },
+    "15": {
+     "injected": 17,
+     "fn": 15
+    },
+    "16": {
+     "injected": 42,
+     "fn": 28
+    },
+    "17": {
+     "injected": 30,
+     "fn": 22
+    },
+    "18": {
+     "injected": 53,
+     "fn": 34
+    },
+    "19": {
+     "injected": 28,
+     "fn": 20
+    },
+    "20": {
+     "injected": 31,
+     "fn": 26
+    },
+    "21": {
+     "injected": 27,
+     "fn": 22
+    },
+    "22": {
+     "injected": 36,
+     "fn": 33
+    },
+    "23": {
+     "injected": 26,
+     "fn": 22
+    },
+    "24": {
+     "injected": 48,
+     "fn": 29
+    },
+    "25": {
+     "injected": 21,
+     "fn": 17
+    },
+    "26": {
+     "injected": 23,
+     "fn": 19
+    },
+    "27": {
+     "injected": 47,
+     "fn": 30
+    },
+    "28": {
+     "injected": 29,
+     "fn": 22
+    },
+    "29": {
+     "injected": 19,
+     "fn": 17
+    },
+    "30": {
+     "injected": 48,
+     "fn": 30
+    },
+    "31": {
+     "injected": 15,
+     "fn": 13
+    },
+    "32": {
+     "injected": 21,
+     "fn": 17
+    },
+    "33": {
+     "injected": 25,
+     "fn": 21
+    },
+    "34": {
+     "injected": 36,
+     "fn": 25
+    },
+    "35": {
+     "injected": 34,
+     "fn": 24
+    },
+    "36": {
+     "injected": 36,
+     "fn": 33
+    },
+    "37": {
+     "injected": 35,
+     "fn": 25
+    },
+    "38": {
+     "injected": 29,
+     "fn": 23
+    },
+    "39": {
+     "injected": 11,
+     "fn": 9
+    },
+    "40": {
+     "injected": 24,
+     "fn": 20
+    },
+    "41": {
+     "injected": 17,
+     "fn": 15
+    },
+    "42": {
+     "injected": 25,
+     "fn": 20
+    },
+    "43": {
+     "injected": 29,
+     "fn": 25
+    },
+    "44": {
+     "injected": 30,
+     "fn": 25
+    },
+    "45": {
+     "injected": 28,
+     "fn": 22
+    },
+    "46": {
+     "injected": 7,
+     "fn": 6
+    },
+    "47": {
+     "injected": 40,
+     "fn": 12
+    },
+    "48": {
+     "injected": 32,
+     "fn": 26
+    },
+    "49": {
+     "injected": 11,
+     "fn": 9
+    },
+    "50": {
+     "injected": 25,
+     "fn": 21
+    }
+   },
+   "total_fn_all": 1047,
+   "total_injected_all": 1374,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 960,
+   "total_injected_subset": 1266
+  },
+  "TOD": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 16
+    },
+    "2": {
+     "injected": 20,
+     "fn": 18
+    },
+    "3": {
+     "injected": 21,
+     "fn": 19
+    },
+    "4": {
+     "injected": 18,
+     "fn": 16
+    },
+    "5": {
+     "injected": 31,
+     "fn": 27
+    },
+    "6": {
+     "injected": 30,
+     "fn": 28
+    },
+    "7": {
+     "injected": 31,
+     "fn": 29
+    },
+    "8": {
+     "injected": 31,
+     "fn": 27
+    },
+    "9": {
+     "injected": 24,
+     "fn": 21
+    },
+    "10": {
+     "injected": 8,
+     "fn": 6
+    },
+    "11": {
+     "injected": 31,
+     "fn": 29
+    },
+    "12": {
+     "injected": 37,
+     "fn": 33
+    },
+    "13": {
+     "injected": 17,
+     "fn": 15
+    },
+    "14": {
+     "injected": 22,
+     "fn": 20
+    },
+    "15": {
+     "injected": 17,
+     "fn": 15
+    },
+    "16": {
+     "injected": 40,
+     "fn": 37
+    },
+    "17": {
+     "injected": 30,
+     "fn": 26
+    },
+    "18": {
+     "injected": 40,
+     "fn": 36
+    },
+    "19": {
+     "injected": 28,
+     "fn": 26
+    },
+    "20": {
+     "injected": 31,
+     "fn": 28
+    },
+    "21": {
+     "injected": 27,
+     "fn": 25
+    },
+    "22": {
+     "injected": 36,
+     "fn": 30
+    },
+    "23": {
+     "injected": 26,
+     "fn": 24
+    },
+    "24": {
+     "injected": 40,
+     "fn": 38
+    },
+    "25": {
+     "injected": 21,
+     "fn": 20
+    },
+    "26": {
+     "injected": 23,
+     "fn": 21
+    },
+    "27": {
+     "injected": 40,
+     "fn": 36
+    },
+    "28": {
+     "injected": 29,
+     "fn": 27
+    },
+    "29": {
+     "injected": 19,
+     "fn": 18
+    },
+    "30": {
+     "injected": 40,
+     "fn": 37
+    },
+    "31": {
+     "injected": 15,
+     "fn": 13
+    },
+    "32": {
+     "injected": 21,
+     "fn": 18
+    },
+    "33": {
+     "injected": 25,
+     "fn": 23
+    },
+    "34": {
+     "injected": 36,
+     "fn": 32
+    },
+    "35": {
+     "injected": 34,
+     "fn": 30
+    },
+    "36": {
+     "injected": 36,
+     "fn": 30
+    },
+    "37": {
+     "injected": 35,
+     "fn": 30
+    },
+    "38": {
+     "injected": 29,
+     "fn": 27
+    },
+    "39": {
+     "injected": 11,
+     "fn": 10
+    },
+    "40": {
+     "injected": 24,
+     "fn": 22
+    },
+    "41": {
+     "injected": 17,
+     "fn": 15
+    },
+    "42": {
+     "injected": 25,
+     "fn": 23
+    },
+    "43": {
+     "injected": 29,
+     "fn": 22
+    },
+    "44": {
+     "injected": 30,
+     "fn": 21
+    },
+    "45": {
+     "injected": 28,
+     "fn": 26
+    },
+    "46": {
+     "injected": 7,
+     "fn": 5
+    },
+    "47": {
+     "injected": 40,
+     "fn": 38
+    },
+    "48": {
+     "injected": 32,
+     "fn": 29
+    },
+    "49": {
+     "injected": 11,
+     "fn": 10
+    },
+    "50": {
+     "injected": 25,
+     "fn": 23
+    }
+   },
+   "total_fn_all": 1195,
+   "total_injected_all": 1336,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 1099,
+   "total_injected_subset": 1228
+  },
+  "Overflow-Underflow": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 12
+    },
+    "2": {
+     "injected": 20,
+     "fn": 13
+    },
+    "3": {
+     "injected": 21,
+     "fn": 13
+    },
+    "4": {
+     "injected": 18,
+     "fn": 12
+    },
+    "5": {
+     "injected": 31,
+     "fn": 21
+    },
+    "6": {
+     "injected": 30,
+     "fn": 20
+    },
+    "7": {
+     "injected": 31,
+     "fn": 20
+    },
+    "8": {
+     "injected": 31,
+     "fn": 21
+    },
+    "9": {
+     "injected": 24,
+     "fn": 14
+    },
+    "10": {
+     "injected": 8,
+     "fn": 6
+    },
+    "11": {
+     "injected": 30,
+     "fn": 17
+    },
+    "12": {
+     "injected": 37,
+     "fn": 26
+    },
+    "13": {
+     "injected": 17,
+     "fn": 12
+    },
+    "14": {
+     "injected": 22,
+     "fn": 14
+    },
+    "15": {
+     "injected": 17,
+     "fn": 12
+    },
+    "16": {
+     "injected": 40,
+     "fn": 30
+    },
+    "17": {
+     "injected": 30,
+     "fn": 17
+    },
+    "18": {
+     "injected": 40,
+     "fn": 31
+    },
+    "19": {
+     "injected": 28,
+     "fn": 22
+    },
+    "20": {
+     "injected": 31,
+     "fn": 19
+    },
+    "21": {
+     "injected": 27,
+     "fn": 17
+    },
+    "22": {
+     "injected": 36,
+     "fn": 25
+    },
+    "23": {
+     "injected": 26,
+     "fn": 15
+    },
+    "24": {
+     "injected": 40,
+     "fn": 30
+    },
+    "25": {
+     "injected": 21,
+     "fn": 13
+    },
+    "26": {
+     "injected": 23,
+     "fn": 14
+    },
+    "27": {
+     "injected": 40,
+     "fn": 29
+    },
+    "28": {
+     "injected": 29,
+     "fn": 20
+    },
+    "29": {
+     "injected": 19,
+     "fn": 14
+    },
+    "30": {
+     "injected": 40,
+     "fn": 26
+    },
+    "31": {
+     "injected": 15,
+     "fn": 10
+    },
+    "32": {
+     "injected": 21,
+     "fn": 13
+    },
+    "33": {
+     "injected": 25,
+     "fn": 14
+    },
+    "34": {
+     "injected": 36,
+     "fn": 28
+    },
+    "35": {
+     "injected": 34,
+     "fn": 26
+    },
+    "36": {
+     "injected": 36,
+     "fn": 25
+    },
+    "37": {
+     "injected": 34,
+     "fn": 22
+    },
+    "38": {
+     "injected": 29,
+     "fn": 19
+    },
+    "39": {
+     "injected": 11,
+     "fn": 7
+    },
+    "40": {
+     "injected": 24,
+     "fn": 14
+    },
+    "41": {
+     "injected": 17,
+     "fn": 12
+    },
+    "42": {
+     "injected": 25,
+     "fn": 14
+    },
+    "43": {
+     "injected": 29,
+     "fn": 16
+    },
+    "44": {
+     "injected": 30,
+     "fn": 16
+    },
+    "45": {
+     "injected": 28,
+     "fn": 18
+    },
+    "46": {
+     "injected": 7,
+     "fn": 5
+    },
+    "47": {
+     "injected": 40,
+     "fn": 30
+    },
+    "48": {
+     "injected": 31,
+     "fn": 20
+    },
+    "49": {
+     "injected": 11,
+     "fn": 7
+    },
+    "50": {
+     "injected": 25,
+     "fn": 14
+    }
+   },
+   "total_fn_all": 885,
+   "total_injected_all": 1333,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 814,
+   "total_injected_subset": 1225
+  }
+ },
+ "Securify": {
+  "Re-entrancy": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 0
+    },
+    "2": {
+     "injected": 20,
+     "fn": 0
+    },
+    "3": {
+     "injected": 21,
+     "fn": 0
+    },
+    "4": {
+     "injected": 18,
+     "fn": 0
+    },
+    "5": {
+     "injected": 31,
+     "fn": 0
+    },
+    "6": {
+     "injected": 30,
+     "fn": 0
+    },
+    "7": {
+     "injected": 31,
+     "fn": 0
+    },
+    "8": {
+     "injected": 31,
+     "fn": 0
+    },
+    "9": {
+     "injected": 24,
+     "fn": 0
+    },
+    "10": {
+     "injected": 8,
+     "fn": 0
+    },
+    "11": {
+     "injected": 30,
+     "fn": 1
+    },
+    "12": {
+     "injected": 37,
+     "fn": 9
+    },
+    "13": {
+     "injected": 17,
+     "fn": 0
+    },
+    "14": {
+     "injected": 22,
+     "fn": 0
+    },
+    "15": {
+     "injected": 17,
+     "fn": 0
+    },
+    "16": {
+     "injected": 42,
+     "fn": 0
+    },
+    "17": {
+     "injected": 30,
+     "fn": 0
+    },
+    "18": {
+     "injected": 42,
+     "fn": 1
+    },
+    "19": {
+     "injected": 28,
+     "fn": 0
+    },
+    "20": {
+     "injected": 31,
+     "fn": 2
+    },
+    "21": {
+     "injected": 27,
+     "fn": 27
+    },
+    "22": {
+     "injected": 36,
+     "fn": 7
+    },
+    "23": {
+     "injected": 26,
+     "fn": 0
+    },
+    "24": {
+     "injected": 42,
+     "fn": 42
+    },
+    "25": {
+     "injected": 21,
+     "fn": 0
+    },
+    "26": {
+     "injected": 23,
+     "fn": 0
+    },
+    "27": {
+     "injected": 42,
+     "fn": 39
+    },
+    "28": {
+     "injected": 29,
+     "fn": 29
+    },
+    "29": {
+     "injected": 19,
+     "fn": 3
+    },
+    "30": {
+     "injected": 42,
+     "fn": 0
+    },
+    "31": {
+     "injected": 15,
+     "fn": 0
+    },
+    "32": {
+     "injected": 21,
+     "fn": 0
+    },
+    "33": {
+     "injected": 25,
+     "fn": 3
+    },
+    "34": {
+     "injected": 36,
+     "fn": 0
+    },
+    "35": {
+     "injected": 34,
+     "fn": 28
+    },
+    "36": {
+     "injected": 36,
+     "fn": 7
+    },
+    "37": {
+     "injected": 34,
+     "fn": 1
+    },
+    "38": {
+     "injected": 29,
+     "fn": 29
+    },
+    "39": {
+     "injected": 11,
+     "fn": 0
+    },
+    "40": {
+     "injected": 24,
+     "fn": 0
+    },
+    "41": {
+     "injected": 17,
+     "fn": 0
+    },
+    "42": {
+     "injected": 25,
+     "fn": 3
+    },
+    "43": {
+     "injected": 29,
+     "fn": 0
+    },
+    "44": {
+     "injected": 30,
+     "fn": 0
+    },
+    "45": {
+     "injected": 28,
+     "fn": 0
+    },
+    "46": {
+     "injected": 7,
+     "fn": 0
+    },
+    "47": {
+     "injected": 40,
+     "fn": 0
+    },
+    "48": {
+     "injected": 31,
+     "fn": 1
+    },
+    "49": {
+     "injected": 11,
+     "fn": 0
+    },
+    "50": {
+     "injected": 25,
+     "fn": 0
+    }
+   },
+   "total_fn_all": 232,
+   "total_injected_all": 1343,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 232,
+   "total_injected_subset": 1235
+  },
+  "Unchecked-Send": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 0
+    },
+    "2": {
+     "injected": 20,
+     "fn": 0
+    },
+    "3": {
+     "injected": 21,
+     "fn": 0
+    },
+    "4": {
+     "injected": 18,
+     "fn": 0
+    },
+    "5": {
+     "injected": 31,
+     "fn": 0
+    },
+    "6": {
+     "injected": 30,
+     "fn": 30
+    },
+    "7": {
+     "injected": 31,
+     "fn": 31
+    },
+    "8": {
+     "injected": 31,
+     "fn": 0
+    },
+    "9": {
+     "injected": 24,
+     "fn": 22
+    },
+    "10": {
+     "injected": 8,
+     "fn": 0
+    },
+    "11": {
+     "injected": 31,
+     "fn": 1
+    },
+    "12": {
+     "injected": 32,
+     "fn": 9
+    },
+    "13": {
+     "injected": 17,
+     "fn": 0
+    },
+    "14": {
+     "injected": 22,
+     "fn": 0
+    },
+    "15": {
+     "injected": 17,
+     "fn": 0
+    },
+    "16": {
+     "injected": 32,
+     "fn": 0
+    },
+    "17": {
+     "injected": 30,
+     "fn": 12
+    },
+    "18": {
+     "injected": 32,
+     "fn": 28
+    },
+    "19": {
+     "injected": 28,
+     "fn": 0
+    },
+    "20": {
+     "injected": 31,
+     "fn": 2
+    },
+    "21": {
+     "injected": 27,
+     "fn": 27
+    },
+    "22": {
+     "injected": 32,
+     "fn": 26
+    },
+    "23": {
+     "injected": 26,
+     "fn": 0
+    },
+    "24": {
+     "injected": 32,
+     "fn": 32
+    },
+    "25": {
+     "injected": 21,
+     "fn": 0
+    },
+    "26": {
+     "injected": 23,
+     "fn": 0
+    },
+    "27": {
+     "injected": 32,
+     "fn": 29
+    },
+    "28": {
+     "injected": 29,
+     "fn": 29
+    },
+    "29": {
+     "injected": 19,
+     "fn": 3
+    },
+    "30": {
+     "injected": 32,
+     "fn": 32
+    },
+    "31": {
+     "injected": 15,
+     "fn": 0
+    },
+    "32": {
+     "injected": 21,
+     "fn": 0
+    },
+    "33": {
+     "injected": 25,
+     "fn": 20
+    },
+    "34": {
+     "injected": 32,
+     "fn": 29
+    },
+    "35": {
+     "injected": 32,
+     "fn": 28
+    },
+    "36": {
+     "injected": 32,
+     "fn": 26
+    },
+    "37": {
+     "injected": 32,
+     "fn": 1
+    },
+    "38": {
+     "injected": 29,
+     "fn": 29
+    },
+    "39": {
+     "injected": 11,
+     "fn": 0
+    },
+    "40": {
+     "injected": 24,
+     "fn": 0
+    },
+    "41": {
+     "injected": 17,
+     "fn": 0
+    },
+    "42": {
+     "injected": 25,
+     "fn": 20
+    },
+    "43": {
+     "injected": 29,
+     "fn": 0
+    },
+    "44": {
+     "injected": 30,
+     "fn": 6
+    },
+    "45": {
+     "injected": 28,
+     "fn": 0
+    },
+    "46": {
+     "injected": 7,
+     "fn": 1
+    },
+    "47": {
+     "injected": 32,
+     "fn": 0
+    },
+    "48": {
+     "injected": 32,
+     "fn": 26
+    },
+    "49": {
+     "injected": 11,
+     "fn": 0
+    },
+    "50": {
+     "injected": 25,
+     "fn": 0
+    }
+   },
+   "total_fn_all": 499,
+   "total_injected_all": 1266,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 499,
+   "total_injected_subset": 1158
+  },
+  "Unhandled-Exceptions": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 6
+    },
+    "2": {
+     "injected": 20,
+     "fn": 6
+    },
+    "3": {
+     "injected": 21,
+     "fn": 6
+    },
+    "4": {
+     "injected": 18,
+     "fn": 6
+    },
+    "5": {
+     "injected": 31,
+     "fn": 11
+    },
+    "6": {
+     "injected": 30,
+     "fn": 10
+    },
+    "7": {
+     "injected": 31,
+     "fn": 11
+    },
+    "8": {
+     "injected": 31,
+     "fn": 11
+    },
+    "9": {
+     "injected": 24,
+     "fn": 8
+    },
+    "10": {
+     "injected": 8,
+     "fn": 3
+    },
+    "11": {
+     "injected": 31,
+     "fn": 12
+    },
+    "12": {
+     "injected": 37,
+     "fn": 17
+    },
+    "13": {
+     "injected": 17,
+     "fn": 6
+    },
+    "14": {
+     "injected": 22,
+     "fn": 7
+    },
+    "15": {
+     "injected": 17,
+     "fn": 6
+    },
+    "16": {
+     "injected": 42,
+     "fn": 13
+    },
+    "17": {
+     "injected": 30,
+     "fn": 10
+    },
+    "18": {
+     "injected": 53,
+     "fn": 50
+    },
+    "19": {
+     "injected": 28,
+     "fn": 9
+    },
+    "20": {
+     "injected": 31,
+     "fn": 13
+    },
+    "21": {
+     "injected": 27,
+     "fn": 27
+    },
+    "22": {
+     "injected": 36,
+     "fn": 17
+    },
+    "23": {
+     "injected": 26,
+     "fn": 9
+    },
+    "24": {
+     "injected": 48,
+     "fn": 48
+    },
+    "25": {
+     "injected": 21,
+     "fn": 6
+    },
+    "26": {
+     "injected": 23,
+     "fn": 8
+    },
+    "27": {
+     "injected": 47,
+     "fn": 44
+    },
+    "28": {
+     "injected": 29,
+     "fn": 29
+    },
+    "29": {
+     "injected": 19,
+     "fn": 8
+    },
+    "30": {
+     "injected": 48,
+     "fn": 16
+    },
+    "31": {
+     "injected": 15,
+     "fn": 5
+    },
+    "32": {
+     "injected": 21,
+     "fn": 6
+    },
+    "33": {
+     "injected": 25,
+     "fn": 10
+    },
+    "34": {
+     "injected": 36,
+     "fn": 36
+    },
+    "35": {
+     "injected": 34,
+     "fn": 30
+    },
+    "36": {
+     "injected": 36,
+     "fn": 17
+    },
+    "37": {
+     "injected": 35,
+     "fn": 13
+    },
+    "38": {
+     "injected": 29,
+     "fn": 29
+    },
+    "39": {
+     "injected": 11,
+     "fn": 3
+    },
+    "40": {
+     "injected": 24,
+     "fn": 8
+    },
+    "41": {
+     "injected": 17,
+     "fn": 6
+    },
+    "42": {
+     "injected": 25,
+     "fn": 10
+    },
+    "43": {
+     "injected": 29,
+     "fn": 10
+    },
+    "44": {
+     "injected": 30,
+     "fn": 10
+    },
+    "45": {
+     "injected": 28,
+     "fn": 9
+    },
+    "46": {
+     "injected": 7,
+     "fn": 3
+    },
+    "47": {
+     "injected": 40,
+     "fn": 12
+    },
+    "48": {
+     "injected": 32,
+     "fn": 12
+    },
+    "49": {
+     "injected": 11,
+     "fn": 3
+    },
+    "50": {
+     "injected": 25,
+     "fn": 8
+    }
+   },
+   "total_fn_all": 673,
+   "total_injected_all": 1374,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 638,
+   "total_injected_subset": 1266
+  },
+  "TOD": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 0
+    },
+    "2": {
+     "injected": 20,
+     "fn": 0
+    },
+    "3": {
+     "injected": 21,
+     "fn": 0
+    },
+    "4": {
+     "injected": 18,
+     "fn": 0
+    },
+    "5": {
+     "injected": 31,
+     "fn": 0
+    },
+    "6": {
+     "injected": 30,
+     "fn": 0
+    },
+    "7": {
+     "injected": 31,
+     "fn": 0
+    },
+    "8": {
+     "injected": 31,
+     "fn": 0
+    },
+    "9": {
+     "injected": 24,
+     "fn": 0
+    },
+    "10": {
+     "injected": 8,
+     "fn": 0
+    },
+    "11": {
+     "injected": 31,
+     "fn": 1
+    },
+    "12": {
+     "injected": 37,
+     "fn": 9
+    },
+    "13": {
+     "injected": 17,
+     "fn": 0
+    },
+    "14": {
+     "injected": 22,
+     "fn": 0
+    },
+    "15": {
+     "injected": 17,
+     "fn": 0
+    },
+    "16": {
+     "injected": 40,
+     "fn": 0
+    },
+    "17": {
+     "injected": 30,
+     "fn": 0
+    },
+    "18": {
+     "injected": 40,
+     "fn": 36
+    },
+    "19": {
+     "injected": 28,
+     "fn": 0
+    },
+    "20": {
+     "injected": 31,
+     "fn": 2
+    },
+    "21": {
+     "injected": 27,
+     "fn": 27
+    },
+    "22": {
+     "injected": 36,
+     "fn": 7
+    },
+    "23": {
+     "injected": 26,
+     "fn": 0
+    },
+    "24": {
+     "injected": 40,
+     "fn": 40
+    },
+    "25": {
+     "injected": 21,
+     "fn": 0
+    },
+    "26": {
+     "injected": 23,
+     "fn": 0
+    },
+    "27": {
+     "injected": 40,
+     "fn": 37
+    },
+    "28": {
+     "injected": 29,
+     "fn": 29
+    },
+    "29": {
+     "injected": 19,
+     "fn": 3
+    },
+    "30": {
+     "injected": 40,
+     "fn": 0
+    },
+    "31": {
+     "injected": 15,
+     "fn": 0
+    },
+    "32": {
+     "injected": 21,
+     "fn": 0
+    },
+    "33": {
+     "injected": 25,
+     "fn": 3
+    },
+    "34": {
+     "injected": 36,
+     "fn": 0
+    },
+    "35": {
+     "injected": 34,
+     "fn": 28
+    },
+    "36": {
+     "injected": 36,
+     "fn": 7
+    },
+    "37": {
+     "injected": 35,
+     "fn": 1
+    },
+    "38": {
+     "injected": 29,
+     "fn": 29
+    },
+    "39": {
+     "injected": 11,
+     "fn": 0
+    },
+    "40": {
+     "injected": 24,
+     "fn": 0
+    },
+    "41": {
+     "injected": 17,
+     "fn": 0
+    },
+    "42": {
+     "injected": 25,
+     "fn": 3
+    },
+    "43": {
+     "injected": 29,
+     "fn": 0
+    },
+    "44": {
+     "injected": 30,
+     "fn": 0
+    },
+    "45": {
+     "injected": 28,
+     "fn": 0
+    },
+    "46": {
+     "injected": 7,
+     "fn": 0
+    },
+    "47": {
+     "injected": 40,
+     "fn": 0
+    },
+    "48": {
+     "injected": 32,
+     "fn": 1
+    },
+    "49": {
+     "injected": 11,
+     "fn": 0
+    },
+    "50": {
+     "injected": 25,
+     "fn": 0
+    }
+   },
+   "total_fn_all": 263,
+   "total_injected_all": 1336,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 263,
+   "total_injected_subset": 1228
+  }
+ },
+ "Mythril": {
+  "Re-entrancy": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 13
+    },
+    "2": {
+     "injected": 20,
+     "fn": 20
+    },
+    "3": {
+     "injected": 21,
+     "fn": 21
+    },
+    "4": {
+     "injected": 18,
+     "fn": 18
+    },
+    "5": {
+     "injected": 31,
+     "fn": 28
+    },
+    "6": {
+     "injected": 30,
+     "fn": 21
+    },
+    "7": {
+     "injected": 31,
+     "fn": 21
+    },
+    "8": {
+     "injected": 31,
+     "fn": 28
+    },
+    "9": {
+     "injected": 24,
+     "fn": 16
+    },
+    "10": {
+     "injected": 8,
+     "fn": 5
+    },
+    "11": {
+     "injected": 30,
+     "fn": 21
+    },
+    "12": {
+     "injected": 37,
+     "fn": 29
+    },
+    "13": {
+     "injected": 17,
+     "fn": 17
+    },
+    "14": {
+     "injected": 22,
+     "fn": 15
+    },
+    "15": {
+     "injected": 17,
+     "fn": 17
+    },
+    "16": {
+     "injected": 42,
+     "fn": 37
+    },
+    "17": {
+     "injected": 30,
+     "fn": 30
+    },
+    "18": {
+     "injected": 42,
+     "fn": 32
+    },
+    "19": {
+     "injected": 28,
+     "fn": 19
+    },
+    "20": {
+     "injected": 31,
+     "fn": 26
+    },
+    "21": {
+     "injected": 27,
+     "fn": 27
+    },
+    "22": {
+     "injected": 36,
+     "fn": 29
+    },
+    "23": {
+     "injected": 26,
+     "fn": 18
+    },
+    "24": {
+     "injected": 42,
+     "fn": 42
+    },
+    "25": {
+     "injected": 21,
+     "fn": 15
+    },
+    "26": {
+     "injected": 23,
+     "fn": 16
+    },
+    "27": {
+     "injected": 42,
+     "fn": 32
+    },
+    "28": {
+     "injected": 29,
+     "fn": 20
+    },
+    "29": {
+     "injected": 19,
+     "fn": 14
+    },
+    "30": {
+     "injected": 42,
+     "fn": 42
+    },
+    "31": {
+     "injected": 15,
+     "fn": 15
+    },
+    "32": {
+     "injected": 21,
+     "fn": 15
+    },
+    "33": {
+     "injected": 25,
+     "fn": 24
+    },
+    "34": {
+     "injected": 36,
+     "fn": 26
+    },
+    "35": {
+     "injected": 34,
+     "fn": 24
+    },
+    "36": {
+     "injected": 36,
+     "fn": 29
+    },
+    "37": {
+     "injected": 34,
+     "fn": 24
+    },
+    "38": {
+     "injected": 29,
+     "fn": 20
+    },
+    "39": {
+     "injected": 11,
+     "fn": 7
+    },
+    "40": {
+     "injected": 24,
+     "fn": 16
+    },
+    "41": {
+     "injected": 17,
+     "fn": 17
+    },
+    "42": {
+     "injected": 25,
+     "fn": 24
+    },
+    "43": {
+     "injected": 29,
+     "fn": 20
+    },
+    "44": {
+     "injected": 30,
+     "fn": 21
+    },
+    "45": {
+     "injected": 28,
+     "fn": 28
+    },
+    "46": {
+     "injected": 7,
+     "fn": 4
+    },
+    "47": {
+     "injected": 40,
+     "fn": 36
+    },
+    "48": {
+     "injected": 31,
+     "fn": 22
+    },
+    "49": {
+     "injected": 11,
+     "fn": 7
+    },
+    "50": {
+     "injected": 25,
+     "fn": 17
+    }
+   },
+   "total_fn_all": 1085,
+   "total_injected_all": 1343,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 985,
+   "total_injected_subset": 1235
+  },
+  "Timestamp-Dependency": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 7
+    },
+    "2": {
+     "injected": 20,
+     "fn": 20
+    },
+    "3": {
+     "injected": 21,
+     "fn": 21
+    },
+    "4": {
+     "injected": 19,
+     "fn": 19
+    },
+    "5": {
+     "injected": 31,
+     "fn": 29
+    },
+    "6": {
+     "injected": 30,
+     "fn": 11
+    },
+    "7": {
+     "injected": 31,
+     "fn": 12
+    },
+    "8": {
+     "injected": 31,
+     "fn": 29
+    },
+    "9": {
+     "injected": 26,
+     "fn": 9
+    },
+    "10": {
+     "injected": 9,
+     "fn": 7
+    },
+    "11": {
+     "injected": 32,
+     "fn": 13
+    },
+    "12": {
+     "injected": 39,
+     "fn": 16
+    },
+    "13": {
+     "injected": 17,
+     "fn": 17
+    },
+    "14": {
+     "injected": 22,
+     "fn": 8
+    },
+    "15": {
+     "injected": 17,
+     "fn": 17
+    },
+    "16": {
+     "injected": 42,
+     "fn": 14
+    },
+    "17": {
+     "injected": 31,
+     "fn": 29
+    },
+    "18": {
+     "injected": 45,
+     "fn": 15
+    },
+    "19": {
+     "injected": 29,
+     "fn": 11
+    },
+    "20": {
+     "injected": 31,
+     "fn": 27
+    },
+    "21": {
+     "injected": 28,
+     "fn": 28
+    },
+    "22": {
+     "injected": 36,
+     "fn": 20
+    },
+    "23": {
+     "injected": 26,
+     "fn": 9
+    },
+    "24": {
+     "injected": 45,
+     "fn": 45
+    },
+    "25": {
+     "injected": 21,
+     "fn": 7
+    },
+    "26": {
+     "injected": 23,
+     "fn": 7
+    },
+    "27": {
+     "injected": 45,
+     "fn": 15
+    },
+    "28": {
+     "injected": 29,
+     "fn": 11
+    },
+    "29": {
+     "injected": 21,
+     "fn": 10
+    },
+    "30": {
+     "injected": 45,
+     "fn": 45
+    },
+    "31": {
+     "injected": 17,
+     "fn": 17
+    },
+    "32": {
+     "injected": 21,
+     "fn": 7
+    },
+    "33": {
+     "injected": 26,
+     "fn": 24
+    },
+    "34": {
+     "injected": 38,
+     "fn": 13
+    },
+    "35": {
+     "injected": 34,
+     "fn": 12
+    },
+    "36": {
+     "injected": 36,
+     "fn": 20
+    },
+    "37": {
+     "injected": 36,
+     "fn": 14
+    },
+    "38": {
+     "injected": 29,
+     "fn": 11
+    },
+    "39": {
+     "injected": 11,
+     "fn": 7
+    },
+    "40": {
+     "injected": 24,
+     "fn": 7
+    },
+    "41": {
+     "injected": 17,
+     "fn": 17
+    },
+    "42": {
+     "injected": 26,
+     "fn": 24
+    },
+    "43": {
+     "injected": 30,
+     "fn": 11
+    },
+    "44": {
+     "injected": 30,
+     "fn": 11
+    },
+    "45": {
+     "injected": 28,
+     "fn": 28
+    },
+    "46": {
+     "injected": 7,
+     "fn": 6
+    },
+    "47": {
+     "injected": 41,
+     "fn": 24
+    },
+    "48": {
+     "injected": 33,
+     "fn": 13
+    },
+    "49": {
+     "injected": 11,
+     "fn": 7
+    },
+    "50": {
+     "injected": 26,
+     "fn": 9
+    }
+   },
+   "total_fn_all": 810,
+   "total_injected_all": 1381,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 714,
+   "total_injected_subset": 1272
+  },
+  "Unchecked-Send": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 0
+    },
+    "2": {
+     "injected": 20,
+     "fn": 20
+    },
+    "3": {
+     "injected": 21,
+     "fn": 21
+    },
+    "4": {
+     "injected": 18,
+     "fn": 0
+    },
+    "5": {
+     "injected": 31,
+     "fn": 27
+    },
+    "6": {
+     "injected": 30,
+     "fn": 0
+    },
+    "7": {
+     "injected": 31,
+     "fn": 0
+    },
+    "8": {
+     "injected": 31,
+     "fn": 27
+    },
+    "9": {
+     "injected": 24,
+     "fn": 0
+    },
+    "10": {
+     "injected": 8,
+     "fn": 0
+    },
+    "11": {
+     "injected": 31,
+     "fn": 1
+    },
+    "12": {
+     "injected": 32,
+     "fn": 9
+    },
+    "13": {
+     "injected": 17,
+     "fn": 17
+    },
+    "14": {
+     "injected": 22,
+     "fn": 0
+    },
+    "15": {
+     "injected": 17,
+     "fn": 17
+    },
+    "16": {
+     "injected": 32,
+     "fn": 0
+    },
+    "17": {
+     "injected": 30,
+     "fn": 27
+    },
+    "18": {
+     "injected": 32,
+     "fn": 1
+    },
+    "19": {
+     "injected": 28,
+     "fn": 0
+    },
+    "20": {
+     "injected": 31,
+     "fn": 24
+    },
+    "21": {
+     "injected": 27,
+     "fn": 27
+    },
+    "22": {
+     "injected": 32,
+     "fn": 7
+    },
+    "23": {
+     "injected": 26,
+     "fn": 0
+    },
+    "24": {
+     "injected": 32,
+     "fn": 0
+    },
+    "25": {
+     "injected": 21,
+     "fn": 0
+    },
+    "26": {
+     "injected": 23,
+     "fn": 0
+    },
+    "27": {
+     "injected": 32,
+     "fn": 0
+    },
+    "28": {
+     "injected": 29,
+     "fn": 0
+    },
+    "29": {
+     "injected": 19,
+     "fn": 3
+    },
+    "30": {
+     "injected": 32,
+     "fn": 32
+    },
+    "31": {
+     "injected": 15,
+     "fn": 15
+    },
+    "32": {
+     "injected": 21,
+     "fn": 0
+    },
+    "33": {
+     "injected": 25,
+     "fn": 20
+    },
+    "34": {
+     "injected": 32,
+     "fn": 0
+    },
+    "35": {
+     "injected": 32,
+     "fn": 0
+    },
+    "36": {
+     "injected": 32,
+     "fn": 7
+    },
+    "37": {
+     "injected": 32,
+     "fn": 1
+    },
+    "38": {
+     "injected": 29,
+     "fn": 0
+    },
+    "39": {
+     "injected": 11,
+     "fn": 0
+    },
+    "40": {
+     "injected": 24,
+     "fn": 0
+    },
+    "41": {
+     "injected": 17,
+     "fn": 17
+    },
+    "42": {
+     "injected": 25,
+     "fn": 20
+    },
+    "43": {
+     "injected": 29,
+     "fn": 0
+    },
+    "44": {
+     "injected": 30,
+     "fn": 0
+    },
+    "45": {
+     "injected": 28,
+     "fn": 28
+    },
+    "46": {
+     "injected": 7,
+     "fn": 1
+    },
+    "47": {
+     "injected": 32,
+     "fn": 19
+    },
+    "48": {
+     "injected": 32,
+     "fn": 1
+    },
+    "49": {
+     "injected": 11,
+     "fn": 0
+    },
+    "50": {
+     "injected": 25,
+     "fn": 0
+    }
+   },
+   "total_fn_all": 389,
+   "total_injected_all": 1266,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 321,
+   "total_injected_subset": 1158
+  },
+  "Unhandled-Exceptions": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 5
+    },
+    "2": {
+     "injected": 20,
+     "fn": 20
+    },
+    "3": {
+     "injected": 21,
+     "fn": 21
+    },
+    "4": {
+     "injected": 18,
+     "fn": 18
+    },
+    "5": {
+     "injected": 31,
+     "fn": 28
+    },
+    "6": {
+     "injected": 30,
+     "fn": 10
+    },
+    "7": {
+     "injected": 31,
+     "fn": 10
+    },
+    "8": {
+     "injected": 31,
+     "fn": 28
+    },
+    "9": {
+     "injected": 24,
+     "fn": 8
+    },
+    "10": {
+     "injected": 8,
+     "fn": 4
+    },
+    "11": {
+     "injected": 31,
+     "fn": 11
+    },
+    "12": {
+     "injected": 37,
+     "fn": 14
+    },
+    "13": {
+     "injected": 17,
+     "fn": 17
+    },
+    "14": {
+     "injected": 22,
+     "fn": 6
+    },
+    "15": {
+     "injected": 17,
+     "fn": 17
+    },
+    "16": {
+     "injected": 42,
+     "fn": 12
+    },
+    "17": {
+     "injected": 30,
+     "fn": 27
+    },
+    "18": {
+     "injected": 53,
+     "fn": 18
+    },
+    "19": {
+     "injected": 28,
+     "fn": 9
+    },
+    "20": {
+     "injected": 31,
+     "fn": 28
+    },
+    "21": {
+     "injected": 27,
+     "fn": 27
+    },
+    "22": {
+     "injected": 36,
+     "fn": 16
+    },
+    "23": {
+     "injected": 26,
+     "fn": 9
+    },
+    "24": {
+     "injected": 48,
+     "fn": 48
+    },
+    "25": {
+     "injected": 21,
+     "fn": 5
+    },
+    "26": {
+     "injected": 23,
+     "fn": 7
+    },
+    "27": {
+     "injected": 47,
+     "fn": 12
+    },
+    "28": {
+     "injected": 29,
+     "fn": 10
+    },
+    "29": {
+     "injected": 19,
+     "fn": 8
+    },
+    "30": {
+     "injected": 48,
+     "fn": 48
+    },
+    "31": {
+     "injected": 15,
+     "fn": 15
+    },
+    "32": {
+     "injected": 21,
+     "fn": 5
+    },
+    "33": {
+     "injected": 25,
+     "fn": 23
+    },
+    "34": {
+     "injected": 36,
+     "fn": 11
+    },
+    "35": {
+     "injected": 34,
+     "fn": 11
+    },
+    "36": {
+     "injected": 36,
+     "fn": 16
+    },
+    "37": {
+     "injected": 35,
+     "fn": 12
+    },
+    "38": {
+     "injected": 29,
+     "fn": 10
+    },
+    "39": {
+     "injected": 11,
+     "fn": 4
+    },
+    "40": {
+     "injected": 24,
+     "fn": 8
+    },
+    "41": {
+     "injected": 17,
+     "fn": 17
+    },
+    "42": {
+     "injected": 25,
+     "fn": 23
+    },
+    "43": {
+     "injected": 29,
+     "fn": 10
+    },
+    "44": {
+     "injected": 30,
+     "fn": 10
+    },
+    "45": {
+     "injected": 28,
+     "fn": 28
+    },
+    "46": {
+     "injected": 7,
+     "fn": 4
+    },
+    "47": {
+     "injected": 40,
+     "fn": 25
+    },
+    "48": {
+     "injected": 32,
+     "fn": 11
+    },
+    "49": {
+     "injected": 11,
+     "fn": 4
+    },
+    "50": {
+     "injected": 25,
+     "fn": 8
+    }
+   },
+   "total_fn_all": 756,
+   "total_injected_all": 1374,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 664,
+   "total_injected_subset": 1266
+  },
+  "Overflow-Underflow": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 12
+    },
+    "2": {
+     "injected": 20,
+     "fn": 20
+    },
+    "3": {
+     "injected": 21,
+     "fn": 21
+    },
+    "4": {
+     "injected": 18,
+     "fn": 14
+    },
+    "5": {
+     "injected": 31,
+     "fn": 28
+    },
+    "6": {
+     "injected": 30,
+     "fn": 23
+    },
+    "7": {
+     "injected": 31,
+     "fn": 24
+    },
+    "8": {
+     "injected": 31,
+     "fn": 28
+    },
+    "9": {
+     "injected": 24,
+     "fn": 19
+    },
+    "10": {
+     "injected": 8,
+     "fn": 8
+    },
+    "11": {
+     "injected": 30,
+     "fn": 22
+    },
+    "12": {
+     "injected": 37,
+     "fn": 28
+    },
+    "13": {
+     "injected": 17,
+     "fn": 17
+    },
+    "14": {
+     "injected": 22,
+     "fn": 14
+    },
+    "15": {
+     "injected": 17,
+     "fn": 17
+    },
+    "16": {
+     "injected": 40,
+     "fn": 28
+    },
+    "17": {
+     "injected": 30,
+     "fn": 29
+    },
+    "18": {
+     "injected": 40,
+     "fn": 28
+    },
+    "19": {
+     "injected": 28,
+     "fn": 22
+    },
+    "20": {
+     "injected": 31,
+     "fn": 26
+    },
+    "21": {
+     "injected": 27,
+     "fn": 27
+    },
+    "22": {
+     "injected": 36,
+     "fn": 27
+    },
+    "23": {
+     "injected": 26,
+     "fn": 18
+    },
+    "24": {
+     "injected": 40,
+     "fn": 40
+    },
+    "25": {
+     "injected": 21,
+     "fn": 17
+    },
+    "26": {
+     "injected": 23,
+     "fn": 18
+    },
+    "27": {
+     "injected": 40,
+     "fn": 29
+    },
+    "28": {
+     "injected": 29,
+     "fn": 23
+    },
+    "29": {
+     "injected": 19,
+     "fn": 14
+    },
+    "30": {
+     "injected": 40,
+     "fn": 40
+    },
+    "31": {
+     "injected": 15,
+     "fn": 15
+    },
+    "32": {
+     "injected": 21,
+     "fn": 13
+    },
+    "33": {
+     "injected": 25,
+     "fn": 22
+    },
+    "34": {
+     "injected": 36,
+     "fn": 27
+    },
+    "35": {
+     "injected": 34,
+     "fn": 24
+    },
+    "36": {
+     "injected": 36,
+     "fn": 27
+    },
+    "37": {
+     "injected": 34,
+     "fn": 23
+    },
+    "38": {
+     "injected": 29,
+     "fn": 23
+    },
+    "39": {
+     "injected": 11,
+     "fn": 7
+    },
+    "40": {
+     "injected": 24,
+     "fn": 18
+    },
+    "41": {
+     "injected": 17,
+     "fn": 17
+    },
+    "42": {
+     "injected": 25,
+     "fn": 22
+    },
+    "43": {
+     "injected": 29,
+     "fn": 17
+    },
+    "44": {
+     "injected": 30,
+     "fn": 17
+    },
+    "45": {
+     "injected": 28,
+     "fn": 28
+    },
+    "46": {
+     "injected": 7,
+     "fn": 7
+    },
+    "47": {
+     "injected": 40,
+     "fn": 31
+    },
+    "48": {
+     "injected": 31,
+     "fn": 23
+    },
+    "49": {
+     "injected": 11,
+     "fn": 7
+    },
+    "50": {
+     "injected": 25,
+     "fn": 20
+    }
+   },
+   "total_fn_all": 1069,
+   "total_injected_all": 1333,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 974,
+   "total_injected_subset": 1225
+  },
+  "tx.origin": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 0
+    },
+    "2": {
+     "injected": 20,
+     "fn": 20
+    },
+    "3": {
+     "injected": 21,
+     "fn": 21
+    },
+    "4": {
+     "injected": 18,
+     "fn": 18
+    },
+    "5": {
+     "injected": 31,
+     "fn": 27
+    },
+    "6": {
+     "injected": 30,
+     "fn": 0
+    },
+    "7": {
+     "injected": 31,
+     "fn": 0
+    },
+    "8": {
+     "injected": 31,
+     "fn": 27
+    },
+    "9": {
+     "injected": 24,
+     "fn": 0
+    },
+    "10": {
+     "injected": 8,
+     "fn": 0
+    },
+    "11": {
+     "injected": 31,
+     "fn": 1
+    },
+    "12": {
+     "injected": 37,
+     "fn": 9
+    },
+    "13": {
+     "injected": 17,
+     "fn": 17
+    },
+    "14": {
+     "injected": 22,
+     "fn": 0
+    },
+    "15": {
+     "injected": 17,
+     "fn": 17
+    },
+    "16": {
+     "injected": 40,
+     "fn": 0
+    },
+    "17": {
+     "injected": 30,
+     "fn": 27
+    },
+    "18": {
+     "injected": 40,
+     "fn": 1
+    },
+    "19": {
+     "injected": 28,
+     "fn": 0
+    },
+    "20": {
+     "injected": 31,
+     "fn": 24
+    },
+    "21": {
+     "injected": 27,
+     "fn": 27
+    },
+    "22": {
+     "injected": 36,
+     "fn": 7
+    },
+    "23": {
+     "injected": 26,
+     "fn": 0
+    },
+    "24": {
+     "injected": 40,
+     "fn": 40
+    },
+    "25": {
+     "injected": 21,
+     "fn": 0
+    },
+    "26": {
+     "injected": 23,
+     "fn": 0
+    },
+    "27": {
+     "injected": 40,
+     "fn": 0
+    },
+    "28": {
+     "injected": 29,
+     "fn": 0
+    },
+    "29": {
+     "injected": 19,
+     "fn": 3
+    },
+    "30": {
+     "injected": 40,
+     "fn": 40
+    },
+    "31": {
+     "injected": 15,
+     "fn": 15
+    },
+    "32": {
+     "injected": 21,
+     "fn": 0
+    },
+    "33": {
+     "injected": 25,
+     "fn": 20
+    },
+    "34": {
+     "injected": 36,
+     "fn": 0
+    },
+    "35": {
+     "injected": 34,
+     "fn": 0
+    },
+    "36": {
+     "injected": 36,
+     "fn": 7
+    },
+    "37": {
+     "injected": 35,
+     "fn": 1
+    },
+    "38": {
+     "injected": 29,
+     "fn": 0
+    },
+    "39": {
+     "injected": 11,
+     "fn": 0
+    },
+    "40": {
+     "injected": 24,
+     "fn": 0
+    },
+    "41": {
+     "injected": 17,
+     "fn": 17
+    },
+    "42": {
+     "injected": 25,
+     "fn": 20
+    },
+    "43": {
+     "injected": 29,
+     "fn": 0
+    },
+    "44": {
+     "injected": 30,
+     "fn": 0
+    },
+    "45": {
+     "injected": 28,
+     "fn": 28
+    },
+    "46": {
+     "injected": 7,
+     "fn": 0
+    },
+    "47": {
+     "injected": 40,
+     "fn": 20
+    },
+    "48": {
+     "injected": 32,
+     "fn": 1
+    },
+    "49": {
+     "injected": 11,
+     "fn": 0
+    },
+    "50": {
+     "injected": 25,
+     "fn": 0
+    }
+   },
+   "total_fn_all": 455,
+   "total_injected_all": 1336,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 369,
+   "total_injected_subset": 1228
+  }
+ },
+ "Smartcheck": {
+  "Re-entrancy": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 18
+    },
+    "2": {
+     "injected": 20,
+     "fn": 20
+    },
+    "3": {
+     "injected": 21,
+     "fn": 21
+    },
+    "4": {
+     "injected": 18,
+     "fn": 18
+    },
+    "5": {
+     "injected": 31,
+     "fn": 31
+    },
+    "6": {
+     "injected": 30,
+     "fn": 30
+    },
+    "7": {
+     "injected": 31,
+     "fn": 31
+    },
+    "8": {
+     "injected": 31,
+     "fn": 31
+    },
+    "9": {
+     "injected": 24,
+     "fn": 24
+    },
+    "10": {
+     "injected": 8,
+     "fn": 8
+    },
+    "11": {
+     "injected": 30,
+     "fn": 30
+    },
+    "12": {
+     "injected": 37,
+     "fn": 37
+    },
+    "13": {
+     "injected": 17,
+     "fn": 17
+    },
+    "14": {
+     "injected": 22,
+     "fn": 22
+    },
+    "15": {
+     "injected": 17,
+     "fn": 17
+    },
+    "16": {
+     "injected": 42,
+     "fn": 42
+    },
+    "17": {
+     "injected": 30,
+     "fn": 30
+    },
+    "18": {
+     "injected": 42,
+     "fn": 42
+    },
+    "19": {
+     "injected": 28,
+     "fn": 28
+    },
+    "20": {
+     "injected": 31,
+     "fn": 31
+    },
+    "21": {
+     "injected": 27,
+     "fn": 27
+    },
+    "22": {
+     "injected": 36,
+     "fn": 36
+    },
+    "23": {
+     "injected": 26,
+     "fn": 26
+    },
+    "24": {
+     "injected": 42,
+     "fn": 42
+    },
+    "25": {
+     "injected": 21,
+     "fn": 21
+    },
+    "26": {
+     "injected": 23,
+     "fn": 23
+    },
+    "27": {
+     "injected": 42,
+     "fn": 42
+    },
+    "28": {
+     "injected": 29,
+     "fn": 29
+    },
+    "29": {
+     "injected": 19,
+     "fn": 19
+    },
+    "30": {
+     "injected": 42,
+     "fn": 42
+    },
+    "31": {
+     "injected": 15,
+     "fn": 15
+    },
+    "32": {
+     "injected": 21,
+     "fn": 21
+    },
+    "33": {
+     "injected": 25,
+     "fn": 25
+    },
+    "34": {
+     "injected": 36,
+     "fn": 36
+    },
+    "35": {
+     "injected": 34,
+     "fn": 34
+    },
+    "36": {
+     "injected": 36,
+     "fn": 36
+    },
+    "37": {
+     "injected": 34,
+     "fn": 34
+    },
+    "38": {
+     "injected": 29,
+     "fn": 29
+    },
+    "39": {
+     "injected": 11,
+     "fn": 11
+    },
+    "40": {
+     "injected": 24,
+     "fn": 24
+    },
+    "41": {
+     "injected": 17,
+     "fn": 17
+    },
+    "42": {
+     "injected": 25,
+     "fn": 25
+    },
+    "43": {
+     "injected": 29,
+     "fn": 29
+    },
+    "44": {
+     "injected": 30,
+     "fn": 30
+    },
+    "45": {
+     "injected": 28,
+     "fn": 28
+    },
+    "46": {
+     "injected": 7,
+     "fn": 7
+    },
+    "47": {
+     "injected": 40,
+     "fn": 40
+    },
+    "48": {
+     "injected": 31,
+     "fn": 31
+    },
+    "49": {
+     "injected": 11,
+     "fn": 11
+    },
+    "50": {
+     "injected": 25,
+     "fn": 25
+    }
+   },
+   "total_fn_all": 1343,
+   "total_injected_all": 1343,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 1235,
+   "total_injected_subset": 1235
+  },
+  "Timestamp-Dependency": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 13
+    },
+    "2": {
+     "injected": 20,
+     "fn": 13
+    },
+    "3": {
+     "injected": 21,
+     "fn": 13
+    },
+    "4": {
+     "injected": 19,
+     "fn": 13
+    },
+    "5": {
+     "injected": 31,
+     "fn": 20
+    },
+    "6": {
+     "injected": 30,
+     "fn": 19
+    },
+    "7": {
+     "injected": 31,
+     "fn": 21
+    },
+    "8": {
+     "injected": 31,
+     "fn": 20
+    },
+    "9": {
+     "injected": 26,
+     "fn": 16
+    },
+    "10": {
+     "injected": 9,
+     "fn": 9
+    },
+    "11": {
+     "injected": 32,
+     "fn": 21
+    },
+    "12": {
+     "injected": 39,
+     "fn": 23
+    },
+    "13": {
+     "injected": 17,
+     "fn": 12
+    },
+    "14": {
+     "injected": 22,
+     "fn": 13
+    },
+    "15": {
+     "injected": 17,
+     "fn": 12
+    },
+    "16": {
+     "injected": 42,
+     "fn": 25
+    },
+    "17": {
+     "injected": 31,
+     "fn": 20
+    },
+    "18": {
+     "injected": 45,
+     "fn": 25
+    },
+    "19": {
+     "injected": 29,
+     "fn": 29
+    },
+    "20": {
+     "injected": 31,
+     "fn": 26
+    },
+    "21": {
+     "injected": 28,
+     "fn": 26
+    },
+    "22": {
+     "injected": 36,
+     "fn": 22
+    },
+    "23": {
+     "injected": 26,
+     "fn": 16
+    },
+    "24": {
+     "injected": 45,
+     "fn": 25
+    },
+    "25": {
+     "injected": 21,
+     "fn": 14
+    },
+    "26": {
+     "injected": 23,
+     "fn": 13
+    },
+    "27": {
+     "injected": 45,
+     "fn": 25
+    },
+    "28": {
+     "injected": 29,
+     "fn": 19
+    },
+    "29": {
+     "injected": 21,
+     "fn": 13
+    },
+    "30": {
+     "injected": 45,
+     "fn": 29
+    },
+    "31": {
+     "injected": 17,
+     "fn": 12
+    },
+    "32": {
+     "injected": 21,
+     "fn": 13
+    },
+    "33": {
+     "injected": 26,
+     "fn": 16
+    },
+    "34": {
+     "injected": 38,
+     "fn": 22
+    },
+    "35": {
+     "injected": 34,
+     "fn": 21
+    },
+    "36": {
+     "injected": 36,
+     "fn": 22
+    },
+    "37": {
+     "injected": 36,
+     "fn": 22
+    },
+    "38": {
+     "injected": 29,
+     "fn": 19
+    },
+    "39": {
+     "injected": 11,
+     "fn": 10
+    },
+    "40": {
+     "injected": 24,
+     "fn": 14
+    },
+    "41": {
+     "injected": 17,
+     "fn": 12
+    },
+    "42": {
+     "injected": 26,
+     "fn": 16
+    },
+    "43": {
+     "injected": 30,
+     "fn": 19
+    },
+    "44": {
+     "injected": 30,
+     "fn": 19
+    },
+    "45": {
+     "injected": 28,
+     "fn": 18
+    },
+    "46": {
+     "injected": 7,
+     "fn": 7
+    },
+    "47": {
+     "injected": 41,
+     "fn": 26
+    },
+    "48": {
+     "injected": 33,
+     "fn": 21
+    },
+    "49": {
+     "injected": 11,
+     "fn": 10
+    },
+    "50": {
+     "injected": 26,
+     "fn": 18
+    }
+   },
+   "total_fn_all": 902,
+   "total_injected_all": 1381,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 830,
+   "total_injected_subset": 1272
+  },
+  "Unhandled-Exceptions": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 18
+    },
+    "2": {
+     "injected": 20,
+     "fn": 17
+    },
+    "3": {
+     "injected": 21,
+     "fn": 20
+    },
+    "4": {
+     "injected": 18,
+     "fn": 18
+    },
+    "5": {
+     "injected": 31,
+     "fn": 29
+    },
+    "6": {
+     "injected": 30,
+     "fn": 27
+    },
+    "7": {
+     "injected": 31,
+     "fn": 31
+    },
+    "8": {
+     "injected": 31,
+     "fn": 29
+    },
+    "9": {
+     "injected": 24,
+     "fn": 23
+    },
+    "10": {
+     "injected": 8,
+     "fn": 8
+    },
+    "11": {
+     "injected": 31,
+     "fn": 31
+    },
+    "12": {
+     "injected": 37,
+     "fn": 36
+    },
+    "13": {
+     "injected": 17,
+     "fn": 17
+    },
+    "14": {
+     "injected": 22,
+     "fn": 22
+    },
+    "15": {
+     "injected": 17,
+     "fn": 17
+    },
+    "16": {
+     "injected": 42,
+     "fn": 42
+    },
+    "17": {
+     "injected": 30,
+     "fn": 30
+    },
+    "18": {
+     "injected": 53,
+     "fn": 50
+    },
+    "19": {
+     "injected": 28,
+     "fn": 28
+    },
+    "20": {
+     "injected": 31,
+     "fn": 29
+    },
+    "21": {
+     "injected": 27,
+     "fn": 26
+    },
+    "22": {
+     "injected": 36,
+     "fn": 36
+    },
+    "23": {
+     "injected": 26,
+     "fn": 25
+    },
+    "24": {
+     "injected": 48,
+     "fn": 47
+    },
+    "25": {
+     "injected": 21,
+     "fn": 21
+    },
+    "26": {
+     "injected": 23,
+     "fn": 23
+    },
+    "27": {
+     "injected": 47,
+     "fn": 43
+    },
+    "28": {
+     "injected": 29,
+     "fn": 29
+    },
+    "29": {
+     "injected": 19,
+     "fn": 17
+    },
+    "30": {
+     "injected": 48,
+     "fn": 43
+    },
+    "31": {
+     "injected": 15,
+     "fn": 13
+    },
+    "32": {
+     "injected": 21,
+     "fn": 21
+    },
+    "33": {
+     "injected": 25,
+     "fn": 25
+    },
+    "34": {
+     "injected": 36,
+     "fn": 36
+    },
+    "35": {
+     "injected": 34,
+     "fn": 33
+    },
+    "36": {
+     "injected": 36,
+     "fn": 36
+    },
+    "37": {
+     "injected": 35,
+     "fn": 34
+    },
+    "38": {
+     "injected": 29,
+     "fn": 29
+    },
+    "39": {
+     "injected": 11,
+     "fn": 10
+    },
+    "40": {
+     "injected": 24,
+     "fn": 23
+    },
+    "41": {
+     "injected": 17,
+     "fn": 17
+    },
+    "42": {
+     "injected": 25,
+     "fn": 25
+    },
+    "43": {
+     "injected": 29,
+     "fn": 27
+    },
+    "44": {
+     "injected": 30,
+     "fn": 27
+    },
+    "45": {
+     "injected": 28,
+     "fn": 28
+    },
+    "46": {
+     "injected": 7,
+     "fn": 5
+    },
+    "47": {
+     "injected": 40,
+     "fn": 39
+    },
+    "48": {
+     "injected": 32,
+     "fn": 30
+    },
+    "49": {
+     "injected": 11,
+     "fn": 10
+    },
+    "50": {
+     "injected": 25,
+     "fn": 25
+    }
+   },
+   "total_fn_all": 1325,
+   "total_injected_all": 1374,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 1223,
+   "total_injected_subset": 1266
+  },
+  "Overflow-Underflow": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 14
+    },
+    "2": {
+     "injected": 20,
+     "fn": 16
+    },
+    "3": {
+     "injected": 21,
+     "fn": 17
+    },
+    "4": {
+     "injected": 18,
+     "fn": 14
+    },
+    "5": {
+     "injected": 31,
+     "fn": 24
+    },
+    "6": {
+     "injected": 30,
+     "fn": 23
+    },
+    "7": {
+     "injected": 31,
+     "fn": 25
+    },
+    "8": {
+     "injected": 31,
+     "fn": 24
+    },
+    "9": {
+     "injected": 24,
+     "fn": 20
+    },
+    "10": {
+     "injected": 8,
+     "fn": 8
+    },
+    "11": {
+     "injected": 30,
+     "fn": 23
+    },
+    "12": {
+     "injected": 37,
+     "fn": 29
+    },
+    "13": {
+     "injected": 17,
+     "fn": 14
+    },
+    "14": {
+     "injected": 22,
+     "fn": 18
+    },
+    "15": {
+     "injected": 17,
+     "fn": 14
+    },
+    "16": {
+     "injected": 40,
+     "fn": 32
+    },
+    "17": {
+     "injected": 30,
+     "fn": 23
+    },
+    "18": {
+     "injected": 40,
+     "fn": 30
+    },
+    "19": {
+     "injected": 28,
+     "fn": 27
+    },
+    "20": {
+     "injected": 31,
+     "fn": 28
+    },
+    "21": {
+     "injected": 27,
+     "fn": 25
+    },
+    "22": {
+     "injected": 36,
+     "fn": 28
+    },
+    "23": {
+     "injected": 26,
+     "fn": 21
+    },
+    "24": {
+     "injected": 40,
+     "fn": 30
+    },
+    "25": {
+     "injected": 21,
+     "fn": 18
+    },
+    "26": {
+     "injected": 23,
+     "fn": 19
+    },
+    "27": {
+     "injected": 40,
+     "fn": 30
+    },
+    "28": {
+     "injected": 29,
+     "fn": 23
+    },
+    "29": {
+     "injected": 19,
+     "fn": 15
+    },
+    "30": {
+     "injected": 40,
+     "fn": 34
+    },
+    "31": {
+     "injected": 15,
+     "fn": 12
+    },
+    "32": {
+     "injected": 21,
+     "fn": 17
+    },
+    "33": {
+     "injected": 25,
+     "fn": 20
+    },
+    "34": {
+     "injected": 36,
+     "fn": 28
+    },
+    "35": {
+     "injected": 34,
+     "fn": 26
+    },
+    "36": {
+     "injected": 36,
+     "fn": 28
+    },
+    "37": {
+     "injected": 34,
+     "fn": 26
+    },
+    "38": {
+     "injected": 29,
+     "fn": 23
+    },
+    "39": {
+     "injected": 11,
+     "fn": 9
+    },
+    "40": {
+     "injected": 24,
+     "fn": 20
+    },
+    "41": {
+     "injected": 17,
+     "fn": 14
+    },
+    "42": {
+     "injected": 25,
+     "fn": 20
+    },
+    "43": {
+     "injected": 29,
+     "fn": 23
+    },
+    "44": {
+     "injected": 30,
+     "fn": 23
+    },
+    "45": {
+     "injected": 28,
+     "fn": 23
+    },
+    "46": {
+     "injected": 7,
+     "fn": 7
+    },
+    "47": {
+     "injected": 40,
+     "fn": 32
+    },
+    "48": {
+     "injected": 31,
+     "fn": 24
+    },
+    "49": {
+     "injected": 11,
+     "fn": 9
+    },
+    "50": {
+     "injected": 25,
+     "fn": 22
+    }
+   },
+   "total_fn_all": 1072,
+   "total_injected_all": 1333,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 987,
+   "total_injected_subset": 1225
+  },
+  "tx.origin": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 16
+    },
+    "2": {
+     "injected": 20,
+     "fn": 18
+    },
+    "3": {
+     "injected": 21,
+     "fn": 19
+    },
+    "4": {
+     "injected": 18,
+     "fn": 18
+    },
+    "5": {
+     "injected": 31,
+     "fn": 31
+    },
+    "6": {
+     "injected": 30,
+     "fn": 27
+    },
+    "7": {
+     "injected": 31,
+     "fn": 27
+    },
+    "8": {
+     "injected": 31,
+     "fn": 31
+    },
+    "9": {
+     "injected": 24,
+     "fn": 24
+    },
+    "10": {
+     "injected": 8,
+     "fn": 5
+    },
+    "11": {
+     "injected": 31,
+     "fn": 30
+    },
+    "12": {
+     "injected": 37,
+     "fn": 34
+    },
+    "13": {
+     "injected": 17,
+     "fn": 15
+    },
+    "14": {
+     "injected": 22,
+     "fn": 20
+    },
+    "15": {
+     "injected": 17,
+     "fn": 15
+    },
+    "16": {
+     "injected": 40,
+     "fn": 39
+    },
+    "17": {
+     "injected": 30,
+     "fn": 30
+    },
+    "18": {
+     "injected": 40,
+     "fn": 37
+    },
+    "19": {
+     "injected": 28,
+     "fn": 26
+    },
+    "20": {
+     "injected": 31,
+     "fn": 31
+    },
+    "21": {
+     "injected": 27,
+     "fn": 25
+    },
+    "22": {
+     "injected": 36,
+     "fn": 32
+    },
+    "23": {
+     "injected": 26,
+     "fn": 24
+    },
+    "24": {
+     "injected": 40,
+     "fn": 40
+    },
+    "25": {
+     "injected": 21,
+     "fn": 21
+    },
+    "26": {
+     "injected": 23,
+     "fn": 23
+    },
+    "27": {
+     "injected": 40,
+     "fn": 39
+    },
+    "28": {
+     "injected": 29,
+     "fn": 29
+    },
+    "29": {
+     "injected": 19,
+     "fn": 16
+    },
+    "30": {
+     "injected": 40,
+     "fn": 35
+    },
+    "31": {
+     "injected": 15,
+     "fn": 11
+    },
+    "32": {
+     "injected": 21,
+     "fn": 18
+    },
+    "33": {
+     "injected": 25,
+     "fn": 22
+    },
+    "34": {
+     "injected": 36,
+     "fn": 34
+    },
+    "35": {
+     "injected": 34,
+     "fn": 31
+    },
+    "36": {
+     "injected": 36,
+     "fn": 32
+    },
+    "37": {
+     "injected": 35,
+     "fn": 32
+    },
+    "38": {
+     "injected": 29,
+     "fn": 29
+    },
+    "39": {
+     "injected": 11,
+     "fn": 11
+    },
+    "40": {
+     "injected": 24,
+     "fn": 24
+    },
+    "41": {
+     "injected": 17,
+     "fn": 15
+    },
+    "42": {
+     "injected": 25,
+     "fn": 22
+    },
+    "43": {
+     "injected": 29,
+     "fn": 25
+    },
+    "44": {
+     "injected": 30,
+     "fn": 21
+    },
+    "45": {
+     "injected": 28,
+     "fn": 24
+    },
+    "46": {
+     "injected": 7,
+     "fn": 4
+    },
+    "47": {
+     "injected": 40,
+     "fn": 39
+    },
+    "48": {
+     "injected": 32,
+     "fn": 32
+    },
+    "49": {
+     "injected": 11,
+     "fn": 11
+    },
+    "50": {
+     "injected": 25,
+     "fn": 25
+    }
+   },
+   "total_fn_all": 1239,
+   "total_injected_all": 1336,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 1137,
+   "total_injected_subset": 1228
+  }
+ },
+ "Manticore": {
+  "Re-entrancy": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 8
+    },
+    "2": {
+     "injected": 20,
+     "fn": 20
+    },
+    "3": {
+     "injected": 21,
+     "fn": 21
+    },
+    "4": {
+     "injected": 18,
+     "fn": 13
+    },
+    "5": {
+     "injected": 31,
+     "fn": 31
+    },
+    "6": {
+     "injected": 30,
+     "fn": 22
+    },
+    "7": {
+     "injected": 31,
+     "fn": 23
+    },
+    "8": {
+     "injected": 31,
+     "fn": 31
+    },
+    "9": {
+     "injected": 24,
+     "fn": 18
+    },
+    "10": {
+     "injected": 8,
+     "fn": 8
+    },
+    "11": {
+     "injected": 30,
+     "fn": 25
+    },
+    "12": {
+     "injected": 37,
+     "fn": 31
+    },
+    "13": {
+     "injected": 17,
+     "fn": 17
+    },
+    "14": {
+     "injected": 22,
+     "fn": 22
+    },
+    "15": {
+     "injected": 17,
+     "fn": 17
+    },
+    "16": {
+     "injected": 42,
+     "fn": 42
+    },
+    "17": {
+     "injected": 30,
+     "fn": 29
+    },
+    "18": {
+     "injected": 42,
+     "fn": 41
+    },
+    "19": {
+     "injected": 28,
+     "fn": 28
+    },
+    "20": {
+     "injected": 31,
+     "fn": 31
+    },
+    "21": {
+     "injected": 27,
+     "fn": 27
+    },
+    "22": {
+     "injected": 36,
+     "fn": 34
+    },
+    "23": {
+     "injected": 26,
+     "fn": 26
+    },
+    "24": {
+     "injected": 42,
+     "fn": 42
+    },
+    "25": {
+     "injected": 21,
+     "fn": 21
+    },
+    "26": {
+     "injected": 23,
+     "fn": 23
+    },
+    "27": {
+     "injected": 42,
+     "fn": 42
+    },
+    "28": {
+     "injected": 29,
+     "fn": 29
+    },
+    "29": {
+     "injected": 19,
+     "fn": 19
+    },
+    "30": {
+     "injected": 42,
+     "fn": 42
+    },
+    "31": {
+     "injected": 15,
+     "fn": 15
+    },
+    "32": {
+     "injected": 21,
+     "fn": 18
+    },
+    "33": {
+     "injected": 25,
+     "fn": 24
+    },
+    "34": {
+     "injected": 36,
+     "fn": 35
+    },
+    "35": {
+     "injected": 34,
+     "fn": 34
+    },
+    "36": {
+     "injected": 36,
+     "fn": 36
+    },
+    "37": {
+     "injected": 34,
+     "fn": 29
+    },
+    "38": {
+     "injected": 29,
+     "fn": 29
+    },
+    "39": {
+     "injected": 11,
+     "fn": 7
+    },
+    "40": {
+     "injected": 24,
+     "fn": 19
+    },
+    "41": {
+     "injected": 17,
+     "fn": 17
+    },
+    "42": {
+     "injected": 25,
+     "fn": 24
+    },
+    "43": {
+     "injected": 29,
+     "fn": 21
+    },
+    "44": {
+     "injected": 30,
+     "fn": 30
+    },
+    "45": {
+     "injected": 28,
+     "fn": 26
+    },
+    "46": {
+     "injected": 7,
+     "fn": 4
+    },
+    "47": {
+     "injected": 40,
+     "fn": 37
+    },
+    "48": {
+     "injected": 31,
+     "fn": 29
+    },
+    "49": {
+     "injected": 11,
+     "fn": 7
+    },
+    "50": {
+     "injected": 25,
+     "fn": 25
+    }
+   },
+   "total_fn_all": 1249,
+   "total_injected_all": 1343,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 1156,
+   "total_injected_subset": 1235
+  },
+  "Overflow-Underflow": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 14
+    },
+    "2": {
+     "injected": 20,
+     "fn": 20
+    },
+    "3": {
+     "injected": 21,
+     "fn": 21
+    },
+    "4": {
+     "injected": 18,
+     "fn": 14
+    },
+    "5": {
+     "injected": 31,
+     "fn": 28
+    },
+    "6": {
+     "injected": 30,
+     "fn": 23
+    },
+    "7": {
+     "injected": 31,
+     "fn": 26
+    },
+    "8": {
+     "injected": 31,
+     "fn": 31
+    },
+    "9": {
+     "injected": 24,
+     "fn": 19
+    },
+    "10": {
+     "injected": 8,
+     "fn": 8
+    },
+    "11": {
+     "injected": 30,
+     "fn": 26
+    },
+    "12": {
+     "injected": 37,
+     "fn": 33
+    },
+    "13": {
+     "injected": 17,
+     "fn": 17
+    },
+    "14": {
+     "injected": 22,
+     "fn": 15
+    },
+    "15": {
+     "injected": 17,
+     "fn": 17
+    },
+    "16": {
+     "injected": 40,
+     "fn": 38
+    },
+    "17": {
+     "injected": 30,
+     "fn": 30
+    },
+    "18": {
+     "injected": 40,
+     "fn": 37
+    },
+    "19": {
+     "injected": 28,
+     "fn": 27
+    },
+    "20": {
+     "injected": 31,
+     "fn": 26
+    },
+    "21": {
+     "injected": 27,
+     "fn": 27
+    },
+    "22": {
+     "injected": 36,
+     "fn": 33
+    },
+    "23": {
+     "injected": 26,
+     "fn": 26
+    },
+    "24": {
+     "injected": 40,
+     "fn": 40
+    },
+    "25": {
+     "injected": 21,
+     "fn": 21
+    },
+    "26": {
+     "injected": 23,
+     "fn": 19
+    },
+    "27": {
+     "injected": 40,
+     "fn": 38
+    },
+    "28": {
+     "injected": 29,
+     "fn": 29
+    },
+    "29": {
+     "injected": 19,
+     "fn": 15
+    },
+    "30": {
+     "injected": 40,
+     "fn": 40
+    },
+    "31": {
+     "injected": 15,
+     "fn": 15
+    },
+    "32": {
+     "injected": 21,
+     "fn": 14
+    },
+    "33": {
+     "injected": 25,
+     "fn": 22
+    },
+    "34": {
+     "injected": 36,
+     "fn": 34
+    },
+    "35": {
+     "injected": 34,
+     "fn": 32
+    },
+    "36": {
+     "injected": 36,
+     "fn": 33
+    },
+    "37": {
+     "injected": 34,
+     "fn": 29
+    },
+    "38": {
+     "injected": 29,
+     "fn": 29
+    },
+    "39": {
+     "injected": 11,
+     "fn": 8
+    },
+    "40": {
+     "injected": 24,
+     "fn": 19
+    },
+    "41": {
+     "injected": 17,
+     "fn": 17
+    },
+    "42": {
+     "injected": 25,
+     "fn": 22
+    },
+    "43": {
+     "injected": 29,
+     "fn": 17
+    },
+    "44": {
+     "injected": 30,
+     "fn": 21
+    },
+    "45": {
+     "injected": 28,
+     "fn": 26
+    },
+    "46": {
+     "injected": 7,
+     "fn": 6
+    },
+    "47": {
+     "injected": 40,
+     "fn": 35
+    },
+    "48": {
+     "injected": 31,
+     "fn": 27
+    },
+    "49": {
+     "injected": 11,
+     "fn": 8
+    },
+    "50": {
+     "injected": 25,
+     "fn": 20
+    }
+   },
+   "total_fn_all": 1192,
+   "total_injected_all": 1333,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 1095,
+   "total_injected_subset": 1225
+  }
+ },
+ "Slither": {
+  "Re-entrancy": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 0
+    },
+    "2": {
+     "injected": 20,
+     "fn": 0
+    },
+    "3": {
+     "injected": 21,
+     "fn": 0
+    },
+    "4": {
+     "injected": 18,
+     "fn": 0
+    },
+    "5": {
+     "injected": 31,
+     "fn": 0
+    },
+    "6": {
+     "injected": 30,
+     "fn": 0
+    },
+    "7": {
+     "injected": 31,
+     "fn": 0
+    },
+    "8": {
+     "injected": 31,
+     "fn": 0
+    },
+    "9": {
+     "injected": 24,
+     "fn": 0
+    },
+    "10": {
+     "injected": 8,
+     "fn": 0
+    },
+    "11": {
+     "injected": 30,
+     "fn": 0
+    },
+    "12": {
+     "injected": 37,
+     "fn": 0
+    },
+    "13": {
+     "injected": 17,
+     "fn": 0
+    },
+    "14": {
+     "injected": 22,
+     "fn": 0
+    },
+    "15": {
+     "injected": 17,
+     "fn": 0
+    },
+    "16": {
+     "injected": 42,
+     "fn": 0
+    },
+    "17": {
+     "injected": 30,
+     "fn": 0
+    },
+    "18": {
+     "injected": 42,
+     "fn": 0
+    },
+    "19": {
+     "injected": 28,
+     "fn": 0
+    },
+    "20": {
+     "injected": 31,
+     "fn": 0
+    },
+    "21": {
+     "injected": 27,
+     "fn": 0
+    },
+    "22": {
+     "injected": 36,
+     "fn": 0
+    },
+    "23": {
+     "injected": 26,
+     "fn": 0
+    },
+    "24": {
+     "injected": 42,
+     "fn": 0
+    },
+    "25": {
+     "injected": 21,
+     "fn": 0
+    },
+    "26": {
+     "injected": 23,
+     "fn": 0
+    },
+    "27": {
+     "injected": 42,
+     "fn": 0
+    },
+    "28": {
+     "injected": 29,
+     "fn": 0
+    },
+    "29": {
+     "injected": 19,
+     "fn": 0
+    },
+    "30": {
+     "injected": 42,
+     "fn": 0
+    },
+    "31": {
+     "injected": 15,
+     "fn": 0
+    },
+    "32": {
+     "injected": 21,
+     "fn": 0
+    },
+    "33": {
+     "injected": 25,
+     "fn": 0
+    },
+    "34": {
+     "injected": 36,
+     "fn": 0
+    },
+    "35": {
+     "injected": 34,
+     "fn": 0
+    },
+    "36": {
+     "injected": 36,
+     "fn": 0
+    },
+    "37": {
+     "injected": 34,
+     "fn": 0
+    },
+    "38": {
+     "injected": 29,
+     "fn": 0
+    },
+    "39": {
+     "injected": 11,
+     "fn": 0
+    },
+    "40": {
+     "injected": 24,
+     "fn": 0
+    },
+    "41": {
+     "injected": 17,
+     "fn": 0
+    },
+    "42": {
+     "injected": 25,
+     "fn": 0
+    },
+    "43": {
+     "injected": 29,
+     "fn": 0
+    },
+    "44": {
+     "injected": 30,
+     "fn": 0
+    },
+    "45": {
+     "injected": 28,
+     "fn": 0
+    },
+    "46": {
+     "injected": 7,
+     "fn": 0
+    },
+    "47": {
+     "injected": 40,
+     "fn": 0
+    },
+    "48": {
+     "injected": 31,
+     "fn": 0
+    },
+    "49": {
+     "injected": 11,
+     "fn": 0
+    },
+    "50": {
+     "injected": 25,
+     "fn": 0
+    }
+   },
+   "total_fn_all": 0,
+   "total_injected_all": 1343,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 0,
+   "total_injected_subset": 1235
+  },
+  "Timestamp-Dependency": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 8
+    },
+    "2": {
+     "injected": 20,
+     "fn": 9
+    },
+    "3": {
+     "injected": 21,
+     "fn": 10
+    },
+    "4": {
+     "injected": 19,
+     "fn": 9
+    },
+    "5": {
+     "injected": 31,
+     "fn": 11
+    },
+    "6": {
+     "injected": 30,
+     "fn": 11
+    },
+    "7": {
+     "injected": 31,
+     "fn": 11
+    },
+    "8": {
+     "injected": 31,
+     "fn": 11
+    },
+    "9": {
+     "injected": 26,
+     "fn": 11
+    },
+    "10": {
+     "injected": 9,
+     "fn": 5
+    },
+    "11": {
+     "injected": 32,
+     "fn": 11
+    },
+    "12": {
+     "injected": 39,
+     "fn": 13
+    },
+    "13": {
+     "injected": 17,
+     "fn": 8
+    },
+    "14": {
+     "injected": 22,
+     "fn": 11
+    },
+    "15": {
+     "injected": 17,
+     "fn": 8
+    },
+    "16": {
+     "injected": 42,
+     "fn": 15
+    },
+    "17": {
+     "injected": 31,
+     "fn": 11
+    },
+    "18": {
+     "injected": 45,
+     "fn": 15
+    },
+    "19": {
+     "injected": 29,
+     "fn": 11
+    },
+    "20": {
+     "injected": 31,
+     "fn": 11
+    },
+    "21": {
+     "injected": 28,
+     "fn": 11
+    },
+    "22": {
+     "injected": 36,
+     "fn": 12
+    },
+    "23": {
+     "injected": 26,
+     "fn": 11
+    },
+    "24": {
+     "injected": 45,
+     "fn": 15
+    },
+    "25": {
+     "injected": 21,
+     "fn": 10
+    },
+    "26": {
+     "injected": 23,
+     "fn": 11
+    },
+    "27": {
+     "injected": 45,
+     "fn": 15
+    },
+    "28": {
+     "injected": 29,
+     "fn": 11
+    },
+    "29": {
+     "injected": 21,
+     "fn": 10
+    },
+    "30": {
+     "injected": 45,
+     "fn": 15
+    },
+    "31": {
+     "injected": 17,
+     "fn": 8
+    },
+    "32": {
+     "injected": 21,
+     "fn": 10
+    },
+    "33": {
+     "injected": 26,
+     "fn": 11
+    },
+    "34": {
+     "injected": 38,
+     "fn": 13
+    },
+    "35": {
+     "injected": 34,
+     "fn": 12
+    },
+    "36": {
+     "injected": 36,
+     "fn": 12
+    },
+    "37": {
+     "injected": 36,
+     "fn": 12
+    },
+    "38": {
+     "injected": 29,
+     "fn": 11
+    },
+    "39": {
+     "injected": 11,
+     "fn": 6
+    },
+    "40": {
+     "injected": 24,
+     "fn": 11
+    },
+    "41": {
+     "injected": 17,
+     "fn": 8
+    },
+    "42": {
+     "injected": 26,
+     "fn": 11
+    },
+    "43": {
+     "injected": 30,
+     "fn": 11
+    },
+    "44": {
+     "injected": 30,
+     "fn": 11
+    },
+    "45": {
+     "injected": 28,
+     "fn": 11
+    },
+    "46": {
+     "injected": 7,
+     "fn": 5
+    },
+    "47": {
+     "injected": 41,
+     "fn": 14
+    },
+    "48": {
+     "injected": 33,
+     "fn": 12
+    },
+    "49": {
+     "injected": 11,
+     "fn": 6
+    },
+    "50": {
+     "injected": 26,
+     "fn": 11
+    }
+   },
+   "total_fn_all": 537,
+   "total_injected_all": 1381,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 490,
+   "total_injected_subset": 1272
+  },
+  "Unhandled-Exceptions": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 6
+    },
+    "2": {
+     "injected": 20,
+     "fn": 6
+    },
+    "3": {
+     "injected": 21,
+     "fn": 6
+    },
+    "4": {
+     "injected": 18,
+     "fn": 6
+    },
+    "5": {
+     "injected": 31,
+     "fn": 11
+    },
+    "6": {
+     "injected": 30,
+     "fn": 10
+    },
+    "7": {
+     "injected": 31,
+     "fn": 11
+    },
+    "8": {
+     "injected": 31,
+     "fn": 11
+    },
+    "9": {
+     "injected": 24,
+     "fn": 8
+    },
+    "10": {
+     "injected": 8,
+     "fn": 3
+    },
+    "11": {
+     "injected": 31,
+     "fn": 11
+    },
+    "12": {
+     "injected": 37,
+     "fn": 10
+    },
+    "13": {
+     "injected": 17,
+     "fn": 6
+    },
+    "14": {
+     "injected": 22,
+     "fn": 7
+    },
+    "15": {
+     "injected": 17,
+     "fn": 6
+    },
+    "16": {
+     "injected": 42,
+     "fn": 13
+    },
+    "17": {
+     "injected": 30,
+     "fn": 10
+    },
+    "18": {
+     "injected": 53,
+     "fn": 21
+    },
+    "19": {
+     "injected": 28,
+     "fn": 9
+    },
+    "20": {
+     "injected": 31,
+     "fn": 11
+    },
+    "21": {
+     "injected": 27,
+     "fn": 9
+    },
+    "22": {
+     "injected": 36,
+     "fn": 12
+    },
+    "23": {
+     "injected": 26,
+     "fn": 9
+    },
+    "24": {
+     "injected": 48,
+     "fn": 16
+    },
+    "25": {
+     "injected": 21,
+     "fn": 6
+    },
+    "26": {
+     "injected": 23,
+     "fn": 8
+    },
+    "27": {
+     "injected": 47,
+     "fn": 15
+    },
+    "28": {
+     "injected": 29,
+     "fn": 10
+    },
+    "29": {
+     "injected": 19,
+     "fn": 6
+    },
+    "30": {
+     "injected": 48,
+     "fn": 16
+    },
+    "31": {
+     "injected": 15,
+     "fn": 5
+    },
+    "32": {
+     "injected": 21,
+     "fn": 6
+    },
+    "33": {
+     "injected": 25,
+     "fn": 8
+    },
+    "34": {
+     "injected": 36,
+     "fn": 12
+    },
+    "35": {
+     "injected": 34,
+     "fn": 12
+    },
+    "36": {
+     "injected": 36,
+     "fn": 12
+    },
+    "37": {
+     "injected": 35,
+     "fn": 12
+    },
+    "38": {
+     "injected": 29,
+     "fn": 10
+    },
+    "39": {
+     "injected": 11,
+     "fn": 3
+    },
+    "40": {
+     "injected": 24,
+     "fn": 8
+    },
+    "41": {
+     "injected": 17,
+     "fn": 6
+    },
+    "42": {
+     "injected": 25,
+     "fn": 8
+    },
+    "43": {
+     "injected": 29,
+     "fn": 10
+    },
+    "44": {
+     "injected": 30,
+     "fn": 10
+    },
+    "45": {
+     "injected": 28,
+     "fn": 9
+    },
+    "46": {
+     "injected": 7,
+     "fn": 3
+    },
+    "47": {
+     "injected": 40,
+     "fn": 12
+    },
+    "48": {
+     "injected": 32,
+     "fn": 11
+    },
+    "49": {
+     "injected": 11,
+     "fn": 3
+    },
+    "50": {
+     "injected": 25,
+     "fn": 8
+    }
+   },
+   "total_fn_all": 457,
+   "total_injected_all": 1374,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 422,
+   "total_injected_subset": 1266
+  },
+  "tx.origin": {
+   "per_contract": {
+    "1": {
+     "injected": 18,
+     "fn": 0
+    },
+    "2": {
+     "injected": 20,
+     "fn": 0
+    },
+    "3": {
+     "injected": 21,
+     "fn": 0
+    },
+    "4": {
+     "injected": 18,
+     "fn": 0
+    },
+    "5": {
+     "injected": 31,
+     "fn": 0
+    },
+    "6": {
+     "injected": 30,
+     "fn": 0
+    },
+    "7": {
+     "injected": 31,
+     "fn": 0
+    },
+    "8": {
+     "injected": 31,
+     "fn": 0
+    },
+    "9": {
+     "injected": 24,
+     "fn": 0
+    },
+    "10": {
+     "injected": 8,
+     "fn": 0
+    },
+    "11": {
+     "injected": 31,
+     "fn": 0
+    },
+    "12": {
+     "injected": 37,
+     "fn": 0
+    },
+    "13": {
+     "injected": 17,
+     "fn": 0
+    },
+    "14": {
+     "injected": 22,
+     "fn": 0
+    },
+    "15": {
+     "injected": 17,
+     "fn": 0
+    },
+    "16": {
+     "injected": 40,
+     "fn": 0
+    },
+    "17": {
+     "injected": 30,
+     "fn": 0
+    },
+    "18": {
+     "injected": 40,
+     "fn": 0
+    },
+    "19": {
+     "injected": 28,
+     "fn": 0
+    },
+    "20": {
+     "injected": 31,
+     "fn": 0
+    },
+    "21": {
+     "injected": 27,
+     "fn": 0
+    },
+    "22": {
+     "injected": 36,
+     "fn": 0
+    },
+    "23": {
+     "injected": 26,
+     "fn": 0
+    },
+    "24": {
+     "injected": 40,
+     "fn": 0
+    },
+    "25": {
+     "injected": 21,
+     "fn": 0
+    },
+    "26": {
+     "injected": 23,
+     "fn": 0
+    },
+    "27": {
+     "injected": 40,
+     "fn": 0
+    },
+    "28": {
+     "injected": 29,
+     "fn": 0
+    },
+    "29": {
+     "injected": 19,
+     "fn": 0
+    },
+    "30": {
+     "injected": 40,
+     "fn": 0
+    },
+    "31": {
+     "injected": 15,
+     "fn": 0
+    },
+    "32": {
+     "injected": 21,
+     "fn": 0
+    },
+    "33": {
+     "injected": 25,
+     "fn": 0
+    },
+    "34": {
+     "injected": 36,
+     "fn": 0
+    },
+    "35": {
+     "injected": 34,
+     "fn": 0
+    },
+    "36": {
+     "injected": 36,
+     "fn": 0
+    },
+    "37": {
+     "injected": 35,
+     "fn": 0
+    },
+    "38": {
+     "injected": 29,
+     "fn": 0
+    },
+    "39": {
+     "injected": 11,
+     "fn": 0
+    },
+    "40": {
+     "injected": 24,
+     "fn": 0
+    },
+    "41": {
+     "injected": 17,
+     "fn": 0
+    },
+    "42": {
+     "injected": 25,
+     "fn": 0
+    },
+    "43": {
+     "injected": 29,
+     "fn": 0
+    },
+    "44": {
+     "injected": 30,
+     "fn": 0
+    },
+    "45": {
+     "injected": 28,
+     "fn": 0
+    },
+    "46": {
+     "injected": 7,
+     "fn": 0
+    },
+    "47": {
+     "injected": 40,
+     "fn": 0
+    },
+    "48": {
+     "injected": 32,
+     "fn": 0
+    },
+    "49": {
+     "injected": 11,
+     "fn": 0
+    },
+    "50": {
+     "injected": 25,
+     "fn": 0
+    }
+   },
+   "total_fn_all": 0,
+   "total_injected_all": 1336,
+   "subset": [
+    6,
+    50
+   ],
+   "total_fn_subset": 0,
+   "total_injected_subset": 1228
+  }
+ }
+}

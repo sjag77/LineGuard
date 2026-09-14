@@ -1,0 +1,347 @@
+<title>LineGuard Re-entrancy Model Comparison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap">
+<style>
+:root{
+  --ground:#f6f7f5; --paper:#ffffff; --ink:#1b201d; --ink-2:#4b5550; --ink-3:#6f7a74;
+  --rule:#d8ddd9; --rule-2:#e9ece9; --tint:#eef1ee;
+  --gpt:#2a78d6; --son:#eb6834; --pos:#1f7a4d; --neg:#b3402b; --note:#8a6a12; --note-bg:#fbf5e3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121513; --paper:#1a1e1b; --ink:#eaeeeb; --ink-2:#b9c2bd; --ink-3:#8f9a94;
+    --rule:#343b37; --rule-2:#262b28; --tint:#212622;
+    --gpt:#3987e5; --son:#d95926; --pos:#4fb383; --neg:#e07a63; --note:#e0bf6a; --note-bg:#2a2518;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121513; --paper:#1a1e1b; --ink:#eaeeeb; --ink-2:#b9c2bd; --ink-3:#8f9a94;
+  --rule:#343b37; --rule-2:#262b28; --tint:#212622;
+  --gpt:#3987e5; --son:#d95926; --pos:#4fb383; --neg:#e07a63; --note:#e0bf6a; --note-bg:#2a2518;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font:15px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+.doc{max-width:920px;margin:0 auto;padding:40px 24px 72px;display:grid;gap:36px}
+h1,h2,h3{font-family:"Source Serif 4",Georgia,"Times New Roman",serif;text-wrap:balance;margin:0;color:var(--ink)}
+h1{font-size:30px;line-height:1.2;font-weight:600}
+h2{font-size:21px;font-weight:600;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+h3{font-size:16px;font-weight:600}
+p{margin:0;max-width:68ch}
+.mono,code,.num{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+.num{font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+section{display:grid;gap:16px}
+header.title{display:grid;gap:14px;padding-bottom:24px;border-bottom:2px solid var(--ink)}
+dl.meta{display:grid;grid-template-columns:max-content 1fr;gap:4px 20px;margin:0;font-size:13.5px}
+dl.meta dt{color:var(--ink-3)} dl.meta dd{margin:0}
+.summary{background:var(--paper);border:1px solid var(--rule);padding:20px 22px;display:grid;gap:12px}
+.findings{margin:0;padding-left:20px;display:grid;gap:8px;max-width:72ch}
+.caution{background:var(--note-bg);border-left:3px solid var(--note);padding:14px 18px;display:grid;gap:8px}
+.caution strong{color:var(--note)}
+.caution ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.tbl-wrap{overflow-x:auto;background:var(--paper);border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:8px 12px;text-align:right;border-bottom:1px solid var(--rule-2);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-weight:600;color:var(--ink-2);background:var(--tint);border-bottom:1px solid var(--rule)}
+tbody tr:last-child td{border-bottom:0}
+td.pos{color:var(--pos)} td.neg{color:var(--neg)} td.muted{color:var(--ink-3)}
+th.group{text-align:center;border-left:1px solid var(--rule)}
+td.gl,th.gl{border-left:1px solid var(--rule)}
+.legend{display:flex;gap:18px;font-size:13px;color:var(--ink-2);flex-wrap:wrap}
+.key{display:inline-flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:50%;display:inline-block}
+.figure{background:var(--paper);border:1px solid var(--rule);padding:18px 18px 12px;display:grid;gap:10px}
+.figcap{font-size:13px;color:var(--ink-3);max-width:80ch}
+svg text{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;fill:var(--ink-3)}
+svg .lbl{fill:var(--ink-2);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:12px}
+.tip{position:fixed;pointer-events:none;background:var(--paper);color:var(--ink);border:1px solid var(--rule);box-shadow:0 4px 14px rgba(0,0,0,.12);padding:8px 10px;font-size:12.5px;line-height:1.45;border-radius:4px;z-index:10}
+.tip[hidden]{display:none}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.stat{background:var(--paper);border:1px solid var(--rule);padding:14px 16px;display:grid;gap:4px}
+.stat .v{font-family:"IBM Plex Mono",monospace;font-size:20px;font-variant-numeric:tabular-nums}
+.stat .s{font-size:12.5px;color:var(--ink-3)}
+button.sort{all:unset;cursor:pointer;color:inherit}
+button.sort:focus-visible{outline:2px solid var(--gpt);outline-offset:2px}
+footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padding-top:16px}
+@media (max-width:640px){h1{font-size:25px}.doc{padding:28px 16px 56px}}
+</style>
+
+<main class="doc">
+
+<header class="title">
+  <div class="eyebrow">Technical memorandum · exploratory, not for publication</div>
+  <h1>LineGuard Re-entrancy Model Comparison: Claude Sonnet 5 and GPT-4o</h1>
+  <dl class="meta">
+    <dt>Project</dt><dd>LineGuard: An LLM-Based Smart Contract Vulnerability Detection (IEEE Access, Access-2025-55386)</dd>
+    <dt>Date</dt><dd>13 September 2026</dd>
+    <dt>Scope</dt><dd>Re-entrancy category, contracts <span class="mono">buggy_1</span> to <span class="mono">buggy_27</span> in pipeline order (20 contracts)</dd>
+    <dt>Purpose</dt><dd>Functional check of the revised pipeline with a second model backbone, and an indicative comparison with the recorded GPT-4o run</dd>
+  </dl>
+</header>
+
+<section class="summary" aria-labelledby="s-summary">
+  <h2 id="s-summary">Executive summary</h2>
+  <p>The revised LineGuard pipeline ran end to end with Claude Sonnet 5 on 20 Re-entrancy contracts and was compared contract by contract with the recorded GPT-4o results on the same 20 contracts. Both runs used the oracle evaluation configuration and the same framework parameters. The outcome differs sharply by granularity:</p>
+  <ul class="findings">
+    <li><strong>Block level.</strong> Sonnet 5 achieved a higher block F1 on all 20 contracts (macro 0.434 to 0.586). The gain comes from recall (0.288 to 0.430); block precision was essentially unchanged (0.967 to 0.943).</li>
+    <li><strong>Line level.</strong> Line F1 was effectively the same (0.626 to 0.620; 8 contracts better, 10 worse, 2 tied; sign test p = 0.81). The two models reached it differently: Sonnet 5 recovered more vulnerable lines (recall +0.155, p = 0.013) but also flagged more non-vulnerable lines (precision −0.190, p = 0.031).</li>
+    <li><strong>Refinement effort.</strong> Sonnet 5 needed more feedback rounds: an average of 2.75 attempts per contract against 2.30 for GPT-4o, with 15 of 20 contracts using all three attempts.</li>
+  </ul>
+  <p>In short, on this sample Sonnet 5 is the broader detector rather than the more accurate one. Because the model and the invocation method changed together, and the sample is small, these results are indicative only and should not be reported in the manuscript.</p>
+</section>
+
+<section aria-labelledby="s-setup">
+  <h2 id="s-setup">Experimental setup</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Item</th><th style="text-align:left">GPT-4o (reference)</th><th style="text-align:left">Claude Sonnet 5 (this check)</th></tr></thead>
+      <tbody>
+        <tr><td>Source of results</td><td style="text-align:left">Execution log of the October 2025 run</td><td style="text-align:left">New run, 13 September 2026</td></tr>
+        <tr><td>Model invocation</td><td style="text-align:left">OpenAI API, alias <span class="mono">gpt-4o</span></td><td style="text-align:left">Claude Code CLI in print mode, <span class="mono">claude-sonnet-5</span></td></tr>
+        <tr><td>Evaluation mode</td><td style="text-align:left">Oracle</td><td style="text-align:left">Oracle</td></tr>
+        <tr><td>Contracts compared</td><td style="text-align:left" colspan="2">20 Re-entrancy contracts, identical set for both models</td></tr>
+        <tr><td>Framework parameters</td><td style="text-align:left" colspan="2"><span class="mono">max_attempts=3, threshold=0.7, early_stop=block, topk_candidates=40, condense_window=5, block_eval=dilated, block_dilation=1, line_tolerance=0, smart_feedback=llm</span></td></tr>
+        <tr><td>Runs per model</td><td style="text-align:left" colspan="2">One execution per contract</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Block-level metrics credit a prediction that falls inside an annotated vulnerable span (with one-line dilation). Line-level metrics require the exact annotated line. All figures below are macro averages over the 20 contracts. Paired comparisons use a two-sided exact sign test over contracts; ties are excluded from the test.</p>
+</section>
+
+<section class="caution" aria-labelledby="s-validity">
+  <h3 id="s-validity"><strong>Threats to validity</strong></h3>
+  <ul>
+    <li><strong>Two factors changed at once.</strong> Sonnet 5 was called through the Claude Code CLI, which applies its own system prompt and does not expose decoding parameters or a pinned model snapshot. GPT-4o was called directly through its API. Differences cannot be attributed to the model alone.</li>
+    <li><strong>Small sample.</strong> 20 of the 50 Re-entrancy contracts. These 20 are harder than the category average: GPT-4o's line F1 is 0.626 on them against 0.690 on all 50.</li>
+    <li><strong>Single execution.</strong> Run-to-run variance was not measured for either model.</li>
+    <li><strong>Oracle configuration.</strong> Attempt selection and feedback consulted the ground truth in both runs, so absolute scores are upper bounds.</li>
+    <li><strong>Missing line annotations.</strong> Contracts <span class="mono">buggy_17</span> and <span class="mono">buggy_21</span> have no point-level line annotations, so both models score 0 at line level on them. Excluding the two, line F1 is 0.696 (GPT-4o) and 0.689 (Sonnet 5); the conclusion is unchanged.</li>
+    <li><strong>No token or cost data.</strong> The CLI does not report token usage, so cost cannot be compared.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="s-results">
+  <h2 id="s-results">Results</h2>
+
+  <h3>Macro-averaged metrics</h3>
+  <div class="tbl-wrap">
+    <table id="macroTable">
+      <thead>
+        <tr><th>Metric</th><th>GPT-4o</th><th>Sonnet 5</th><th>Difference</th><th>Contracts better / worse / tied</th><th>Sign test p</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="figure">
+    <div class="legend" aria-hidden="true">
+      <span class="key"><span class="sw" style="background:var(--gpt)"></span>GPT-4o</span>
+      <span class="key"><span class="sw" style="background:var(--son)"></span>Claude Sonnet 5</span>
+    </div>
+    <div id="dumbbell" role="img" aria-label="Macro metrics for GPT-4o and Sonnet 5 on a 0 to 1 scale"></div>
+    <p class="figcap">Figure 1. Macro-averaged precision, recall and F1 at block and line granularity. Each row joins the two models' values on a common 0 to 1 scale.</p>
+  </div>
+
+  <div class="figure">
+    <div class="legend" aria-hidden="true">
+      <span class="key"><span class="sw" style="background:var(--pos)"></span>Sonnet 5 higher</span>
+      <span class="key"><span class="sw" style="background:var(--neg)"></span>GPT-4o higher</span>
+    </div>
+    <div id="deltaLine" role="img" aria-label="Per-contract difference in line F1, Sonnet 5 minus GPT-4o"></div>
+    <p class="figcap">Figure 2. Per-contract difference in line-level F1 (Sonnet 5 minus GPT-4o), sorted. The spread on both sides of zero is why the macro difference is negligible.</p>
+  </div>
+
+  <div class="figure">
+    <div class="legend" aria-hidden="true">
+      <span class="key"><span class="sw" style="background:var(--pos)"></span>Sonnet 5 higher</span>
+    </div>
+    <div id="deltaBlock" role="img" aria-label="Per-contract difference in block F1, Sonnet 5 minus GPT-4o"></div>
+    <p class="figcap">Figure 3. Per-contract difference in block-level F1 (Sonnet 5 minus GPT-4o), sorted. Every contract falls on the positive side.</p>
+  </div>
+
+  <h3>Refinement attempts</h3>
+  <div class="grid2" id="attempts"></div>
+  <p class="figcap">Attempt index of the reported result per contract. A higher index means more feedback rounds were used before the result was accepted.</p>
+</section>
+
+<section aria-labelledby="s-appendix">
+  <h2 id="s-appendix">Appendix: per-contract results</h2>
+  <p class="figcap">Select a column heading to sort. Line-level values of 0.000 for <span class="mono">buggy_17</span> and <span class="mono">buggy_21</span> reflect missing annotations.</p>
+  <div class="tbl-wrap">
+    <table id="perTable">
+      <thead>
+        <tr>
+          <th rowspan="2"><button class="sort" data-k="contract">Contract</button></th>
+          <th class="group" colspan="3">Block F1</th>
+          <th class="group" colspan="3">Line F1</th>
+          <th class="group" colspan="2">Attempt</th>
+        </tr>
+        <tr>
+          <th class="gl"><button class="sort" data-k="g_b">GPT-4o</button></th><th><button class="sort" data-k="s_b">Sonnet 5</button></th><th><button class="sort" data-k="d_b">Δ</button></th>
+          <th class="gl"><button class="sort" data-k="g_l">GPT-4o</button></th><th><button class="sort" data-k="s_l">Sonnet 5</button></th><th><button class="sort" data-k="d_l">Δ</button></th>
+          <th class="gl"><button class="sort" data-k="g_a">GPT-4o</button></th><th><button class="sort" data-k="s_a">Sonnet 5</button></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<section aria-labelledby="s-conclusion">
+  <h2 id="s-conclusion">Conclusion</h2>
+  <p>The revised pipeline works with a second model backbone without modification. On these 20 Re-entrancy contracts, Claude Sonnet 5 recovers more of each vulnerable block and more vulnerable lines than GPT-4o, at the cost of lower line-level precision, and ends up with the same line-level F1. The block-level advantage is consistent across every contract, while the line-level result is a trade-off rather than an improvement.</p>
+  <p>A comparison suitable for the manuscript would need both models called through their APIs with pinned model identifiers and fixed decoding parameters, the full set of 50 contracts, and repeated runs to estimate variance.</p>
+</section>
+
+<footer>Data: GPT-4o figures parsed from the October 2025 execution log (macro values verified against the recorded summary for all 50 contracts); Sonnet 5 figures from the run log of 13 September 2026. Statistics computed from the per-contract values listed in the appendix.</footer>
+</main>
+
+<div class="tip" id="tip" hidden></div>
+
+<script>
+const DATA = [
+ ["buggy_1",[1.0,0.271,0.4262,0.923,0.667,0.7742,2],[1.0,0.597,0.7478,0.5,1.0,0.6667,3]],
+ ["buggy_2",[1.0,0.298,0.4593,0.765,0.65,0.7027,3],[1.0,0.584,0.7373,0.526,1.0,0.6897,3]],
+ ["buggy_10",[1.0,0.354,0.5227,0.875,0.875,0.875,2],[1.0,0.446,0.617,0.6,0.75,0.6667,3]],
+ ["buggy_11",[1.0,0.299,0.4601,1.0,0.8,0.8889,2],[0.973,0.444,0.6097,0.75,1.0,0.8571,3]],
+ ["buggy_12",[0.941,0.164,0.2799,0.882,0.405,0.5556,3],[0.974,0.38,0.5468,0.744,0.784,0.7632,3]],
+ ["buggy_13",[1.0,0.269,0.4235,1.0,0.706,0.8276,2],[1.0,0.567,0.7238,0.567,1.0,0.7234,3]],
+ ["buggy_14",[1.0,0.365,0.535,0.955,0.955,0.9545,3],[1.0,0.545,0.7055,0.595,1.0,0.7458,3]],
+ ["buggy_15",[1.0,0.567,0.7238,0.531,1.0,0.6939,1],[0.987,0.575,0.7264,0.586,1.0,0.7391,2]],
+ ["buggy_16",[0.964,0.247,0.3932,0.821,0.548,0.6571,3],[0.973,0.335,0.4989,0.65,0.619,0.6341,3]],
+ ["buggy_17",[1.0,0.299,0.4601,0.0,0.0,0.0,2],[1.0,0.415,0.5865,0.0,0.0,0.0,2]],
+ ["buggy_18",[1.0,0.191,0.3212,0.591,0.31,0.4063,3],[1.0,0.34,0.5069,0.7,0.667,0.6829,3]],
+ ["buggy_19",[0.875,0.094,0.1694,0.875,0.25,0.3889,1],[0.431,0.223,0.2941,0.35,0.5,0.4118,3]],
+ ["buggy_20",[1.0,0.17,0.2907,1.0,0.452,0.6222,1],[0.945,0.421,0.5826,0.75,0.968,0.8451,3]],
+ ["buggy_21",[0.82,0.376,0.5157,0.0,0.0,0.0,3],[0.827,0.394,0.5342,0.0,0.0,0.0,2]],
+ ["buggy_22",[1.0,0.265,0.419,0.6,0.417,0.4918,2],[0.972,0.367,0.5333,0.711,0.75,0.7297,3]],
+ ["buggy_23",[1.0,0.3,0.4615,1.0,0.808,0.8936,2],[1.0,0.505,0.6709,0.65,1.0,0.7879,3]],
+ ["buggy_24",[0.862,0.229,0.3614,0.448,0.31,0.3662,3],[0.897,0.317,0.4685,0.6,0.571,0.5854,3]],
+ ["buggy_25",[0.882,0.394,0.5447,0.808,1.0,0.8936,3],[0.887,0.418,0.568,0.533,0.762,0.6275,2]],
+ ["buggy_26",[1.0,0.371,0.5412,0.84,0.913,0.875,3],[1.0,0.382,0.5525,0.484,0.652,0.5556,2]],
+ ["buggy_27",[1.0,0.229,0.3722,0.88,0.524,0.6567,2],[1.0,0.335,0.5023,0.7,0.667,0.6829,3]]
+];
+const KEYS=["Block precision","Block recall","Block F1","Line precision","Line recall","Line F1"];
+const rows = DATA.map(([c,g,s])=>({contract:c,n:+c.split("_")[1],g,s}));
+const fmt=v=>v.toFixed(3), sgn=v=>(v>0?"+":v<0?"−":"")+Math.abs(v).toFixed(3);
+const binom=(n,k)=>{let r=1;for(let i=1;i<=k;i++)r=r*(n-k+i)/i;return r;};
+const signP=(w,l)=>{const n=w+l,k=Math.min(w,l);if(!n)return 1;let s=0;for(let i=0;i<=k;i++)s+=binom(n,i);return Math.min(1,2*s/2**n);};
+const pFmt=p=>p<0.001?p.toExponential(1).replace("e-","×10⁻").replace(/⁻(\d+)/,(m,d)=>"⁻"+[...d].map(x=>"⁰¹²³⁴⁵⁶⁷⁸⁹"[x]).join("")):p.toFixed(p<0.1?3:2);
+
+const tip=document.getElementById("tip");
+function showTip(e,html){tip.innerHTML=html;tip.hidden=false;moveTip(e);}
+function moveTip(e){const r=tip.getBoundingClientRect();let x=e.clientX+14,y=e.clientY+14;if(x+r.width>innerWidth-8)x=e.clientX-r.width-14;if(y+r.height>innerHeight-8)y=e.clientY-r.height-14;tip.style.left=x+"px";tip.style.top=y+"px";}
+function hideTip(){tip.hidden=true;}
+const NS="http://www.w3.org/2000/svg";
+const el=(t,a={},p)=>{const n=document.createElementNS(NS,t);for(const k in a)n.setAttribute(k,a[k]);if(p)p.appendChild(n);return n;};
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+/* Macro table */
+const macro=KEYS.map((name,i)=>{
+  const gm=rows.reduce((a,r)=>a+r.g[i],0)/rows.length, sm=rows.reduce((a,r)=>a+r.s[i],0)/rows.length;
+  let w=0,l=0;rows.forEach(r=>{const d=r.s[i]-r.g[i];if(d>1e-9)w++;else if(d<-1e-9)l++;});
+  return {name,gm,sm,d:sm-gm,w,l,t:rows.length-w-l,p:signP(w,l)};
+});
+document.querySelector("#macroTable tbody").innerHTML=macro.map(m=>
+  `<tr><td>${m.name}</td><td class="num">${fmt(m.gm)}</td><td class="num">${fmt(m.sm)}</td>`+
+  `<td class="num ${m.d>0.0005?"pos":m.d<-0.0005?"neg":"muted"}">${sgn(m.d)}</td>`+
+  `<td class="num">${m.w} / ${m.l} / ${m.t}</td><td class="num">${pFmt(m.p)}</td></tr>`).join("");
+
+/* Figure 1: dumbbell */
+function drawDumbbell(){
+  const host=document.getElementById("dumbbell");host.innerHTML="";
+  const W=Math.max(host.clientWidth,320), L=W<520?112:136, R=24, rowH=38, top=26, H=top+rowH*KEYS.length+10;
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,width:"100%",height:H},host);
+  const x=v=>L+v*(W-L-R);
+  [0,0.2,0.4,0.6,0.8,1].forEach(t=>{
+    el("line",{x1:x(t),x2:x(t),y1:top-6,y2:H-6,stroke:css("--rule-2"),"stroke-width":1},svg);
+    const tx=el("text",{x:x(t),y:14,"text-anchor":"middle"},svg);tx.textContent=t.toFixed(1);
+  });
+  macro.forEach((m,i)=>{
+    const y=top+rowH*i+rowH/2;
+    if(i===3) el("line",{x1:0,x2:W,y1:top+rowH*3,y2:top+rowH*3,stroke:css("--rule"),"stroke-width":1},svg);
+    const lab=el("text",{x:0,y:y+4,class:"lbl"},svg);lab.textContent=m.name;
+    el("line",{x1:x(Math.min(m.gm,m.sm)),x2:x(Math.max(m.gm,m.sm)),y1:y,y2:y,stroke:css("--ink-3"),"stroke-width":2,"stroke-linecap":"round"},svg);
+    [["gm","--gpt","GPT-4o"],["sm","--son","Sonnet 5"]].forEach(([k,c,n])=>{
+      el("circle",{cx:x(m[k]),cy:y,r:6,fill:css(c),stroke:css("--paper"),"stroke-width":2},svg);
+    });
+    const hit=el("rect",{x:0,y:y-rowH/2,width:W,height:rowH,fill:"transparent"},svg);
+    hit.addEventListener("mousemove",e=>showTip(e,`<strong>${m.name}</strong><br>GPT-4o <span class="num">${fmt(m.gm)}</span><br>Sonnet 5 <span class="num">${fmt(m.sm)}</span><br>Difference <span class="num">${sgn(m.d)}</span>`));
+    hit.addEventListener("mouseleave",hideTip);
+  });
+}
+
+/* Figures 2 and 3: sorted per-contract deltas */
+function drawDelta(hostId,idx,label){
+  const host=document.getElementById(hostId);host.innerHTML="";
+  const d=rows.map(r=>({c:r.contract,g:r.g[idx],s:r.s[idx],v:r.s[idx]-r.g[idx]})).sort((a,b)=>a.v-b.v);
+  const W=Math.max(host.clientWidth,320), padL=40, padR=12, top=12, bottom=62, H=250;
+  const lo=Math.min(-0.35,Math.floor(Math.min(...d.map(o=>o.v))*10)/10), hi=Math.max(0.35,Math.ceil(Math.max(...d.map(o=>o.v))*10)/10);
+  const y=v=>top+(hi-v)/(hi-lo)*(H-top-bottom);
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,width:"100%",height:H},host);
+  const ticks=[];for(let t=Math.ceil(lo*10)/10;t<=hi+1e-9;t+=0.1)ticks.push(+t.toFixed(1));
+  ticks.forEach(t=>{
+    el("line",{x1:padL,x2:W-padR,y1:y(t),y2:y(t),stroke:t===0?css("--ink-3"):css("--rule-2"),"stroke-width":t===0?1.2:1},svg);
+    if(Math.abs(t*10)%2===0){const tx=el("text",{x:padL-6,y:y(t)+4,"text-anchor":"end"},svg);tx.textContent=(t>0?"+":"")+t.toFixed(1);}
+  });
+  const band=(W-padL-padR)/d.length, bw=Math.max(6,Math.min(22,band-4));
+  d.forEach((o,i)=>{
+    const cx=padL+band*i+band/2, y0=y(0), y1=y(o.v);
+    const col=o.v>0?css("--pos"):o.v<0?css("--neg"):css("--ink-3");
+    if(Math.abs(o.v)<1e-9){el("rect",{x:cx-bw/2,y:y0-1,width:bw,height:2,fill:col},svg);}
+    else{
+      const h=Math.abs(y1-y0), yy=Math.min(y0,y1);
+      el("path",{d:roundedBar(cx-bw/2,yy,bw,h,o.v>0),fill:col},svg);
+    }
+    const t=el("text",{x:cx,y:H-bottom+14,"text-anchor":"end",transform:`rotate(-55 ${cx} ${H-bottom+14})`},svg);t.textContent=o.c.replace("buggy_","#");
+    const hit=el("rect",{x:padL+band*i,y:top,width:band,height:H-top-bottom,fill:"transparent"},svg);
+    hit.addEventListener("mousemove",e=>showTip(e,`<strong class="mono">${o.c}</strong> · ${label}<br>GPT-4o <span class="num">${fmt(o.g)}</span><br>Sonnet 5 <span class="num">${fmt(o.s)}</span><br>Difference <span class="num">${sgn(o.v)}</span>`));
+    hit.addEventListener("mouseleave",hideTip);
+  });
+}
+function roundedBar(x,y,w,h,up){
+  const r=Math.min(4,w/2,h);
+  return up
+    ? `M${x},${y+h} V${y+r} Q${x},${y} ${x+r},${y} H${x+w-r} Q${x+w},${y} ${x+w},${y+r} V${y+h} Z`
+    : `M${x},${y} V${y+h-r} Q${x},${y+h} ${x+r},${y+h} H${x+w-r} Q${x+w},${y+h} ${x+w},${y+h-r} V${y} Z`;
+}
+
+/* Attempts */
+(function(){
+  const cnt=k=>{const c={1:0,2:0,3:0};rows.forEach(r=>c[r[k][6]]++);return c;};
+  const mean=k=>rows.reduce((a,r)=>a+r[k][6],0)/rows.length;
+  const card=(name,k,color)=>{const c=cnt(k);const total=rows.length;
+    const bars=[1,2,3].map(a=>`<div style="display:grid;grid-template-columns:70px 1fr 28px;align-items:center;gap:8px;font-size:12.5px">
+      <span style="color:var(--ink-3)">Attempt ${a}</span>
+      <span style="height:10px;background:var(--rule-2);border-radius:0 4px 4px 0;overflow:hidden"><span style="display:block;height:100%;width:${c[a]/total*100}%;background:var(${color});border-radius:0 4px 4px 0"></span></span>
+      <span class="num" style="text-align:right">${c[a]}</span></div>`).join("");
+    return `<div class="stat"><span class="eyebrow">${name}</span><span class="v">${mean(k).toFixed(2)}</span><span class="s">mean attempt index</span><div style="display:grid;gap:6px;margin-top:6px">${bars}</div></div>`;};
+  document.getElementById("attempts").innerHTML=card("GPT-4o","g","--gpt")+card("Claude Sonnet 5","s","--son");
+})();
+
+/* Appendix table */
+let sortKey="n", sortDir=1;
+function renderTable(){
+  const val=r=>({contract:r.n,n:r.n,g_b:r.g[2],s_b:r.s[2],d_b:r.s[2]-r.g[2],g_l:r.g[5],s_l:r.s[5],d_l:r.s[5]-r.g[5],g_a:r.g[6],s_a:r.s[6]});
+  const sorted=[...rows].sort((a,b)=>(val(a)[sortKey]-val(b)[sortKey])*sortDir);
+  const dc=v=>v>0.0005?"pos":v<-0.0005?"neg":"muted";
+  document.querySelector("#perTable tbody").innerHTML=sorted.map(r=>{const v=val(r);return `<tr>
+    <td class="mono">${r.contract}</td>
+    <td class="num gl">${fmt(v.g_b)}</td><td class="num">${fmt(v.s_b)}</td><td class="num ${dc(v.d_b)}">${sgn(v.d_b)}</td>
+    <td class="num gl">${fmt(v.g_l)}</td><td class="num">${fmt(v.s_l)}</td><td class="num ${dc(v.d_l)}">${sgn(v.d_l)}</td>
+    <td class="num gl">${v.g_a}</td><td class="num">${v.s_a}</td></tr>`;}).join("");
+}
+document.querySelectorAll("button.sort").forEach(b=>b.addEventListener("click",()=>{
+  const k=b.dataset.k==="contract"?"n":b.dataset.k;
+  if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=k==="n"?1:-1;}
+  renderTable();
+}));
+
+function drawAll(){drawDumbbell();drawDelta("deltaLine",5,"Line F1");drawDelta("deltaBlock",2,"Block F1");}
+renderTable();drawAll();
+let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(drawAll,120);});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",drawAll);
+new MutationObserver(drawAll).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+</script>

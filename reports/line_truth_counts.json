@@ -1,0 +1,40 @@
+{
+ "Re-entrancy": {
+  "line_truth_all": 1286,
+  "line_truth_6_50": 1178,
+  "contracts_without_line_annotations": [
+   17,
+   21
+  ]
+ },
+ "Timestamp-Dependency": {
+  "line_truth_all": 2317,
+  "line_truth_6_50": 2132,
+  "contracts_without_line_annotations": []
+ },
+ "Unchecked-Send": {
+  "line_truth_all": 1262,
+  "line_truth_6_50": 1154,
+  "contracts_without_line_annotations": []
+ },
+ "Unhandled-Exceptions": {
+  "line_truth_all": 1373,
+  "line_truth_6_50": 1265,
+  "contracts_without_line_annotations": []
+ },
+ "TOD": {
+  "line_truth_all": 2670,
+  "line_truth_6_50": 2454,
+  "contracts_without_line_annotations": []
+ },
+ "Overflow-Underflow": {
+  "line_truth_all": 1899,
+  "line_truth_6_50": 1745,
+  "contracts_without_line_annotations": []
+ },
+ "tx.origin": {
+  "line_truth_all": 1336,
+  "line_truth_6_50": 1228,
+  "contracts_without_line_annotations": []
+ }
+}
