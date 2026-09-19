@@ -355,7 +355,11 @@ _COMPACT_RULES: Dict[str, Dict[str, List[str]]] = {
         ],
         "NEVER": [
             "Exclude pure events/logs and comments.",
-            "Exclude arithmetic-only lines unrelated to external calls."
+            "Exclude arithmetic-only lines unrelated to external calls.",
+            "The candidate list is a syntactic superset and most of its lines are not vulnerable: "
+            "return only the statements that form the exploit window (the state write and the "
+            "external value transfer that precedes its update), never the whole candidate list.",
+            "Exclude declarations, modifiers, guards and helper calls that are not part of that window."
         ],
     },
     "Timestamp-Dependency": {
@@ -375,7 +379,7 @@ _COMPACT_RULES: Dict[str, Dict[str, List[str]]] = {
     },
     "TOD": {
         "MUST": ["Flag order-dependent read/write patterns around external calls."],
-        "INCLUDE": ["State read → external call → state write depending on the read."],
+        "INCLUDE": ["State read \u2192 external call \u2192 state write depending on the read."],
         "NEVER": ["Exclude lines irrelevant to ordering or external interactions."],
     },
     "Overflow-Underflow": {
@@ -514,6 +518,12 @@ _RE_TXORIGIN = re.compile(r"\btx\.origin\b", re.I)
 _RE_TIMESTAMP = re.compile(r"\b(block\.timestamp|now)\b", re.I)
 _RE_ARITH = re.compile(r"(\+|-|\*|/|<<|>>)", re.I)
 
+# Vocabulary of state that transaction-ordering bugs race over (claim/auction/reward
+# patterns). Deliberately generic: no benchmark-specific identifier is matched.
+_RE_TOD_STATE = re.compile(
+    r"\b(winner|claim|claimed|reward|prize|bid|bidder|auction|submission|payout|race|first|pending|locked?)\b",
+    re.IGNORECASE)
+
 def extract_candidates(contract_text: str, label_name: str) -> List[int]:
     lines = contract_text.splitlines()
     out: List[int] = []
@@ -532,7 +542,11 @@ def extract_candidates(contract_text: str, label_name: str) -> List[int]:
             if _RE_ARITH.search(s) and ("balance" in L or "allowance" in L or "=" in s):
                 out.append(i)
         elif "tod" in label_name.lower():
+            # Order-dependent bugs are races over claimable state, so the guard and the
+            # state write that decide the race are candidates too, not only the payout call.
             if _RE_LOWLEVEL_ANY.search(s) or ("order" in L or "front" in L):
+                out.append(i)
+            elif _RE_TOD_STATE.search(s) and ("=" in s or "require" in L or "if" in L):
                 out.append(i)
         else:
             if _RE_LOWLEVEL_ANY.search(s) or _RE_TXORIGIN.search(s) or _RE_TIMESTAMP.search(s) or _RE_ARITH.search(s):
@@ -560,6 +574,8 @@ def score_candidate_line(s: str, label_name: str) -> int:
     elif "tod" in label_name.lower():
         if ".call" in s_low or ".send" in s_low or ".transfer" in s_low: score += 3
         if "read" in s_low or "write" in s_low: score += 1
+        if _RE_TOD_STATE.search(s): score += 2
+        if "msg.sender" in s_low: score += 1
     else:
         if _RE_LOWLEVEL_ANY.search(s): score += 3
         if _RE_TXORIGIN.search(s): score += 3
@@ -1323,8 +1339,18 @@ def process_label_real(
         total_lines = len(contract_text.splitlines())
 
         truth_all = read_truth(meta_file)
-        truth_block = truth_all["block_lines"]
-        truth_point = truth_all["point_lines"]
+        # Blank source lines carry no statement and can never be a correct prediction, yet a
+        # few injected spans in the benchmark cover them (11.4% of the annotated lines of the
+        # transaction-ordering category). They are dropped from the ground truth before scoring
+        # so that recall is measured against annotated statements only.
+        _src_lines = contract_text.splitlines()
+        def _is_code(ln: int) -> bool:
+            return 1 <= ln <= len(_src_lines) and bool(_src_lines[ln - 1].strip())
+        _dropped = [l for l in truth_all["point_lines"] if not _is_code(l)]
+        truth_block = [l for l in truth_all["block_lines"] if _is_code(l)]
+        truth_point = [l for l in truth_all["point_lines"] if _is_code(l)]
+        if _dropped:
+            print(f"[TRUTH] {sol_file.name}: dropped {len(_dropped)} blank ground-truth line(s) before scoring.")
 
         attempt = 0
         last_numeric_pred: List[int] = []
