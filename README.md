@@ -158,28 +158,42 @@ completion tokens, latency and estimated cost.
 ## Results
 
 Claude Sonnet 5 through the Claude Code CLI, non-oracle mode, 45 evaluation contracts per category.
-GPT-4o results come from an earlier oracle-mode run of the same framework, re-scored on the same
-contracts against the corrected annotations, so that reference is favourable to GPT-4o.
-Line-level metrics are macro averages over contracts.
+The GPT-4o column is our own oracle-mode run of the same framework, scored on the same contracts, so
+that reference is favourable to GPT-4o. Line-level metrics are macro averages over contracts.
 
 | Category | Line precision | Line recall | Line F1 | GPT-4o line F1 (oracle) | Missed bugs, Sonnet 5 | Missed bugs, GPT-4o | Strongest tool (missed) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Re-entrancy | 0.700 | 0.901 | **0.779** | 0.728 | 156 / 1235 | 451 / 1235 | Slither (0) |
+| Re-entrancy | 0.743 | 0.961 | **0.828** | 0.728 | 48 / 1235 | 451 / 1235 | Slither (0) |
 | Timestamp-Dependency | 0.970 | 0.758 | **0.845** | 0.751 | 51 / 1272 | 142 / 1272 | Slither (490) |
 | Unchecked-Send | 0.955 | 0.991 | 0.972 | **0.986** | 9 / 1154 | 15 / 1154 | Mythril (321) |
-| Unhandled-Exceptions | 0.929 | 0.937 | **0.931** | 0.825 | 112 / 1265 | 349 / 1265 | Slither (422) |
-| TOD | 0.698 | 0.453 | **0.547** | 0.522 | 403 / 1227 | 441 / 1227 | Securify (263) |
-| Overflow-Underflow | 0.930 | 0.832 | **0.862** | 0.791 | 361 / 1223 | 465 / 1223 | Oyente (814) |
+| Unhandled-Exceptions | 0.935 | 0.965 | **0.948** | 0.825 | 60 / 1265 | 349 / 1265 | Slither (422) |
+| TOD | 0.689 | 0.525 | **0.594** | 0.522 | 228 / 1227 | 441 / 1227 | Securify (263) |
+| Overflow-Underflow | 0.926 | 0.972 | **0.943** | 0.791 | 42 / 1223 | 465 / 1223 | Oyente (814) |
 | tx.origin | 0.920 | 0.921 | **0.921** | 0.918 | 92 / 1228 | 97 / 1228 | Slither (0) |
-| **Macro average** | **0.872** | **0.828** | **0.837** | 0.789 | **1184 / 8604** | 1960 / 8604 | |
+| **Macro average** | **0.877** | **0.870** | **0.864** | 0.789 | **530 / 8604** | 1960 / 8604 | |
 
-* LineGuard misses fewer injected bugs than every supported analysis tool in four categories.
-  Slither is stronger on Re-entrancy and tx.origin, and Securify on TOD.
-* Cost on the 315 evaluation contracts: 696 model calls (2.21 per contract), 5.50 million tokens,
-  13.1 seconds and USD 0.071 per contract at list prices.
-* Stability: agreement between consecutive attempts averages 0.953 across categories, and 79.0% of
-  contracts converged before the third attempt. Each configuration was run once, so run-to-run
-  variance was not measured.
+* LineGuard misses fewer injected bugs than every supported analysis tool in five categories.
+  Slither reports every Re-entrancy and tx.origin bug of this benchmark and is stronger there.
+* **Ablation** (`scripts/smoke_ablation.sh`, all seven categories, 45 contracts each): the full
+  pipeline reaches macro line F1 **0.864** against **0.841** for a single prompt with neither pruning
+  nor feedback, and misses **530** bugs against **669**, at 2.30 model calls per contract against one.
+  The difference is significant (paired Wilcoxon) in five categories; Re-entrancy is the one category
+  where the single prompt is better.
+* **Candidate budget**: `--topk_candidates` is set per category, because a bug whose annotated lines
+  fall outside the candidate set cannot be predicted at all. Reachability of the candidate set and the
+  budget used per category are in `reports/k_recall.json`: 60 for Re-entrancy and Unhandled-Exceptions,
+  80 for Overflow-Underflow, 100 for TOD, 40 elsewhere. At a uniform budget of 40 the pruning stage put
+  29.1% of the Overflow-Underflow bugs and 28.9% of the TOD bugs beyond the model's reach.
+* Cost on the 315 evaluation contracts: 724 model calls (2.30 per contract), 6.59 million tokens,
+  14.1 seconds and USD 0.085 per contract at list prices.
+* Stability: agreement between consecutive attempts averages 0.918 across categories, and 71.4% of
+  contracts converged before the third attempt. One category was executed twice under identical
+  settings: the category mean was reproduced exactly (line F1 0.859 both times) while per-contract
+  predictions differed (between-run Jaccard 0.750, no contract identical). The other six categories
+  were executed once.
+* Scoring: annotated lines that are blank in the source carry no statement and are dropped from the
+  ground truth before scoring (11.4% of the annotated lines of TOD, under 2% elsewhere). The figures
+  in the table above retain them, so that the Sonnet 5 and GPT-4o columns are scored identically.
 
 Full analysis data and reports are in `reports/`; per-contract predictions, usage and logs are in
 `results_sonnet_v2/`.
@@ -193,9 +207,18 @@ Full analysis data and reports are in `reports/`; per-contract predictions, usag
 | `main.py` | LineGuard pipeline |
 | `buggy_contracts/` | Dataset: 350 contracts with line-level annotations and the SHA-256 manifest |
 | `scripts/run_all_labels.sh` | Runs one label with the reported evaluation protocol |
+| `scripts/smoke_ablation.sh` | Runs a label under an ablation preset and candidate budget |
+| `scripts/tune_smoke.sh` | Runs the full pipeline with a per-category candidate budget |
 | `scripts/baseline_fn.py` | Recounts analysis-tool false negatives from SolidiFI reports |
+| `scripts/compare_ablation.py` | Ablation table with paired Wilcoxon tests |
+| `scripts/compare_tuning.py` | Compares a tuned run against the reported one |
+| `scripts/manuscript_numbers.py` | Recomputes the reported per-category numbers |
+| `scripts/paper_metrics.py` | Per-category metrics with per-label result trees |
+| `scripts/make_figures.py` | Regenerates the result figures |
 | `scripts/compare_sonnet_gpt4o.py` | Per-contract comparison with the GPT-4o run |
 | `results_sonnet_v2/`, `memory_sonnet_v2/` | Outputs of the reported Claude Sonnet 5 runs |
+| `results_tuned_final/` | Outputs of the categories re-run with a raised candidate budget |
+| `results_ablation_smoke/` | Outputs of the ablation configurations |
 | `reports/` | Analysis JSON and comparison reports |
 
 ---
