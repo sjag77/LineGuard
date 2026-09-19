@@ -1,8 +1,19 @@
-__pycache__/
+# OS / Python
 .DS_Store
+__pycache__/
+*.pyc
+
+# Claude CLI working directory (must stay empty)
 .cli_empty/
-results_smoke/
-memory_smoke/
-results_sonnet/
-memory_sonnet/
-resubmission.zip
+
+# Local scratch: superseded run trees and console logs
+archive/
+*.out
+
+# Manuscript and submission material (not part of the public release)
+paper/
+resubmission/
+
+# Archives, except the published GPT-4o baseline outputs
+*.zip
+!SmartContract Results (GPT-4o).zip
