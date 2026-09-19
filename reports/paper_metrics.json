@@ -1,0 +1,65 @@
+{
+ "Re-entrancy": {
+  "P": 0.7428577324071484,
+  "R": 0.9611044289994976,
+  "F1": 0.8278703791463459,
+  "missed": 48,
+  "bugs": 1235,
+  "contracts": 45,
+  "source": "results_tuned_final"
+ },
+ "Timestamp-Dependency": {
+  "P": 0.970385816757768,
+  "R": 0.760414633367998,
+  "F1": 0.846243436896287,
+  "missed": 51,
+  "bugs": 1272,
+  "contracts": 45,
+  "source": "results_sonnet_v2"
+ },
+ "Unchecked-Send": {
+  "P": 0.9552201351390301,
+  "R": 0.9952380952380953,
+  "F1": 0.973912418001781,
+  "missed": 6,
+  "bugs": 1151,
+  "contracts": 45,
+  "source": "results_sonnet_v2"
+ },
+ "Unhandled-Exceptions": {
+  "P": 0.9345687153616873,
+  "R": 0.9649571485346952,
+  "F1": 0.9478461123892633,
+  "missed": 60,
+  "bugs": 1265,
+  "contracts": 45,
+  "source": "results_tuned_final"
+ },
+ "TOD": {
+  "P": 0.6889004143393777,
+  "R": 0.566512915764267,
+  "F1": 0.6159808783507766,
+  "missed": 214,
+  "bugs": 1213,
+  "contracts": 45,
+  "source": "results_tuned_final"
+ },
+ "Overflow-Underflow": {
+  "P": 0.9257151153208826,
+  "R": 0.9755100397064781,
+  "F1": 0.9448940108408781,
+  "missed": 41,
+  "bugs": 1222,
+  "contracts": 45,
+  "source": "results_tuned_final"
+ },
+ "tx.origin": {
+  "P": 0.9199434419588294,
+  "R": 0.9213323308477183,
+  "F1": 0.9206154849695821,
+  "missed": 92,
+  "bugs": 1228,
+  "contracts": 45,
+  "source": "results_sonnet_v2"
+ }
+}

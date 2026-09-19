@@ -1,0 +1,58 @@
+{
+ "Re-entrancy": {
+  "measured": 14,
+  "missing": 31,
+  "calls": 41,
+  "tokens": 487440,
+  "usd": 1.96417,
+  "s_per": 17.36414285714286
+ },
+ "Timestamp-Dependency": {
+  "measured": 45,
+  "missing": 0,
+  "calls": 109,
+  "tokens": 979225,
+  "usd": 3.961194,
+  "s_per": 19.097166666666666
+ },
+ "Unchecked-Send": {
+  "measured": 45,
+  "missing": 0,
+  "calls": 90,
+  "tokens": 597194,
+  "usd": 2.417912,
+  "s_per": 12.351853333333333
+ },
+ "Unhandled-Exceptions": {
+  "measured": 45,
+  "missing": 0,
+  "calls": 97,
+  "tokens": 657518,
+  "usd": 2.663914,
+  "s_per": 11.461553333333333
+ },
+ "TOD": {
+  "measured": 43,
+  "missing": 2,
+  "calls": 101,
+  "tokens": 996996,
+  "usd": 4.040512,
+  "s_per": 13.88442093023256
+ },
+ "Overflow-Underflow": {
+  "measured": 45,
+  "missing": 0,
+  "calls": 100,
+  "tokens": 1128392,
+  "usd": 4.562056,
+  "s_per": 14.85943111111111
+ },
+ "tx.origin": {
+  "measured": 45,
+  "missing": 0,
+  "calls": 90,
+  "tokens": 620213,
+  "usd": 2.510528,
+  "s_per": 9.671573333333333
+ }
+}
