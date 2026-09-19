@@ -1,0 +1,33 @@
+{
+ "filename": "buggy_15.sol",
+ "phase": "eval",
+ "selected_attempt": 3,
+ "attempts_run": 3,
+ "BlockDetection.P": 1.0,
+ "BlockDetection.Recall": 0.3805970149253731,
+ "BlockDetection.F1-Score": 0.5513513513513513,
+ "BlockDetection.HitRate": 1.0,
+ "LineDetection.P": 1.0,
+ "LineDetection.Recall": 1.0,
+ "LineDetection.F1-Score": 1.0,
+ "LineDetection.Accuracy": 1.0,
+ "predicted_lines": [
+  16,
+  27,
+  35,
+  45,
+  54,
+  63,
+  74,
+  86,
+  95,
+  121,
+  150,
+  170,
+  195,
+  215,
+  240,
+  264,
+  292
+ ]
+}

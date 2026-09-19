@@ -1,0 +1,374 @@
+/Users/sj_ag77/LineGuard/main.py:2: SyntaxWarning: invalid escape sequence '\m'
+  """
+
+=== REAL MODE: Processing Label 'Integer flow' → folder 'Overflow-Underflow' [provider=claude_cli model=claude-sonnet-5 oracle=False ablation=pruning_only] ===
+[INFO] Loaded memory chat for Integer flow (1 messages).
+
+[REAL::Overflow-Underflow] buggy_1.sol | Attempt 1
+   SYSTEM → [prediction] 24,34,46,47,48,60,61,62,72,78,84,99,100,101,107,118,124,125,126,132,145,150,151,157,163,164,166,173,181,192,205
+   EVAL   → [BLOCK/dilated] P=0.861, R=0.620, F1*100=72.09, HitRate*100=86.11 | [LINE±0] P=0.839, R=1.000, F1*100=91.23, Acc*100=97.58
+   FINAL → [BLOCK/dilated] P=0.861, R=0.620, F1*100=72.09 (saved buggy_1_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_2.sol | Attempt 1
+   SYSTEM → [prediction] 10,15,21,33,43,49,50,51,57,62,68,69,70,76,83,91,93,96,109,120,123,124,135,136,137,150,154,155,156,167,168,169,182,193,203,207,217,228,238
+   EVAL   → [BLOCK/dilated] P=0.723, R=0.596, F1*100=65.38, HitRate*100=72.34 | [LINE±0] P=0.718, R=1.000, F1*100=83.58, Acc*100=95.51
+   FINAL → [BLOCK/dilated] P=0.723, R=0.596, F1*100=65.38 (saved buggy_2_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_3.sol | Attempt 1
+   SYSTEM → [prediction] 10,15,21,33,44,54,60,61,62,68,74,80,81,82,90,116,127,130,131,141,153,157,158,159,170,171,172,186,187,188,200,208,222,232,243,253
+   EVAL   → [BLOCK/dilated] P=0.826, R=0.573, F1*100=67.62, HitRate*100=82.56 | [LINE±0] P=0.806, R=1.000, F1*100=89.23, Acc*100=97.31
+   FINAL → [BLOCK/dilated] P=0.826, R=0.573, F1*100=67.62 (saved buggy_3_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_4.sol | Attempt 1
+   SYSTEM → [prediction] 32,33,34,40,45,52,53,54,60,65,71,77,78,79,87,88,89,95,100,105,120,121,122,137,145,154,167,170,171,172,173,174,175,176,179,180,187,194,201,214
+   EVAL   → [BLOCK/dilated] P=0.721, R=0.620, F1*100=66.67, HitRate*100=72.09 | [LINE±0] P=0.650, R=1.000, F1*100=78.79, Acc*100=93.67
+   FINAL → [BLOCK/dilated] P=0.721, R=0.620, F1*100=66.67 (saved buggy_4_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_5.sol | Attempt 1
+   SYSTEM → [prediction] 80,81,82,89,90,91,122,123,124,199,200,201,259,260,261,278,299,300,374,377,378,384,385,386,402,403,404,446
+   EVAL   → [BLOCK/dilated] P=0.673, R=0.175, F1*100=27.78, HitRate*100=67.31 | [LINE±0] P=0.750, R=0.467, F1*100=57.53, Acc*100=93.17
+   FINAL → [BLOCK/dilated] P=0.673, R=0.175, F1*100=27.78 (saved buggy_5_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_6.sol | Attempt 1
+   SYSTEM → [prediction] 12,13,14,21,22,23,29,35,40,45,51,71,86,87,88,99,132,146,156,171,185,195,196,197,207,218,230,231,232,243,253,261,267,272,303,304,305,320,321,322
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.484, F1*100=65.25, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.909, F1*100=95.24, Acc*100=98.87
+   FINAL → [BLOCK/dilated] P=1.000, R=0.484, F1*100=65.25 (saved buggy_6_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_7.sol | Attempt 1
+   SYSTEM → [prediction] 12,23,24,25,32,33,34,41,46,51,57,77,92,93,94,105,138,152,162,177,191,201,202,203,213,224,236,237,238,249,259,267,272,278,314,315,316,332,333,334
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.460, F1*100=63.01, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.889, F1*100=94.12, Acc*100=98.64
+   FINAL → [BLOCK/dilated] P=1.000, R=0.460, F1*100=63.01 (saved buggy_7_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_8.sol | Attempt 1
+   SYSTEM → [prediction] 80,81,82,89,90,91,122,123,124,199,200,201,259,260,261,278,299,300,374,377,378,384,385,386,402,403,404,446
+   EVAL   → [BLOCK/dilated] P=0.673, R=0.175, F1*100=27.78, HitRate*100=67.31 | [LINE±0] P=0.750, R=0.467, F1*100=57.53, Acc*100=93.17
+   FINAL → [BLOCK/dilated] P=0.673, R=0.175, F1*100=27.78 (saved buggy_8_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_9.sol | Attempt 1
+   SYSTEM → [prediction] 58,72,88,98,104,116,126,134,135,136,142,149,156,164,207,208,209,221,234,248,263,264,265,285,286,287,306,324,342,362,380,394
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.541, F1*100=70.18, HitRate*100=100.00 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+   FINAL → [BLOCK/dilated] P=1.000, R=0.541, F1*100=70.18 (saved buggy_9_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_10.sol | Attempt 1
+   SYSTEM → [prediction] 10,15,26,32,50,62,72,85
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.545, F1*100=70.59, HitRate*100=100.00 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+   FINAL → [BLOCK/dilated] P=1.000, R=0.545, F1*100=70.59 (saved buggy_10_pred.csv) | Selected Attempt = 1
+[INFO] Memory distilled/pruned for label 'Overflow-Underflow'. Kept 25 messages.
+
+[REAL::Overflow-Underflow] buggy_11.sol | Attempt 1
+   SYSTEM → [prediction] 32,42,48,59,69,75,76,77,83,88,98,107,108,109,116,117,118,126,140,154,155,156,167,177,182,188,199,200,201,260,261,262,281,282,283
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.405, F1*100=57.68, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.795, F1*100=88.61, Acc*100=97.67
+   FINAL → [BLOCK/dilated] P=1.000, R=0.405, F1*100=57.68 (saved buggy_11_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_12.sol | Attempt 1
+   SYSTEM → [prediction] 101,102,103,110,111,112,118,123,129,140,141,142,147,152,163,177,187,193,203,220,252,288,297,298,299,361,362,363,398,399,400,436,437,438,448,449,450
+   EVAL   → [BLOCK/dilated] P=0.924, R=0.332, F1*100=48.83, HitRate*100=92.41 | [LINE±0] P=0.946, R=0.673, F1*100=78.65, Acc*100=96.34
+   FINAL → [BLOCK/dilated] P=0.924, R=0.332, F1*100=48.83 (saved buggy_12_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_13.sol | Attempt 1
+   SYSTEM → [prediction] 15,20,26,27,28,35,39,42,47,54,61,69,88,89,96,97,98,111,113,115,117,120,125,126,127,145,158,159,165,169,184,188,207,218,219,220,238,239,240,241
+   EVAL   → [BLOCK/dilated] P=0.571, R=0.565, F1*100=56.83, HitRate*100=57.14 | [LINE±0] P=0.525, R=0.913, F1*100=66.67, Acc*100=91.80
+   FINAL → [BLOCK/dilated] P=0.571, R=0.565, F1*100=56.83 (saved buggy_13_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_14.sol | Attempt 1
+   SYSTEM → [prediction] 15,16,24,31,37,74,80,94,104,114,123,124,125,135,145,154,163,164,165,175,176,177,189,202,214,226,236,237,238,250,262,278,289,296,299,310
+   EVAL   → [BLOCK/dilated] P=0.822, R=0.578, F1*100=67.89, HitRate*100=82.22 | [LINE±0] P=0.833, R=1.000, F1*100=90.91, Acc*100=98.11
+   FINAL → [BLOCK/dilated] P=0.822, R=0.578, F1*100=67.89 (saved buggy_14_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_15.sol | Attempt 1
+   SYSTEM → [prediction] 15,20,26,27,28,35,42,47,54,61,69,88,89,96,97,98,111,113,115,117,120,125,126,127,145,158,159,165,184,207,218,219,220,238,239,240,241
+   EVAL   → [BLOCK/dilated] P=0.622, R=0.554, F1*100=58.62, HitRate*100=62.20 | [LINE±0] P=0.568, R=0.913, F1*100=70.00, Acc*100=92.97
+   FINAL → [BLOCK/dilated] P=0.622, R=0.554, F1*100=58.62 (saved buggy_15_pred.csv) | Selected Attempt = 1
+[INFO] Saved folder summary → results_ablation_smoke/pruning_only/Overflow-Underflow/Overflow-Underflow_result.csv
+[SUMMARY::Overflow-Underflow] eval contracts=10 (warm-up excluded=5) | MACRO Block P/R/F1 = 0.861/0.464/0.587 | MACRO Line P/R/F1 = 0.862/0.856/0.842
+[INFO] Saved usage/cost log → results_ablation_smoke/pruning_only/Overflow-Underflow/Overflow-Underflow_usage.csv
+[USAGE::Overflow-Underflow] calls=15 tokens=132614 est_cost_usd=0.5366 avg_s/call=5.74
+
+REAL mode completed for the selected label.
+/Users/sj_ag77/LineGuard/main.py:2: SyntaxWarning: invalid escape sequence '\m'
+  """
+
+=== REAL MODE: Processing Label 'Integer flow' → folder 'Overflow-Underflow' [provider=claude_cli model=claude-sonnet-5 oracle=False ablation=pruning_only] ===
+[INFO] Loaded memory chat for Integer flow (40 messages).
+[RESUME] buggy_1.sol already done (warmup); skipping.
+[RESUME] buggy_2.sol already done (warmup); skipping.
+[RESUME] buggy_3.sol already done (warmup); skipping.
+[RESUME] buggy_4.sol already done (warmup); skipping.
+[RESUME] buggy_5.sol already done (warmup); skipping.
+[RESUME] buggy_6.sol already done (eval); skipping.
+[RESUME] buggy_7.sol already done (eval); skipping.
+[RESUME] buggy_8.sol already done (eval); skipping.
+[RESUME] buggy_9.sol already done (eval); skipping.
+[RESUME] buggy_10.sol already done (eval); skipping.
+[RESUME] buggy_11.sol already done (eval); skipping.
+[RESUME] buggy_12.sol already done (eval); skipping.
+[RESUME] buggy_13.sol already done (eval); skipping.
+[RESUME] buggy_14.sol already done (eval); skipping.
+[RESUME] buggy_15.sol already done (eval); skipping.
+[INFO] Saved folder summary → results_ablation_smoke/pruning_only/Overflow-Underflow/Overflow-Underflow_result.csv
+[SUMMARY::Overflow-Underflow] eval contracts=10 (warm-up excluded=5) | MACRO Block P/R/F1 = 0.861/0.464/0.587 | MACRO Line P/R/F1 = 0.862/0.856/0.842
+
+REAL mode completed for the selected label.
+/Users/sj_ag77/LineGuard/main.py:2: SyntaxWarning: invalid escape sequence '\m'
+  """
+
+=== REAL MODE: Processing Label 'Integer flow' → folder 'Overflow-Underflow' [provider=claude_cli model=claude-sonnet-5 oracle=False ablation=pruning_only] ===
+[INFO] Loaded memory chat for Integer flow (40 messages).
+[RESUME] buggy_1.sol already done (warmup); skipping.
+[RESUME] buggy_2.sol already done (warmup); skipping.
+[RESUME] buggy_3.sol already done (warmup); skipping.
+[RESUME] buggy_4.sol already done (warmup); skipping.
+[RESUME] buggy_5.sol already done (warmup); skipping.
+[RESUME] buggy_6.sol already done (eval); skipping.
+[RESUME] buggy_7.sol already done (eval); skipping.
+[RESUME] buggy_8.sol already done (eval); skipping.
+[RESUME] buggy_9.sol already done (eval); skipping.
+[RESUME] buggy_10.sol already done (eval); skipping.
+[RESUME] buggy_11.sol already done (eval); skipping.
+[RESUME] buggy_12.sol already done (eval); skipping.
+[RESUME] buggy_13.sol already done (eval); skipping.
+[RESUME] buggy_14.sol already done (eval); skipping.
+[RESUME] buggy_15.sol already done (eval); skipping.
+
+[REAL::Overflow-Underflow] buggy_16.sol | Attempt 1
+   SYSTEM → [prediction] 54,60,61,62,69,80,81,82,89,90,91,97,102,107,118,136,159,177,178,179,198,199,200,248,249,250,350,351,352,389,390,391,442,443,444,455,456,457
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.285, F1*100=44.31, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.633, F1*100=77.55, Acc*100=95.74
+   FINAL → [BLOCK/dilated] P=1.000, R=0.285, F1*100=44.31 (saved buggy_16_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_17.sol | Attempt 1
+   SYSTEM → [prediction] 52,53,54,64,77,91,92,93,99,104,110,122,123,124,131,142,148,155,173,174,175,187,196,207,219,220,221,236,237,238,253,263,270,282,306,307,308,364,375,376
+   EVAL   → [BLOCK/dilated] P=0.922, R=0.437, F1*100=59.29, HitRate*100=92.22 | [LINE±0] P=0.875, R=0.795, F1*100=83.33, Acc*100=96.49
+   FINAL → [BLOCK/dilated] P=0.922, R=0.437, F1*100=59.29 (saved buggy_17_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_18.sol | Attempt 1
+   SYSTEM → [prediction] 64,70,71,72,79,90,91,92,99,100,101,184,185,186,241,242,243,261,262,263,461,462,463,495,496,497,561,562,563,584,585,586
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.219, F1*100=35.90, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.533, F1*100=69.57, Acc*100=95.82
+   FINAL → [BLOCK/dilated] P=1.000, R=0.219, F1*100=35.90 (saved buggy_18_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_19.sol | Attempt 1
+   SYSTEM → [prediction] 20,60,72,93,108,109,110,121,136,157,170,190,204,214,215,216,226,235,245,246,247,257,266,275,285,286,287,298,299,300,310,319,328,337,346,356,370,379,389
+   EVAL   → [BLOCK/dilated] P=0.969, R=0.540, F1*100=69.37, HitRate*100=96.91 | [LINE±0] P=0.974, R=1.000, F1*100=98.70, Acc*100=99.75
+   FINAL → [BLOCK/dilated] P=0.969, R=0.540, F1*100=69.37 (saved buggy_19_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_20.sol | Attempt 1
+   SYSTEM → [prediction] 35,46,56,76,95,96,97,105,126,163,182,215,216,217,223,228,234,250,255,261,289,296,297,298,306,314,328,329,330,343,365,397,398,399,440,441,442,461,462,463
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.460, F1*100=63.01, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.889, F1*100=94.12, Acc*100=99.02
+   FINAL → [BLOCK/dilated] P=1.000, R=0.460, F1*100=63.01 (saved buggy_20_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_21.sol | Attempt 1
+   SYSTEM → [prediction] 7,12,18,19,20,26,67,74,78,85,97,98,99,107,145,152,163,170,182,193,200,201,202,219,232,233,234,247,248,249,265,291,313,329,480,512
+   EVAL   → [BLOCK/dilated] P=0.977, R=0.506, F1*100=66.67, HitRate*100=97.73 | [LINE±0] P=0.972, R=0.946, F1*100=95.89, Acc*100=99.43
+   FINAL → [BLOCK/dilated] P=0.977, R=0.506, F1*100=66.67 (saved buggy_21_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_22.sol | Attempt 1
+   SYSTEM → [prediction] 11,20,34,47,52,64,65,66,76,91,101,107,118,128,134,135,136,142,221,231,236,242,243,244,262,263,264,271,272,273,389,390,391,519,520,521,554,555,556
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.370, F1*100=53.97, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.750, F1*100=85.71, Acc*100=97.89
+   FINAL → [BLOCK/dilated] P=1.000, R=0.370, F1*100=53.97 (saved buggy_22_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_23.sol | Attempt 1
+   SYSTEM → [prediction] 123,135,136,137,145,163,181,196,197,198,213,231,250,251,252,272,291,309,329,330,331,351,352,353,372,389,412
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.367, F1*100=53.74, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.750, F1*100=85.71, Acc*100=98.33
+   FINAL → [BLOCK/dilated] P=1.000, R=0.367, F1*100=53.74 (saved buggy_23_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_24.sol | Attempt 1
+   SYSTEM → [prediction] 233,234,235,242,253,254,255,261,266,272,282,287,294,295,296,303,314,315,316,323,324,325,331,354,403,404,405,569,570,571,662,663,664,744,745,746,762,763,764
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.296, F1*100=45.70, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.650, F1*100=78.79, Acc*100=97.91
+   FINAL → [BLOCK/dilated] P=1.000, R=0.296, F1*100=45.70 (saved buggy_24_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_25.sol | Attempt 1
+   SYSTEM → [prediction] 16,46,65,72,77,82,88,98,103,109,125,126,127,137,154,175,176,177,222,237,260,275,285,286,287,298,299,300,310,321
+   EVAL   → [BLOCK/dilated] P=0.959, R=0.573, F1*100=71.72, HitRate*100=95.95 | [LINE±0] P=0.967, R=1.000, F1*100=98.31, Acc*100=99.69
+   FINAL → [BLOCK/dilated] P=0.959, R=0.573, F1*100=71.72 (saved buggy_25_pred.csv) | Selected Attempt = 1
+[INFO] Memory distilled/pruned for label 'Overflow-Underflow'. Kept 25 messages.
+
+[REAL::Overflow-Underflow] buggy_26.sol | Attempt 1
+   SYSTEM → [prediction] 66,76,82,93,103,109,110,111,124,128,135,149,158,159,160,168,176,184,194,195,196,206,207,208,218,228,237,246,271,283
+   EVAL   → [BLOCK/dilated] P=0.959, R=0.530, F1*100=68.27, HitRate*100=95.95 | [LINE±0] P=0.967, R=0.967, F1*100=96.67, Acc*100=99.30
+   FINAL → [BLOCK/dilated] P=0.959, R=0.530, F1*100=68.27 (saved buggy_26_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_27.sol | Attempt 1
+   SYSTEM → [prediction] 56,67,68,69,88,113,114,115,125,126,127,136,144,158,159,160,178,179,180,270,271,272,415,416,417,501,502,503,545,546,547,559,560,561
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.238, F1*100=38.51, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.567, F1*100=72.34, Acc*100=95.67
+   FINAL → [BLOCK/dilated] P=1.000, R=0.238, F1*100=38.51 (saved buggy_27_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_28.sol | Attempt 1
+   SYSTEM → [prediction] 57,58,59,65,70,81,90,91,92,101,109,119,130,131,132,140,151,161,167,178,193,194,195,204,212,220,231,232,233,256,257,258,269,280,305,316,327,338,351,363
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.527, F1*100=69.06, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.976, F1*100=98.77, Acc*100=99.74
+   FINAL → [BLOCK/dilated] P=1.000, R=0.527, F1*100=69.06 (saved buggy_28_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_29.sol | Attempt 1
+   SYSTEM → [prediction] 19,27,33,34,35,161,170,171,172,181,189,198,199,200,209,264,269,275,310,311,312,348,367,381,391,401,413
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.625, F1*100=76.92, HitRate*100=100.00 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+   FINAL → [BLOCK/dilated] P=1.000, R=0.625, F1*100=76.92 (saved buggy_29_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_30.sol | Attempt 1
+   SYSTEM → [prediction] 343,344,345,364,387,388,389,399,417,428,442,453,475,476,477,505,537,538,539,567,568,569,591,605,627,657,658,659,812,813,814,845,846,847,909,910,911,935,936,937
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.308, F1*100=47.06, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.667, F1*100=80.00, Acc*100=97.95
+   FINAL → [BLOCK/dilated] P=1.000, R=0.308, F1*100=47.06 (saved buggy_30_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_31.sol | Attempt 1
+   SYSTEM → [prediction] 98,99,100,107,121,122,123,136,137,138,158,170,183,203,214,225,236,241,248,263,288,303
+   EVAL   → [BLOCK/dilated] P=0.944, R=0.607, F1*100=73.91, HitRate*100=94.44 | [LINE±0] P=0.955, R=1.000, F1*100=97.67, Acc*100=99.67
+   FINAL → [BLOCK/dilated] P=0.944, R=0.607, F1*100=73.91 (saved buggy_31_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_32.sol | Attempt 1
+   SYSTEM → [prediction] 26,35,51,56,61,67,68,69,76,77,78,93,104,111,114,116,119,127,143,147,161,165,176,180,189,197,203,221,222,223,229,234,240,241,242,249,256,272
+   EVAL   → [BLOCK/dilated] P=0.753, R=0.589, F1*100=66.06, HitRate*100=75.26 | [LINE±0] P=0.763, R=1.000, F1*100=86.57, Acc*100=96.73
+   FINAL → [BLOCK/dilated] P=0.753, R=0.589, F1*100=66.06 (saved buggy_32_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_33.sol | Attempt 1
+   SYSTEM → [prediction] 11,12,13,20,31,40,54,55,56,98,103,108,116,126,132,143,154,160,161,162,168,174,190,203,204,205,211,220,221,222,238,246,254,263,271,282
+   EVAL   → [BLOCK/dilated] P=0.966, R=0.545, F1*100=69.67, HitRate*100=96.59 | [LINE±0] P=0.972, R=1.000, F1*100=98.59, Acc*100=99.65
+   FINAL → [BLOCK/dilated] P=0.966, R=0.545, F1*100=69.67 (saved buggy_33_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_34.sol | Attempt 1
+   SYSTEM → [prediction] 27,28,29,176,177,178,198,199,200,207,208,209,363,364,365,448,449,450,501,502,503,521,522,523
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.174, F1*100=29.63, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.462, F1*100=63.16, Acc*100=95.88
+   FINAL → [BLOCK/dilated] P=1.000, R=0.174, F1*100=29.63 (saved buggy_34_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_35.sol | Attempt 1
+   SYSTEM → [prediction] 138,143,150,160,180,181,182,196,219,220,221,228,239,240,241,249,250,251,257,262,268,273,279,289,294,300,397,398,399,438,439,440,485,486,487,518,519,520
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.380, F1*100=55.03, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.760, F1*100=86.36, Acc*100=97.88
+   FINAL → [BLOCK/dilated] P=1.000, R=0.380, F1*100=55.03 (saved buggy_35_pred.csv) | Selected Attempt = 1
+[INFO] Memory distilled/pruned for label 'Overflow-Underflow'. Kept 25 messages.
+
+[REAL::Overflow-Underflow] buggy_36.sol | Attempt 1
+   SYSTEM → [prediction] 11,20,34,47,52,64,65,66,76,91,101,107,118,128,134,135,136,142,221,231,236,242,243,244,262,263,264,271,272,273,389,390,391,519,520,521,554,555,556
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.370, F1*100=53.97, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.750, F1*100=85.71, Acc*100=97.89
+   FINAL → [BLOCK/dilated] P=1.000, R=0.370, F1*100=53.97 (saved buggy_36_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_37.sol | Attempt 1
+   SYSTEM → [prediction] 32,41,55,56,57,67,86,102,113,123,129,130,131,137,142,208,209,210,234,235,236,254,255,256,263,264,265,316,317,318
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.287, F1*100=44.60, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.600, F1*100=75.00, Acc*100=95.51
+   FINAL → [BLOCK/dilated] P=1.000, R=0.287, F1*100=44.60 (saved buggy_37_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_38.sol | Attempt 1
+   SYSTEM → [prediction] 57,58,59,65,70,81,90,91,92,101,109,119,130,131,132,140,151,161,167,178,193,194,195,204,212,220,231,232,233,256,257,258,269,280,305,316,327,338,351,363
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.527, F1*100=69.06, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.976, F1*100=98.77, Acc*100=99.74
+   FINAL → [BLOCK/dilated] P=1.000, R=0.527, F1*100=69.06 (saved buggy_38_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_39.sol | Attempt 1
+   SYSTEM → [prediction] 11,12,13,21,22,23,29,34,37,41,51,56,57,63,69,80,95,110,111,112,118
+   EVAL   → [BLOCK/dilated] P=0.755, R=0.578, F1*100=65.49, HitRate*100=75.51 | [LINE±0] P=0.714, R=1.000, F1*100=83.33, Acc*100=95.00
+   FINAL → [BLOCK/dilated] P=0.755, R=0.578, F1*100=65.49 (saved buggy_39_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_40.sol | Attempt 1
+   SYSTEM → [prediction] 255,256,257,298,299,300,384,385,386,415,416,417
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.135, F1*100=23.81, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.375, F1*100=54.55, Acc*100=96.76
+   FINAL → [BLOCK/dilated] P=1.000, R=0.135, F1*100=23.81 (saved buggy_40_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_41.sol | Attempt 1
+   SYSTEM → [prediction] 19,24,30,31,32,39,46,51,58,65,73,92,100,101,102,129,130,131,149,169,188,211,223,224,244,245
+   EVAL   → [BLOCK/dilated] P=0.823, R=0.554, F1*100=66.23, HitRate*100=82.26 | [LINE±0] P=0.808, R=0.913, F1*100=85.71, Acc*100=97.31
+   FINAL → [BLOCK/dilated] P=0.823, R=0.554, F1*100=66.23 (saved buggy_41_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_42.sol | Attempt 1
+   SYSTEM → [prediction] 11,12,13,20,31,40,54,55,56,98,103,108,116,126,132,143,154,160,161,162,168,174,190,203,204,205,210,219,220,221,237,245,253,262,270,281
+   EVAL   → [BLOCK/dilated] P=0.966, R=0.545, F1*100=69.67, HitRate*100=96.59 | [LINE±0] P=0.972, R=1.000, F1*100=98.59, Acc*100=99.65
+   FINAL → [BLOCK/dilated] P=0.966, R=0.545, F1*100=69.67 (saved buggy_42_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_43.sol | Attempt 1
+   SYSTEM → [prediction] 13,30,31,32,44,45,46,52,58,72,88,104,115,131,146,155,156,157,166,174,216,217,218,246,285,291,303,313,325,356,357,358,368,369,370,379,394,430,444,456
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.527, F1*100=69.06, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.976, F1*100=98.77, Acc*100=99.79
+   FINAL → [BLOCK/dilated] P=1.000, R=0.527, F1*100=69.06 (saved buggy_43_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_44.sol | Attempt 1
+   SYSTEM → [prediction] 12,23,34,35,36,43,44,45,53,72,88,89,90,103,119,134,145,159,172,181,182,183,195,200,212,221,263,264,265,293,332,357,365,374,375,376,393,436,437,438
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.484, F1*100=65.25, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.909, F1*100=95.24, Acc*100=99.19
+   FINAL → [BLOCK/dilated] P=1.000, R=0.484, F1*100=65.25 (saved buggy_44_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_45.sol | Attempt 1
+   SYSTEM → [prediction] 11,16,21,26,32,42,48,54,80,85,91,103,104,105,113,125,135,141,153,163,203,204,205,216,227,238,239,240,245,254,267,287,296,305,306,307,320,321,322,331
+   EVAL   → [BLOCK/dilated] P=0.940, R=0.540, F1*100=68.61, HitRate*100=94.00 | [LINE±0] P=0.950, R=1.000, F1*100=97.44, Acc*100=99.40
+   FINAL → [BLOCK/dilated] P=0.940, R=0.540, F1*100=68.61 (saved buggy_45_pred.csv) | Selected Attempt = 1
+[INFO] Memory distilled/pruned for label 'Overflow-Underflow'. Kept 25 messages.
+
+[REAL::Overflow-Underflow] buggy_46.sol | Attempt 1
+   SYSTEM → [prediction] 21,49,75,93,112,136,160
+   EVAL   → [BLOCK/dilated] P=0.952, R=0.500, F1*100=65.57, HitRate*100=95.24 | [LINE±0] P=0.857, R=0.857, F1*100=85.71, Acc*100=98.82
+   FINAL → [BLOCK/dilated] P=0.952, R=0.500, F1*100=65.57 (saved buggy_46_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_47.sol | Attempt 1
+   SYSTEM → [prediction] 16,27,77,78,79,97,98,99,148,149,150,183,184,194,195,196,220,221,245,246,247,269,270,271,279,280,281,315,316,317,350,351,352,363,364,365,422,423,424
+   EVAL   → [BLOCK/dilated] P=0.812, R=0.215, F1*100=34.04, HitRate*100=81.16 | [LINE±0] P=0.821, R=0.533, F1*100=64.65, Acc*100=92.81
+   FINAL → [BLOCK/dilated] P=0.812, R=0.215, F1*100=34.04 (saved buggy_47_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_48.sol | Attempt 1
+   SYSTEM → [prediction] 51,62,72,78,89,99,104,109,125,126,127,140,151,152,153,161,175,199,200,201,217,218,219,249,250,251,312,313,314,327,328,329
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.340, F1*100=50.75, HitRate*100=100.00 | [LINE±0] P=1.000, R=0.711, F1*100=83.12, Acc*100=97.02
+   FINAL → [BLOCK/dilated] P=1.000, R=0.340, F1*100=50.75 (saved buggy_48_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_49.sol | Attempt 1
+   SYSTEM → [prediction] 11,12,13,21,22,23,29,34,41,51,56,57,63,69,80,95,110,111,112,118
+   EVAL   → [BLOCK/dilated] P=0.804, R=0.578, F1*100=67.27, HitRate*100=80.43 | [LINE±0] P=0.750, R=1.000, F1*100=85.71, Acc*100=95.83
+   FINAL → [BLOCK/dilated] P=0.804, R=0.578, F1*100=67.27 (saved buggy_49_pred.csv) | Selected Attempt = 1
+
+[REAL::Overflow-Underflow] buggy_50.sol | Attempt 1
+   SYSTEM → [prediction] 13,14,15,23,35,46,59,71,82,89,114,131,132,133,145,154,166,167,168,178,187,196,207,208,209,221,222,223,237,246,255,269,292,315,329
+   EVAL   → [BLOCK/dilated] P=1.000, R=0.545, F1*100=70.54, HitRate*100=100.00 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+   FINAL → [BLOCK/dilated] P=1.000, R=0.545, F1*100=70.54 (saved buggy_50_pred.csv) | Selected Attempt = 1
+[INFO] Saved folder summary → results_ablation_smoke/pruning_only/Overflow-Underflow/Overflow-Underflow_result.csv
+[SUMMARY::Overflow-Underflow] eval contracts=45 (warm-up excluded=5) | MACRO Block P/R/F1 = 0.936/0.443/0.584 | MACRO Line P/R/F1 = 0.932/0.833/0.863
+[INFO] Saved usage/cost log → results_ablation_smoke/pruning_only/Overflow-Underflow/Overflow-Underflow_usage.csv
+[USAGE::Overflow-Underflow] calls=35 tokens=305647 est_cost_usd=1.2364 avg_s/call=5.84
+
+REAL mode completed for the selected label.
+/Users/sj_ag77/LineGuard/main.py:2: SyntaxWarning: invalid escape sequence '\m'
+  """
+
+=== REAL MODE: Processing Label 'Integer flow' → folder 'Overflow-Underflow' [provider=claude_cli model=claude-sonnet-5 oracle=False ablation=pruning_only] ===
+[INFO] Loaded memory chat for Integer flow (40 messages).
+[RESUME] buggy_1.sol already done (warmup); skipping.
+[RESUME] buggy_2.sol already done (warmup); skipping.
+[RESUME] buggy_3.sol already done (warmup); skipping.
+[RESUME] buggy_4.sol already done (warmup); skipping.
+[RESUME] buggy_5.sol already done (warmup); skipping.
+[RESUME] buggy_6.sol already done (eval); skipping.
+[RESUME] buggy_7.sol already done (eval); skipping.
+[RESUME] buggy_8.sol already done (eval); skipping.
+[RESUME] buggy_9.sol already done (eval); skipping.
+[RESUME] buggy_10.sol already done (eval); skipping.
+[RESUME] buggy_11.sol already done (eval); skipping.
+[RESUME] buggy_12.sol already done (eval); skipping.
+[RESUME] buggy_13.sol already done (eval); skipping.
+[RESUME] buggy_14.sol already done (eval); skipping.
+[RESUME] buggy_15.sol already done (eval); skipping.
+[RESUME] buggy_16.sol already done (eval); skipping.
+[RESUME] buggy_17.sol already done (eval); skipping.
+[RESUME] buggy_18.sol already done (eval); skipping.
+[RESUME] buggy_19.sol already done (eval); skipping.
+[RESUME] buggy_20.sol already done (eval); skipping.
+[RESUME] buggy_21.sol already done (eval); skipping.
+[RESUME] buggy_22.sol already done (eval); skipping.
+[RESUME] buggy_23.sol already done (eval); skipping.
+[RESUME] buggy_24.sol already done (eval); skipping.
+[RESUME] buggy_25.sol already done (eval); skipping.
+[RESUME] buggy_26.sol already done (eval); skipping.
+[RESUME] buggy_27.sol already done (eval); skipping.
+[RESUME] buggy_28.sol already done (eval); skipping.
+[RESUME] buggy_29.sol already done (eval); skipping.
+[RESUME] buggy_30.sol already done (eval); skipping.
+[RESUME] buggy_31.sol already done (eval); skipping.
+[RESUME] buggy_32.sol already done (eval); skipping.
+[RESUME] buggy_33.sol already done (eval); skipping.
+[RESUME] buggy_34.sol already done (eval); skipping.
+[RESUME] buggy_35.sol already done (eval); skipping.
+[RESUME] buggy_36.sol already done (eval); skipping.
+[RESUME] buggy_37.sol already done (eval); skipping.
+[RESUME] buggy_38.sol already done (eval); skipping.
+[RESUME] buggy_39.sol already done (eval); skipping.
+[RESUME] buggy_40.sol already done (eval); skipping.
+[RESUME] buggy_41.sol already done (eval); skipping.
+[RESUME] buggy_42.sol already done (eval); skipping.
+[RESUME] buggy_43.sol already done (eval); skipping.
+[RESUME] buggy_44.sol already done (eval); skipping.
+[RESUME] buggy_45.sol already done (eval); skipping.
+[RESUME] buggy_46.sol already done (eval); skipping.
+[RESUME] buggy_47.sol already done (eval); skipping.
+[RESUME] buggy_48.sol already done (eval); skipping.
+[RESUME] buggy_49.sol already done (eval); skipping.
+[RESUME] buggy_50.sol already done (eval); skipping.
+[INFO] Saved folder summary → results_ablation_smoke/pruning_only/Overflow-Underflow/Overflow-Underflow_result.csv
+[SUMMARY::Overflow-Underflow] eval contracts=45 (warm-up excluded=5) | MACRO Block P/R/F1 = 0.936/0.443/0.584 | MACRO Line P/R/F1 = 0.932/0.833/0.863
+
+REAL mode completed for the selected label.

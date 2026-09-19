@@ -1,0 +1,118 @@
+[
+  {
+    "role": "user",
+    "content": "You are an expert in smart contract vulnerability detection.\nA Solidity smart contract will be provided; identify all vulnerabilities present in the code.\nFocus specifically on detecting instances of TOD.\nReturn ONLY the line numbers.\nOutput format constraint: ONLY digits separated by commas (e.g., 12,27,41). No words, no ranges, no JSON, no brackets, no explanations.\nWhen ready, you may first reply 'I understand the patterns and I'm ready for the next contract' or directly give predictions."
+  },
+  {
+    "role": "user",
+    "content": "[feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state variable and function whose logic reveals a transaction-order-dependence (TOD) pattern, such as reward/winner variables and functions using `block.number`, hashed === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrelevant to ordering or external interactions. MissedCandidates (consider): L22: address payable winner_T..."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state varia"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 41,58,71,79,97,119,133,147,161,175,185,193,208,222,242,250,271,285,300,314,322,341,349,365,373,391,399,410,418,433,443,451,463,471,482,490,518,539,556,564,587,595,620,628,660,678,686,713,730,738,747,760"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state variable and function whose logic reveals a transaction-order-dependence (TOD) pattern, such as reward/winner variables and functions using `block.number`, hashed === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrelevant to ordering or external interactions. MissedCandidates (consider): L22: address payable winner_T...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nHighRankedButNotSelected (double-check these): L2: * Source Code first verified at https://etherscan.io on Thursday, March 28, 2019 | L77: require(submission < 10);\nSelfConsistency: agree_with_prev=45 newly_added=7 dropped=0\nRe-examine lines that changed between attempts before finalizing.\nFORMAT: Return only..."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state varia"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 61,67,69,80,86,88,103,123,136,142,144,158,164,166,180,186,188,207,217,223,225,241,255,269,283,297,311,317,319,333,339,341,359,376,391,397,399,426,432,434,450,456,458,479,509,515,517,538,554,560,562,582,599,620,639"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state variable and function whose logic reveals a transaction-order-dependence (TOD) pattern, such as reward/winner variables and functions using `block.number`, hashed === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrelevant to ordering or external interactions. MissedCandidates (consider): L22: address payable winner_T...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nSelfConsistency: agree_with_prev=55 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state varia"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 227,242,257,274,282,299,307,330,338,355,363,385,393,425,455,483,491,524,532,559,567,600,630,636,638,663,682,696,710,731,737,739,760,781,810,829"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state variable and function whose logic reveals a transaction-order-dependence (TOD) pattern, such as reward/winner variables and functions using `block.number`, hashed === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrelevant to ordering or external interactions. MissedCandidates (consider): L22: address payable winner_T...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nHighRankedButNotSelected (double-check these): L154: * transaction ordering. One possible solution to mitigate this race | L280: require(submission < 10);\nSelfConsistency: agree_with_prev=33 newly_added=3 dropped=0\nRe-examine lines that changed between attempts before finalizing.\nFORMAT: Return only comma-sep..."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === COMPACT HINTS (non-oracle: no ground truth used) === Label: TOD MUST: - Flag order-dependent read/write pattern"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 15,23,38,53,67,75,94,102,149,157,172,186,202,216,230,244,259,269,275,277,292,306,322,328,348,354,356,374,380,382,390,403,409,411,429,442,448,450,469,482,488,490,510"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state variable and function whose logic reveals a transaction-order-dependence (TOD) pattern, such as reward/winner variables and functions using `block.number`, hashed === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrelevant to ordering or external interactions. MissedCandidates (consider): L22: address payable winner_T...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nHighRankedButNotSelected (double-check these): L330: msg.sender.transfer(reward_TOD20); | L21: require(submission < 10);\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state varia"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 21,37,43,45,61,67,69,80,86,88,104,126,145,165,184,203,222,235,241,243,257,263,265,279,285,287,334,340,342,375,381,383,432,447,468,487,507,537,543,545,559,565,567,581,587,589,613,653,672,678,680,702,719,725,727"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state variable and function whose logic reveals a transaction-order-dependence (TOD) pattern, such as reward/winner variables and functions using `block.number`, hashed === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrelevant to ordering or external interactions. MissedCandidates (consider): L22: address payable winner_T...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nSelfConsistency: agree_with_prev=42 newly_added=13 dropped=0\nRe-examine lines that changed between attempts before finalizing.\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state varia"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 17,23,25,46,61,67,69,80,86,88,104,126,141,147,149,170,189,208,227,244,261,274,280,282,303,317,334,340,342,357,363,365,412,418,420,453,459,461,506,512,514,549,566,579,585,587,612,654,660,662,682,688,690,712,729,735,737,759"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state variable and function whose logic reveals a transaction-order-dependence (TOD) pattern, such as reward/winner variables and functions using `block.number`, hashed === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrelevant to ordering or external interactions. MissedCandidates (consider): L22: address payable winner_T...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nSelfConsistency: agree_with_prev=45 newly_added=13 dropped=0\nRe-examine lines that changed between attempts before finalizing.\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state varia"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 20,30,38,53,63,71,86,100,115,129,155,163,178,192,203,211,227,242,256,270,285,299,343,351,367,375,392,400,416,424,443,451,474,512,525,533,540,550,558,572,580"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state variable and function whose logic reveals a transaction-order-dependence (TOD) pattern, such as reward/winner variables and functions using `block.number`, hashed === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrelevant to ordering or external interactions. MissedCandidates (consider): L22: address payable winner_T...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nHighRankedButNotSelected (double-check these): L36: require(submission < 10); | L69: require(submission < 10);\nSelfConsistency: agree_with_prev=40 newly_added=1 dropped=12\nRe-examine lines that changed between attempts before finalizing.\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no..."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE ="
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 24,38,52,68,82,96,111,119,134,144,152,164,172,183,191,207,222,245,253,268,276,297,305,329,337,351,359,377,400,413,421,436,444,461,473,481,493,501,513,521,539,553,565,573,595,613,621,636,644,659,667,688,711,719,742,762,776,784,807,813,826,844"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state variable and function whose logic reveals a transaction-order-dependence (TOD) pattern, such as reward/winner variables and functions using `block.number`, hashed === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrelevant to ordering or external interactions. MissedCandidates (consider): L22:...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nHighRankedButNotSelected (double-check these): L117: require(submission < 10); | L150: require(submission < 10);\nSelfConsistency: agree_with_prev=61 newly_added=1 dropped=0\nRe-examine lines that changed between attempts before finalizing.\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, n..."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE ="
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 59,73,87,101,115,129,143,157,177,185,202,210,225,240,254,262,281,289,305,313,333,341,352,360,371,379,394,409,419,427,451,459,481,502,524,532,549,557,578,586,615,642,650,673,695,703,712,725"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every state variable and function whose logic reveals a transaction-order-dependence (TOD) pattern, such as reward/winner variables and functions using `block.number`, hashed === COMPACT HINTS === Label: TOD Mode: broaden MUST: - Flag order-dependent read/write patterns around external calls. INCLUDE: - State read \u2192 external call \u2192 state write depending on the read. NEVER: - Exclude lines irrelevant to ordering or external interactions. MissedCandidates (consider): L22:...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: TOD\nMUST: - Flag order-dependent read/write patterns around external calls.\nINCLUDE: - State read \u2192 external call \u2192 state write depending on the read.\nNEVER: - Exclude lines irrelevant to ordering or external interactions.\nHighRankedButNotSelected (double-check these): L183: require(submission < 10); | L208: require(submission < 10);\nSelfConsistency: agree_with_prev=31 newly_added=17 dropped=15\nRe-examine lines that changed between attempts before finalizing.\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words,..."
+  }
+]

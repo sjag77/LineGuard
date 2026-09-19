@@ -1,0 +1,6 @@
+label,contract,attempt,call_type,provider,model,prompt_tokens,completion_tokens,total_tokens,elapsed_s,is_fallback,est_cost_usd
+Overflow-Underflow,buggy_14.sol,1,prediction,claude_cli,claude-sonnet-5,6668,117,6785,7.8878,False,0.027838
+Overflow-Underflow,buggy_14.sol,2,prediction,claude_cli,claude-sonnet-5,6845,91,6936,5.5507,False,0.028286
+Overflow-Underflow,buggy_14.sol,3,prediction,claude_cli,claude-sonnet-5,6897,123,7020,6.3767,False,0.028814
+Overflow-Underflow,buggy_15.sol,1,prediction,claude_cli,claude-sonnet-5,6246,77,6323,4.9696,False,0.02575
+Overflow-Underflow,buggy_15.sol,2,prediction,claude_cli,claude-sonnet-5,6454,77,6531,7.8871,False,0.026582

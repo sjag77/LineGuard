@@ -1,0 +1,118 @@
+[
+  {
+    "role": "user",
+    "content": "You are an expert in smart contract vulnerability detection.\nA Solidity smart contract will be provided; identify all vulnerabilities present in the code.\nFocus specifically on detecting instances of Unhandled-Exceptions.\nReturn ONLY the line numbers.\nOutput format constraint: ONLY digits separated by commas (e.g., 12,27,41). No words, no ranges, no JSON, no brackets, no explanations.\nWhen ready, you may first reply 'I understand the patterns and I'm ready for the next contract' or directly give predictions."
+  },
+  {
+    "role": "user",
+    "content": "[feedback_for_next] === MEMORY SUMMARY ===\n- === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value isn't checked, even in trivial one-line functions with no other logic. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch with proper handling. MissedCandidates (consider): L22: function unhandledsend_unchk14(address payable callee) public { | L24: } FORMAT: Return only comma-separated in..."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === Flag every function that declares an address payable variable for a low-level `.send()`/`.call()` whose result is n"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 10,18,22,27,36,46,51,56,63,73,80,105,131,166,178,187,194,212,223,241,249"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] [BLOCK/dilated] P=0.9683 R=0.5648 F1*100=71.35 HitRate*100=96.83 ; [LINE\u00b10] P=1.0000 R=1.0000 F1*100=100.00 Acc*100=100.00 ; [feedback_for_next] === MEMORY SUMMARY ===\n- === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value isn't checked, even in trivial one-line functions with no other logic. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch with proper handling. MissedCandidates (consider): L22: function unhandledsend_unchk14(address payable callee) public { | L24: } FORMAT: Return only comma-separated in...\n\n=== NEXT RULE ===\nFlag every function declaring an `address payable`/external-call target variable even if unused on that line, since it likely feeds an unchecked send/call later in the same functio\n\n=== COMPACT HINTS ===\nLabel: Unhandled-Exceptions\nMode: broaden\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nMissedCandidates (consider): L8: function bug_unchk31() public{ | L9: address payable addr_unchk31;\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === Flag every function containing `.call()`/`.send()`/`.transfer()` even if declared with uninitialized/unused local v"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 30,35,41,52,57,61,68,80,86,89,93,102,135,150,157,184,201,212"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] [BLOCK/dilated] P=0.9630 R=0.5843 F1*100=72.73 HitRate*100=96.30 ; [LINE\u00b10] P=1.0000 R=1.0000 F1*100=100.00 Acc*100=100.00 ; [feedback_for_next] === MEMORY SUMMARY ===\n- === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value isn't checked, even in trivial one-line functions with no other logic. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch with proper handling. MissedCandidates (consider): L22: function unhandledsend_unchk14(address payable callee) public { | L24: } FORMAT: Return only comma-separated in...\n\n=== NEXT RULE ===\nFlag every function containing an unchecked `.call()`/`.send()`, even minimal ones like `callee.send(1);`, by scanning all functions for the call itself, not surrounding logic.\n\n=== COMPACT HINTS ===\nLabel: Unhandled-Exceptions\nMode: broaden\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nMissedCandidates (consider): L29: function unhandledsend_unchk38(address payable callee) public { | L31: }\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === Flag every function performing `.call.value(...)()`/`.send()`/`.call()` without a subsequent require/revert check, "
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 11,22,35,61,70,86,91,95,100,106,116,141,166,183,204,228,251,272,286,290,296,303,316,339,353,363,374,388,398,402"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] [BLOCK/dilated] P=0.9222 R=0.5608 F1*100=69.75 HitRate*100=92.22 ; [LINE\u00b10] P=0.9333 R=0.9032 F1*100=91.80 Acc*100=98.78 ; [feedback_for_next] === MEMORY SUMMARY ===\n- === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value isn't checked, even in trivial one-line functions with no other logic. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch with proper handling. MissedCandidates (consider): L22: function unhandledsend_unchk14(address payable callee) public { | L24: } FORMAT: Return only comma-separated in...\n\n=== NEXT RULE ===\nFlag every unchecked `.transfer()`/`.send()`/`.call()` including plain `x.transfer(...)` payouts, and scan every function body (even ones with unfamiliar/truncated names) for missi\n\n=== COMPACT HINTS ===\nLabel: Unhandled-Exceptions\nMode: broaden\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nFalsePositives (avoid): L398: msg.sender.transfer(amount * sellPrice);            // sends ether to the seller. It's imp\u2026\nMissedCandidates (consider): L8: function bug_unchk42() public{ | L9: uint receivers_unchk42;\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value is"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 53,58,63,70,75,80,85,97,105,108,120,140,151,161,170,175,180,185,191,196,213,222,230,238,257,274,287,296,314,323,337,348,367,376,385,393,399,402,412,422,428,436,442,450,454"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value isn't checked, even in trivial one-line functions with no other logic. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch with proper handling. MissedCandidates (consider): L22: function unhandledsend_unchk14(address payable callee) public { | L24: } FORMAT: Return only comma-separated in...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unhandled-Exceptions\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nSelfConsistency: agree_with_prev=45 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value is"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 63,68,73,80,85,90,93,97,132,140,152,164,187,195,207,215,224,229,232,236,246,254,259,264,269,274,278,283,313,342,367,407,421,430,438,451,466,477,488,501,535,554,578,590,611,624,637,643"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value isn't checked, even in trivial one-line functions with no other logic. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch with proper handling. MissedCandidates (consider): L22: function unhandledsend_unchk14(address payable callee) public { | L24: } FORMAT: Return only comma-separated in...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unhandled-Exceptions\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nHighRankedButNotSelected (double-check these): L115: msg.sender.send(Balances_unchk17);}\nSelfConsistency: agree_with_prev=46 newly_added=2 dropped=1\nRe-examine lines that changed between attempts before finalizing.\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value is"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 59,71,89,97,101,107,112,115,127,131,143,152,161,166,175,180,184,188,193,198,203,212,217,222,226,230,234,238,244,251,260,265,269,272,276,280,284,288,297,302,307,316,323,327,331,334,339,344,351,355,359"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value isn't checked, even in trivial one-line functions with no other logic. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch with proper handling. MissedCandidates (consider): L22: function unhandledsend_unchk14(address payable callee) public { | L24: } FORMAT: Return only comma-separated in...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unhandled-Exceptions\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nSelfConsistency: agree_with_prev=28 newly_added=23 dropped=0\nRe-examine lines that changed between attempts before finalizing.\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value is"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 220,228,233,241,252,259,263,267,277,285,290,295,300,305,309,313,319,324,331,336,341,364,376,403,418,425,442,474,514,537,550,563,577,645,666,670,692,696,704,710,721,730,744,764,772,801,827,859,913,923,967,981"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value isn't checked, even in trivial one-line functions with no other logic. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch with proper handling. MissedCandidates (consider): L22: function unhandledsend_unchk14(address payable callee) public { | L24: } FORMAT: Return only comma-separated in...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unhandled-Exceptions\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nSelfConsistency: agree_with_prev=52 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value is"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 55,61,71,88,102,110,119,129,137,145,153,161,164,169,179,187,192,197,202,207,211,215,223,227,233,237,245,252,261,268,278,287,352,367,378,438,450,466,476,483,496,513,523,530,538,551,561"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value isn't checked, even in trivial one-line functions with no other logic. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch with proper handling. MissedCandidates (consider): L22: function unhandledsend_unchk14(address payable callee) public { | L24: } FORMAT: Return only comma-separated in...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unhandled-Exceptions\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nSelfConsistency: agree_with_prev=47 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  },
+  {
+    "role": "user",
+    "content": "[contract_prompt elided] === PREVIOUS FEEDBACK (for this attempt) === === MEMORY SUMMARY === - === MEMORY SUMMARY === - === NEXT RULE === Flag every unchecked low-level `.send()`/`.call"
+  },
+  {
+    "role": "system",
+    "content": "[prediction] 288,300,309,321,334,343,360,368,387,407,424,433,451,461,469,479,500,526,554,580,601,615,634,657,689,701,714,726,734,742,755,769,778,782,793,806,815,828,837,845,855,861,874,890,912,920,935,948"
+  },
+  {
+    "role": "user",
+    "content": "[analysis] non-oracle ; [feedback_for_next] === MEMORY SUMMARY ===\n- === MEMORY SUMMARY === - === NEXT RULE === Flag every unchecked low-level `.send()`/`.call()` whose return value isn't checked, even in trivial one-line functions with no other logic. === COMPACT HINTS === Label: Unhandled-Exceptions Mode: broaden MUST: - Flag external calls whose return values are ignored without revert path. INCLUDE: - call(), delegatecall(), staticcall() without require/handling. NEVER: - Exclude try/catch with proper handling. MissedCandidates (consider): L22: function unhandledsend_unchk14(address payable callee) public { | L24: } FORMAT: Retur...\n\n=== COMPACT HINTS (non-oracle: no ground truth used) ===\nLabel: Unhandled-Exceptions\nMUST: - Flag external calls whose return values are ignored without revert path.\nINCLUDE: - call(), delegatecall(), staticcall() without require/handling.\nNEVER: - Exclude try/catch with proper handling.\nSelfConsistency: agree_with_prev=48 newly_added=0 dropped=0\nFORMAT: Return only comma-separated integers (e.g., 12,27). No words, no ranges, no JSON."
+  }
+]

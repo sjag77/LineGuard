@@ -1,0 +1,178 @@
+/Users/sj_ag77/LineGuard/main.py:2: SyntaxWarning: invalid escape sequence '\m'
+  """
+
+=== REAL MODE: Processing Label 'Unhandled exp' → folder 'Unhandled-Exceptions' [provider=claude_cli model=claude-sonnet-5 oracle=False ablation=full] ===
+[INFO] Loaded memory chat for Unhandled exp (1 messages).
+
+[REAL::Unhandled-Exceptions] buggy_1.sol | Attempt 1
+   SYSTEM → [prediction] 23,34,52,62,69,77,81,89,94,106,116,121,133,149,166,181,190,197
+   EVAL   → [BLOCK/dilated] P=0.963, R=0.584, F1*100=72.73, HitRate*100=96.30 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+
+[REAL::Unhandled-Exceptions] buggy_1.sol | Attempt 2
+   SYSTEM → [prediction] 23,34,52,62,69,77,81,89,94,106,116,121,133,149,166,181,190,197
+   EVAL   → [BLOCK/dilated] P=0.963, R=0.584, F1*100=72.73, HitRate*100=96.30 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+
+[REAL::Unhandled-Exceptions] buggy_1.sol | Attempt 3
+   SYSTEM → [prediction] 23,34,52,62,69,77,81,89,94,106,116,121,133,149,166,181,190,197
+   EVAL   → [BLOCK/dilated] P=0.963, R=0.584, F1*100=72.73, HitRate*100=96.30 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+   FINAL → [BLOCK/dilated] P=0.963, R=0.584, F1*100=72.73 (saved buggy_1_pred.csv) | Selected Attempt = 1
+
+[REAL::Unhandled-Exceptions] buggy_2.sol | Attempt 1
+   SYSTEM → [prediction] 10,18,22,32,42,47,52,58,68,73,79,106,138,166,176,186,204,215,233,241
+   EVAL   → [BLOCK/dilated] P=0.967, R=0.552, F1*100=70.30, HitRate*100=96.67 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+
+[REAL::Unhandled-Exceptions] buggy_2.sol | Attempt 2
+   SYSTEM → [prediction] 10,18,22,32,42,47,52,58,68,73,79,106,138,166,176,186,204,215,233,241
+   EVAL   → [BLOCK/dilated] P=0.967, R=0.552, F1*100=70.30, HitRate*100=96.67 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+
+[REAL::Unhandled-Exceptions] buggy_2.sol | Attempt 3
+   SYSTEM → [prediction] 10,18,22,32,42,47,52,58,68,73,79,106,138,166,176,186,204,215,233,241
+   EVAL   → [BLOCK/dilated] P=0.967, R=0.552, F1*100=70.30, HitRate*100=96.67 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+   FINAL → [BLOCK/dilated] P=0.967, R=0.552, F1*100=70.30 (saved buggy_2_pred.csv) | Selected Attempt = 1
+
+[REAL::Unhandled-Exceptions] buggy_3.sol | Attempt 1
+   SYSTEM → [prediction] 10,18,22,27,36,46,51,56,63,73,80,105,131,166,178,187,194,212,223,241,249
+   EVAL   → [BLOCK/dilated] P=0.968, R=0.565, F1*100=71.35, HitRate*100=96.83 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+
+[REAL::Unhandled-Exceptions] buggy_3.sol | Attempt 2
+   SYSTEM → [prediction] 10,18,22,27,36,46,51,56,63,73,80,105,131,166,178,187,194,212,223,241,249
+   EVAL   → [BLOCK/dilated] P=0.968, R=0.565, F1*100=71.35, HitRate*100=96.83 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+
+[REAL::Unhandled-Exceptions] buggy_3.sol | Attempt 3
+   SYSTEM → [prediction] 10,18,22,27,36,46,51,56,63,73,80,105,131,166,178,187,194,212,223,241,249
+   EVAL   → [BLOCK/dilated] P=0.968, R=0.565, F1*100=71.35, HitRate*100=96.83 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+   FINAL → [BLOCK/dilated] P=0.968, R=0.565, F1*100=71.35 (saved buggy_3_pred.csv) | Selected Attempt = 1
+
+[REAL::Unhandled-Exceptions] buggy_4.sol | Attempt 1
+   SYSTEM → [prediction] 30,35,41,52,57,61,68,80,86,89,93,102,135,150,157,184,201,212
+   EVAL   → [BLOCK/dilated] P=0.963, R=0.584, F1*100=72.73, HitRate*100=96.30 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+
+[REAL::Unhandled-Exceptions] buggy_4.sol | Attempt 2
+   SYSTEM → [prediction] 30,35,41,52,57,61,68,80,86,89,93,102,135,150,157,184,201,212
+   EVAL   → [BLOCK/dilated] P=0.963, R=0.584, F1*100=72.73, HitRate*100=96.30 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+
+[REAL::Unhandled-Exceptions] buggy_4.sol | Attempt 3
+   SYSTEM → [prediction] 30,35,41,52,57,61,68,80,86,89,93,102,135,150,157,184,201,212
+   EVAL   → [BLOCK/dilated] P=0.963, R=0.584, F1*100=72.73, HitRate*100=96.30 | [LINE±0] P=1.000, R=1.000, F1*100=100.00, Acc*100=100.00
+   FINAL → [BLOCK/dilated] P=0.963, R=0.584, F1*100=72.73 (saved buggy_4_pred.csv) | Selected Attempt = 1
+
+[REAL::Unhandled-Exceptions] buggy_5.sol | Attempt 1
+   SYSTEM → [prediction] 11,22,35,61,70,86,91,95,100,106,116,141,166,183,204,228,251,272,286,290,296,303,316,339,353,363,374,388,398,402
+   EVAL   → [BLOCK/dilated] P=0.922, R=0.561, F1*100=69.75, HitRate*100=92.22 | [LINE±0] P=0.933, R=0.903, F1*100=91.80, Acc*100=98.78
+
+[REAL::Unhandled-Exceptions] buggy_5.sol | Attempt 2
+   SYSTEM → [prediction] 11,22,35,61,70,86,91,95,100,106,141,166,183,204,228,251,272,286,290,296,303,316,339,353,363,374,388,398,402
+   EVAL   → [BLOCK/dilated] P=0.920, R=0.541, F1*100=68.09, HitRate*100=91.95 | [LINE±0] P=0.931, R=0.871, F1*100=90.00, Acc*100=98.53
+
+[REAL::Unhandled-Exceptions] buggy_5.sol | Attempt 3
+   SYSTEM → [prediction] 11,22,35,61,70,86,91,95,100,106,116,141,166,183,204,228,251,272,286,290,296,303,316,339,353,363,374,388,398,402
+   EVAL   → [BLOCK/dilated] P=0.922, R=0.561, F1*100=69.75, HitRate*100=92.22 | [LINE±0] P=0.933, R=0.903, F1*100=91.80, Acc*100=98.78
+   FINAL → [BLOCK/dilated] P=0.922, R=0.561, F1*100=69.75 (saved buggy_5_pred.csv) | Selected Attempt = 1
+[RESUME] buggy_6.sol already done (eval); skipping.
+[RESUME] buggy_7.sol already done (eval); skipping.
+[RESUME] buggy_8.sol already done (eval); skipping.
+[RESUME] buggy_9.sol already done (eval); skipping.
+[RESUME] buggy_10.sol already done (eval); skipping.
+[RESUME] buggy_11.sol already done (eval); skipping.
+[RESUME] buggy_12.sol already done (eval); skipping.
+[RESUME] buggy_13.sol already done (eval); skipping.
+[RESUME] buggy_14.sol already done (eval); skipping.
+[RESUME] buggy_15.sol already done (eval); skipping.
+
+[REAL::Unhandled-Exceptions] buggy_16.sol | Attempt 2
+   SYSTEM → [prediction] 53,58,63,70,75,80,85,97,105,108,120,140,151,161,170,175,180,185,191,196,213,222,230,238,257,274,287,296,314,323,337,348,367,376,385,393,399,402,412,422,428,436,442,450,454
+   EVAL   → [BLOCK/dilated] P=0.889, R=0.619, F1*100=72.95, HitRate*100=88.89 | [LINE±0] P=0.889, R=0.952, F1*100=91.95, Acc*100=98.47
+
+[REAL::Unhandled-Exceptions] buggy_16.sol | Attempt 1
+   SYSTEM → [prediction] 53,58,63,70,75,80,85,97,105,108,120,140,151,161,170,175,180,185,191,196,213,222,230,238,257,274,287,296,314,323,337,348,367,376,385,393,399,402,412,422,428,436,442,450,454
+   EVAL   → [BLOCK/dilated] P=0.889, R=0.619, F1*100=72.95, HitRate*100=88.89 | [LINE±0] P=0.889, R=0.952, F1*100=91.95, Acc*100=98.47
+   FINAL → [BLOCK/dilated] P=0.889, R=0.619, F1*100=72.95 (saved buggy_16_pred.csv) | Selected Attempt = 2
+[RESUME] buggy_17.sol already done (eval); skipping.
+
+[REAL::Unhandled-Exceptions] buggy_18.sol | Attempt 2
+   SYSTEM → [prediction] 63,68,73,80,85,90,93,97,132,140,152,164,187,195,207,215,224,229,232,236,246,254,259,264,269,274,278,283,313,342,367,407,421,430,438,451,466,477,488,501,535,554,578,590,611,624,637,643
+   EVAL   → [BLOCK/dilated] P=0.931, R=0.575, F1*100=71.09, HitRate*100=93.06 | [LINE±0] P=0.896, R=0.811, F1*100=85.15, Acc*100=97.68
+
+[REAL::Unhandled-Exceptions] buggy_18.sol | Attempt 1
+   SYSTEM → [prediction] 68,73,80,90,93,97,115,132,140,152,164,187,195,207,215,224,229,232,236,246,254,259,264,269,274,278,283,313,342,367,407,421,430,438,451,466,477,488,501,535,554,578,590,611,624,637,643
+   EVAL   → [BLOCK/dilated] P=0.922, R=0.558, F1*100=69.52, HitRate*100=92.20 | [LINE±0] P=0.872, R=0.774, F1*100=82.00, Acc*100=97.21
+   FINAL → [BLOCK/dilated] P=0.931, R=0.575, F1*100=71.09 (saved buggy_18_pred.csv) | Selected Attempt = 2
+
+[REAL::Unhandled-Exceptions] buggy_19.sol | Attempt 3
+   SYSTEM → [prediction] 59,71,89,97,101,107,112,115,127,131,143,152,161,166,175,180,184,188,193,198,203,212,217,222,226,230,234,238,244,251,260,265,269,272,276,280,284,288,297,302,307,316,323,327,331,334,339,344,351,355,359
+   EVAL   → [BLOCK/dilated] P=0.523, R=0.606, F1*100=56.14, HitRate*100=52.29 | [LINE±0] P=0.529, R=0.964, F1*100=68.35, Acc*100=93.07
+
+[REAL::Unhandled-Exceptions] buggy_19.sol | Attempt 1
+   SYSTEM → [prediction] 59,71,89,97,101,107,112,115,127,131,143,152,161,166,175,180,184,188,193,198,203,212,217,222,226,230,234,238,244,251,260,265,269,272,276,280,284,288,297,302,307,316,323,327,331,334,339,344,351,355,359
+   EVAL   → [BLOCK/dilated] P=0.523, R=0.606, F1*100=56.14, HitRate*100=52.29 | [LINE±0] P=0.529, R=0.964, F1*100=68.35, Acc*100=93.07
+
+[REAL::Unhandled-Exceptions] buggy_19.sol | Attempt 2
+   SYSTEM → [prediction] 59,71,89,97,101,107,115,131,143,161,175,184,193,203,217,226,234,244,260,269,276,297,307,323,331,339,351,359
+   EVAL   → [BLOCK/dilated] P=0.917, R=0.583, F1*100=71.30, HitRate*100=91.67 | [LINE±0] P=0.929, R=0.929, F1*100=92.86, Acc*100=98.89
+   FINAL → [BLOCK/dilated] P=0.523, R=0.606, F1*100=56.14 (saved buggy_19_pred.csv) | Selected Attempt = 3
+[RESUME] buggy_20.sol already done (eval); skipping.
+[RESUME] buggy_21.sol already done (eval); skipping.
+[RESUME] buggy_22.sol already done (eval); skipping.
+[RESUME] buggy_23.sol already done (eval); skipping.
+
+[REAL::Unhandled-Exceptions] buggy_24.sol | Attempt 3
+   SYSTEM → [prediction] 220,228,233,241,252,259,263,267,277,285,290,295,300,305,309,313,319,324,331,336,341,364,376,403,418,425,442,474,514,537,550,563,577,645,666,670,692,696,704,710,721,730,744,764,772,801,827,859,913,923,967,981
+   EVAL   → [BLOCK/dilated] P=0.872, R=0.596, F1*100=70.83, HitRate*100=87.18 | [LINE±0] P=0.846, R=0.917, F1*100=88.00, Acc*100=98.78
+
+[REAL::Unhandled-Exceptions] buggy_24.sol | Attempt 1
+   SYSTEM → [prediction] 220,228,233,259,277,285,290,295,300,309,319,324,331,336,341,364,376,403,418,425,442,474,514,537,550,563,577,645,666,670,692,696,704,710,721,730,744,764,772,801,827,859,913,923,967,981
+   EVAL   → [BLOCK/dilated] P=0.862, R=0.522, F1*100=65.03, HitRate*100=86.23 | [LINE±0] P=0.826, R=0.792, F1*100=80.85, Acc*100=98.17
+
+[REAL::Unhandled-Exceptions] buggy_24.sol | Attempt 2
+   SYSTEM → [prediction] 220,228,233,241,252,259,263,267,277,285,290,295,300,305,309,313,319,324,331,336,341,364,376,403,418,425,442,474,514,537,550,563,577,645,666,670,692,696,704,710,721,730,744,764,772,801,827,859,913,923,967,981
+   EVAL   → [BLOCK/dilated] P=0.872, R=0.596, F1*100=70.83, HitRate*100=87.18 | [LINE±0] P=0.846, R=0.917, F1*100=88.00, Acc*100=98.78
+   FINAL → [BLOCK/dilated] P=0.872, R=0.596, F1*100=70.83 (saved buggy_24_pred.csv) | Selected Attempt = 3
+[RESUME] buggy_25.sol already done (eval); skipping.
+[RESUME] buggy_26.sol already done (eval); skipping.
+
+[REAL::Unhandled-Exceptions] buggy_27.sol | Attempt 2
+   SYSTEM → [prediction] 55,61,71,88,102,110,119,129,137,145,153,161,164,169,179,187,192,197,202,207,211,215,223,227,233,237,245,252,261,268,278,287,352,367,378,438,450,466,476,483,496,513,523,530,538,551,561
+   EVAL   → [BLOCK/dilated] P=0.943, R=0.605, F1*100=73.68, HitRate*100=94.33 | [LINE±0] P=0.915, R=0.915, F1*100=91.49, Acc*100=98.59
+
+[REAL::Unhandled-Exceptions] buggy_27.sol | Attempt 1
+   SYSTEM → [prediction] 55,61,71,88,102,110,119,129,137,145,153,161,164,169,179,187,192,197,202,207,211,215,223,227,233,237,245,252,261,268,278,287,352,367,378,438,450,466,476,483,496,513,523,530,538,551,561
+   EVAL   → [BLOCK/dilated] P=0.943, R=0.605, F1*100=73.68, HitRate*100=94.33 | [LINE±0] P=0.915, R=0.915, F1*100=91.49, Acc*100=98.59
+   FINAL → [BLOCK/dilated] P=0.943, R=0.605, F1*100=73.68 (saved buggy_27_pred.csv) | Selected Attempt = 2
+[INFO] Memory distilled/pruned for label 'Unhandled-Exceptions'. Kept 26 messages.
+[RESUME] buggy_28.sol already done (eval); skipping.
+[RESUME] buggy_29.sol already done (eval); skipping.
+
+[REAL::Unhandled-Exceptions] buggy_30.sol | Attempt 2
+   SYSTEM → [prediction] 288,300,309,321,334,343,360,368,387,407,424,433,451,461,469,479,500,526,554,580,601,615,634,657,689,701,714,726,734,742,755,769,778,782,793,806,815,828,837,845,855,861,874,890,912,920,935,948
+   EVAL   → [BLOCK/dilated] P=0.944, R=0.596, F1*100=73.12, HitRate*100=94.44 | [LINE±0] P=0.917, R=0.917, F1*100=91.67, Acc*100=99.16
+
+[REAL::Unhandled-Exceptions] buggy_30.sol | Attempt 1
+   SYSTEM → [prediction] 288,300,309,321,334,343,360,368,387,407,424,433,451,461,469,479,500,526,554,580,601,615,634,657,689,701,714,726,734,742,755,769,778,782,793,806,815,828,837,845,855,861,874,890,912,920,935,948
+   EVAL   → [BLOCK/dilated] P=0.944, R=0.596, F1*100=73.12, HitRate*100=94.44 | [LINE±0] P=0.917, R=0.917, F1*100=91.67, Acc*100=99.16
+   FINAL → [BLOCK/dilated] P=0.944, R=0.596, F1*100=73.12 (saved buggy_30_pred.csv) | Selected Attempt = 2
+[RESUME] buggy_31.sol already done (eval); skipping.
+[RESUME] buggy_32.sol already done (eval); skipping.
+[RESUME] buggy_33.sol already done (eval); skipping.
+[RESUME] buggy_34.sol already done (eval); skipping.
+[RESUME] buggy_35.sol already done (eval); skipping.
+[RESUME] buggy_36.sol already done (eval); skipping.
+[RESUME] buggy_37.sol already done (eval); skipping.
+[RESUME] buggy_38.sol already done (eval); skipping.
+[RESUME] buggy_39.sol already done (eval); skipping.
+[RESUME] buggy_40.sol already done (eval); skipping.
+[RESUME] buggy_41.sol already done (eval); skipping.
+[RESUME] buggy_42.sol already done (eval); skipping.
+[RESUME] buggy_43.sol already done (eval); skipping.
+[RESUME] buggy_44.sol already done (eval); skipping.
+[RESUME] buggy_45.sol already done (eval); skipping.
+[RESUME] buggy_46.sol already done (eval); skipping.
+[RESUME] buggy_47.sol already done (eval); skipping.
+[RESUME] buggy_48.sol already done (eval); skipping.
+[RESUME] buggy_49.sol already done (eval); skipping.
+[RESUME] buggy_50.sol already done (eval); skipping.
+[INFO] Saved folder summary → results_tuned_final/Unhandled-Exceptions/Unhandled-Exceptions_result.csv
+[SUMMARY::Unhandled-Exceptions] eval contracts=45 (warm-up excluded=5) | MACRO Block P/R/F1 = 0.922/0.569/0.701 | MACRO Line P/R/F1 = 0.935/0.965/0.948
+[INFO] Saved usage/cost log → results_tuned_final/Unhandled-Exceptions/Unhandled-Exceptions_usage.csv
+[USAGE::Unhandled-Exceptions] calls=44 tokens=280136 est_cost_usd=1.1374 avg_s/call=6.43
+
+REAL mode completed for the selected label.

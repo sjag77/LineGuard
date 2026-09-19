@@ -1,0 +1,28 @@
+{
+ "filename": "buggy_46.sol",
+ "phase": "eval",
+ "selected_attempt": 3,
+ "attempts_run": 3,
+ "BlockDetection.P": 0.9354838709677419,
+ "BlockDetection.Recall": 0.5272727272727272,
+ "BlockDetection.F1-Score": 0.6744186046511628,
+ "BlockDetection.HitRate": 0.9354838709677419,
+ "LineDetection.P": 0.5833333333333334,
+ "LineDetection.Recall": 1.0,
+ "LineDetection.F1-Score": 0.7368421052631579,
+ "LineDetection.Accuracy": 0.9731182795698925,
+ "predicted_lines": [
+  20,
+  21,
+  51,
+  79,
+  82,
+  102,
+  105,
+  124,
+  151,
+  153,
+  154,
+  178
+ ]
+}
